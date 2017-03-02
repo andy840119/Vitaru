@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Game.Modes;
 using OpenTK;
 using OpenTK.Graphics;
@@ -19,7 +19,7 @@ namespace osu.Game.Overlays.Toolbar
     {
         const float padding = 10;
 
-        private FlowContainer modeButtons;
+        private FillFlowContainer modeButtons;
         private Drawable modeButtonLine;
         private ToolbarModeButton activeButton;
 
@@ -32,11 +32,11 @@ namespace osu.Game.Overlays.Toolbar
             Children = new Drawable[]
             {
                 new OpaqueBackground(),
-                modeButtons = new FlowContainer
+                modeButtons = new FillFlowContainer
                 {
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
-                    Direction = FlowDirections.Horizontal,
+                    Direction = FillDirection.Right,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Padding = new MarginPadding { Left = padding, Right = padding },

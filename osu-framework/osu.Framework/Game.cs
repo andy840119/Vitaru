@@ -13,7 +13,6 @@ using osu.Framework.Input;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using OpenTK.Input;
-using FlowDirections = osu.Framework.Graphics.Containers.FlowDirections;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Primitives;
@@ -57,8 +56,6 @@ namespace osu.Framework
         internal DrawVisualiser DrawVisualiser;
 
         private LogOverlay logOverlay;
-
-        protected FrameworkConfigManager Config;
 
         protected override Container<Drawable> Content => content;
 
@@ -105,24 +102,13 @@ namespace osu.Framework
         /// <param name="host"></param>
         public virtual void SetHost(GameHost host)
         {
-            if (Config == null)
-                Config = new FrameworkConfigManager(host.Storage);
-
             this.host = host;
             host.Exiting += OnExiting;
-
-            if (Window != null)
-            {
-                Window.SetupWindow(Config);
-                Window.Title = $@"osu.Framework (running ""{Name}"")";
-            }
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(FrameworkConfigManager config)
         {
-            Dependencies.Cache(Config);
-
             Resources = new ResourceStore<byte[]>();
             Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(@"osu.Framework.dll"), @"Resources"));
             Resources.AddStore(new DllResourceStore(MainResourceFile));
@@ -141,10 +127,10 @@ namespace osu.Framework
             host.RegisterThread(Audio.Thread);
 
             //attach our bindables to the audio subsystem.
-            Audio.AudioDevice.Weld(Config.GetBindable<string>(FrameworkConfig.AudioDevice));
-            Audio.Volume.Weld(Config.GetBindable<double>(FrameworkConfig.VolumeUniversal));
-            Audio.VolumeSample.Weld(Config.GetBindable<double>(FrameworkConfig.VolumeEffect));
-            Audio.VolumeTrack.Weld(Config.GetBindable<double>(FrameworkConfig.VolumeMusic));
+            config.BindWith(FrameworkConfig.AudioDevice, Audio.AudioDevice);
+            config.BindWith(FrameworkConfig.VolumeUniversal, Audio.Volume);
+            config.BindWith(FrameworkConfig.VolumeEffect, Audio.VolumeSample);
+            config.BindWith(FrameworkConfig.VolumeMusic, Audio.VolumeTrack);
 
             Shaders = new ShaderManager(new NamespacedResourceStore<byte[]>(Resources, @"Shaders"));
             Dependencies.Cache(Shaders);
@@ -163,10 +149,10 @@ namespace osu.Framework
             (performanceContainer = new PerformanceOverlay
             {
                 Margin = new MarginPadding(5),
-                Direction = FlowDirections.Vertical,
+                Direction = FillDirection.Down,
+                Spacing = new Vector2(10, 10),
                 AutoSizeAxes = Axes.Both,
                 Alpha = 0,
-                Spacing = new Vector2(10, 10),
                 Anchor = Anchor.BottomRight,
                 Origin = Anchor.BottomRight,
                 Depth = float.MinValue

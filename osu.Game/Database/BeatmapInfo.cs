@@ -7,7 +7,6 @@ using osu.Game.Beatmaps.Samples;
 using osu.Game.Modes;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using osu.Game.Beatmaps;
 
 namespace osu.Game.Database
 {
@@ -89,7 +88,7 @@ namespace osu.Game.Database
             return ID == other?.ID;
         }
 
-        public bool AudioEquals(BeatmapInfo other) => other != null &&
+        public bool AudioEquals(BeatmapInfo other) => other != null && BeatmapSet != null && other.BeatmapSet != null &&
             BeatmapSet.Path == other.BeatmapSet.Path &&
             (Metadata ?? BeatmapSet.Metadata).AudioFile == (other.Metadata ?? other.BeatmapSet.Metadata).AudioFile;
     }

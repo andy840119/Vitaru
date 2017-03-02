@@ -19,7 +19,7 @@ using osu.Game.Screens.Backgrounds;
 using OpenTK;
 using osu.Game.Screens.Play;
 using osu.Framework.Audio.Sample;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Game.Beatmaps.Drawables;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics;
@@ -27,7 +27,7 @@ using osu.Framework.Input;
 using OpenTK.Input;
 using System.Collections.Generic;
 using osu.Framework.Threading;
-using osu.Game.Overlays.Mods;
+using osu.Game.Overlays;
 
 namespace osu.Game.Screens.Select
 {
@@ -39,11 +39,10 @@ namespace osu.Game.Screens.Select
 
         private CarouselContainer carousel;
         private TrackManager trackManager;
+        private DialogOverlay dialogOverlay;
 
         private static readonly Vector2 wedged_container_size = new Vector2(0.5f, 225);
         private BeatmapInfoWedge beatmapInfoWedge;
-
-        private ModSelectOverlay modSelect;
 
         private static readonly Vector2 background_blur = new Vector2(20);
         private CancellationTokenSource initialAddSetsTask;
@@ -75,7 +74,7 @@ namespace osu.Game.Screens.Select
         }
 
         [BackgroundDependencyLoader(permitNulls: true)]
-        private void load(BeatmapDatabase beatmaps, AudioManager audio, Framework.Game game,
+        private void load(BeatmapDatabase beatmaps, AudioManager audio, DialogOverlay dialog, Framework.Game game,
             OsuGame osuGame, OsuColour colours)
         {
             const float carousel_width = 640;
@@ -126,16 +125,6 @@ namespace osu.Game.Screens.Select
                         Right = 20,
                     },
                 },
-                modSelect = new ModSelectOverlay
-                {
-                    RelativeSizeAxes = Axes.X,
-                    Origin = Anchor.BottomCentre,
-                    Anchor = Anchor.BottomCentre,
-                    Margin = new MarginPadding
-                    {
-                        Bottom = 50,
-                    },
-                },
                 footer = new Footer
                 {
                     OnBack = Exit,
@@ -150,10 +139,10 @@ namespace osu.Game.Screens.Select
                             PreferredPlayMode = playMode.Value
                         })).LoadAsync(Game, l => Push(player));
                     }
-                }
+                },
             };
 
-            footer.AddButton(@"mods", colours.Yellow, modSelect.ToggleVisibility);
+            footer.AddButton(@"mods", colours.Yellow, null);
             footer.AddButton(@"random", colours.Green, carousel.SelectRandom);
             footer.AddButton(@"options", colours.Blue, null);
 
@@ -161,11 +150,6 @@ namespace osu.Game.Screens.Select
             {
                 playMode = osuGame.PlayMode;
                 playMode.ValueChanged += playMode_ValueChanged;
-                modSelect.ModMode = playMode;
-            }
-            else
-            {
-                modSelect.ModMode = PlayMode.Osu;
             }
 
             if (database == null)
@@ -175,6 +159,7 @@ namespace osu.Game.Screens.Select
             database.BeatmapSetRemoved += onBeatmapSetRemoved;
 
             trackManager = audio.Track;
+            dialogOverlay = dialog;
 
             sampleChangeDifficulty = audio.Sample.Get(@"SongSelect/select-difficulty");
             sampleChangeBeatmap = audio.Sample.Get(@"SongSelect/select-expand");
@@ -288,7 +273,6 @@ namespace osu.Game.Screens.Select
 
         private void playMode_ValueChanged(object sender, EventArgs e)
         {
-            modSelect.ModMode = playMode;
         }
 
         private void changeBackground(WorkingBeatmap beatmap)
@@ -418,12 +402,14 @@ namespace osu.Game.Screens.Select
                     footer.StartButton.TriggerClick();
                     return true;
                 case Key.Delete:
-                    if (Beatmap != null)
+                    if (state.Keyboard.ShiftPressed)
                     {
-                        Beatmap.Dispose();
-                        database.Delete(Beatmap.BeatmapSetInfo);
+                        if (Beatmap != null)
+                            dialogOverlay?.Push(new BeatmapDeleteDialog(Beatmap));
+
+                        return true;
                     }
-                    return true;
+                    break;
             }
 
             return base.OnKeyDown(state, args);

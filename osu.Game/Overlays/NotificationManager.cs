@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Game.Graphics;
 using osu.Game.Overlays.Notifications;
 using OpenTK.Graphics;
@@ -25,7 +25,7 @@ namespace osu.Game.Overlays
         private FlowContainer<NotificationSection> sections;
 
         [BackgroundDependencyLoader(permitNulls: true)]
-        private void load(OsuColour colours)
+        private void load()
         {
             Width = width;
             RelativeSizeAxes = Axes.Y;
@@ -44,9 +44,9 @@ namespace osu.Game.Overlays
                     Margin = new MarginPadding { Top = Toolbar.Toolbar.HEIGHT },
                     Children = new[]
                     {
-                        sections = new FlowContainer<NotificationSection>
+                        sections = new FillFlowContainer<NotificationSection>
                         {
-                            Direction = FlowDirections.Vertical,
+                            Direction = FillDirection.Down,
                             AutoSizeAxes = Axes.Y,
                             RelativeSizeAxes = Axes.X,
                             Children = new []

@@ -4,7 +4,7 @@
 using OpenTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Framework.MathUtils;
 using System;
 
@@ -13,8 +13,6 @@ namespace osu.Game.Graphics.UserInterface
     public class StarCounter : Container
     {
         private readonly Container<Star> stars;
-
-        private double transformStartTime;
 
         /// <summary>
         /// Maximum amount of stars displayed.
@@ -70,10 +68,10 @@ namespace osu.Game.Graphics.UserInterface
 
             Children = new Drawable[]
             {
-                stars = new FlowContainer<Star>
+                stars = new FillFlowContainer<Star>
                 {
                     AutoSizeAxes = Axes.Both,
-                    Direction = FlowDirections.Horizontal,
+                    Direction = FillDirection.Right,
                     Spacing = new Vector2(star_spacing),
                 }
             };
@@ -113,7 +111,7 @@ namespace osu.Game.Graphics.UserInterface
             int i = 0;
             foreach (var star in stars.Children)
             {
-                star.ClearTransformations(true);
+                star.ClearTransforms(true);
                 star.FadeTo(i < count ? 1.0f : minStarAlpha);
                 star.Icon.ScaleTo(getStarScale(i, count));
                 i++;
@@ -133,7 +131,7 @@ namespace osu.Game.Graphics.UserInterface
             int i = 0;
             foreach (var star in stars.Children)
             {
-                star.ClearTransformations(true);
+                star.ClearTransforms(true);
                 if (count <= newValue)
                     star.Delay(Math.Max(i - count, 0) * animationDelay, true);
                 else

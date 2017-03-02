@@ -4,7 +4,7 @@
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Framework.Logging;
 using OpenTK;
 using OpenTK.Graphics;
@@ -15,7 +15,7 @@ namespace osu.Framework.Graphics.Visualisation
 {
     class LogOverlay : OverlayContainer
     {
-        private FlowContainer flow;
+        private FillFlowContainer flow;
 
         private Bindable<bool> enabled;
 
@@ -35,7 +35,7 @@ namespace osu.Framework.Graphics.Visualisation
 
             Children = new Drawable[]
             {
-                flow = new FlowContainer
+                flow = new FillFlowContainer
                 {
                     LayoutDuration = 150,
                     LayoutEasing = EasingTypes.OutQuart,

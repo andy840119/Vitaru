@@ -385,13 +385,13 @@
     <EmbeddedResource Include="Fonts\Noto.fnt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Textures\Menu\dev-build-footer.png" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Textures\Play\Vitaru\boss.png" />
     <EmbeddedResource Include="Textures\Play\Vitaru\enemy.png" />
     <EmbeddedResource Include="Textures\Play\Vitaru\player.png" />
     <EmbeddedResource Include="Textures\Play\Vitaru\sign.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Samples\Vitaru\pew.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

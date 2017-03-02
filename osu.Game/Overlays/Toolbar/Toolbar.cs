@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Framework.Input;
 using osu.Game.Graphics;
 using osu.Game.Modes;
@@ -41,9 +41,9 @@ namespace osu.Game.Overlays.Toolbar
             Children = new Drawable[]
             {
                 new ToolbarBackground(),
-                new FlowContainer
+                new FillFlowContainer
                 {
-                    Direction = FlowDirections.Horizontal,
+                    Direction = FillDirection.Right,
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
                     Children = new Drawable[]
@@ -63,7 +63,7 @@ namespace osu.Game.Overlays.Toolbar
                 {
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
-                    Direction = FlowDirections.Horizontal,
+                    Direction = FillDirection.Right,
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
                     Children = new Drawable[]
@@ -141,7 +141,7 @@ namespace osu.Game.Overlays.Toolbar
             FadeOut(transition_time);
         }
 
-        class PassThroughFlowContainer : FlowContainer
+        class PassThroughFlowContainer : FillFlowContainer
         {
             //needed to get input to the login overlay.
             public override bool Contains(Vector2 screenSpacePos) => true;

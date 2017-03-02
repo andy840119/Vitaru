@@ -2,6 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu-framework/master/LICENCE
 
 using System;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
@@ -14,7 +15,7 @@ namespace osu.Framework.Screens
         protected Screen ParentScreen;
         public Screen ChildScreen;
 
-        public bool IsCurrentScreen => ChildScreen == null;
+        public bool IsCurrentScreen => !hasExited && ChildScreen == null;
 
         private Container content;
         private Container childModeContainer;
@@ -92,10 +93,10 @@ namespace osu.Framework.Screens
         /// <param name="next">The new Screen</param>
         protected virtual void OnSuspending(Screen next) { }
 
-        protected internal override void Load(Game game)
+        [BackgroundDependencyLoader]
+        private void load(Game game)
         {
             Game = game;
-            base.Load(game);
         }
 
         protected override void LoadComplete()
@@ -166,8 +167,8 @@ namespace osu.Framework.Screens
         /// <summary>
         /// Exits this Screen.
         /// </summary>
-        /// <param name="last">Provides an exit source (used when skipping no-longer-valid modes upwards in stack).</param>
-        protected void ExitFrom(Screen last)
+        /// <param name="source">Provides an exit source (used when skipping no-longer-valid modes upwards in stack).</param>
+        protected void ExitFrom(Screen source)
         {
             if (hasExited)
                 return;
@@ -177,33 +178,32 @@ namespace osu.Framework.Screens
 
             hasExited = true;
 
-            if (ValidForResume)
-            {
+            if (ValidForResume || source == this)
                 Content.Expire();
-                LifetimeEnd = Content.LifetimeEnd;
-            }
+
+            //propagate down the LifetimeEnd from the exit source.
+            LifetimeEnd = source.Content.LifetimeEnd;
 
             Exited?.Invoke(ParentScreen);
-            ParentScreen?.startResume(last);
+            ParentScreen?.startResume(source);
             ParentScreen = null;
 
             Exited = null;
             ModePushed = null;
         }
 
-        private void startResume(Screen last)
+        private void startResume(Screen source)
         {
             ChildScreen = null;
 
             if (ValidForResume)
             {
-                OnResuming(last);
+                OnResuming(source);
                 Content.LifetimeEnd = double.MaxValue;
             }
             else
             {
-                ChildScreen = last;
-                ExitFrom(last);
+                ExitFrom(source);
             }
         }
 

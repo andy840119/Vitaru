@@ -54,6 +54,7 @@
     <Compile Include="Objects\Drawables\Pieces\BossSprite.cs" />
     <Compile Include="Objects\Drawables\Pieces\BulletPiece.cs" />
     <Compile Include="Objects\Drawables\Pieces\EnemySprite.cs" />
+    <Compile Include="Objects\Drawables\Pieces\Glow.cs" />
     <Compile Include="Objects\Drawables\Pieces\HitboxPiece.cs" />
     <Compile Include="Objects\Drawables\Pieces\LaserPiece.cs" />
     <Compile Include="Objects\Drawables\Pieces\PlayerSprite.cs" />

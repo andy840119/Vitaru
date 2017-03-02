@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transformations;
+using osu.Framework.Graphics.Transforms;
 using osu.Game.Overlays.Options;
 using System;
 using osu.Game.Graphics;
@@ -55,6 +55,7 @@ namespace osu.Game.Overlays
                 new EditorSection(),
                 new OnlineSection(),
                 new MaintenanceSection(),
+                new DebugSection(),
             };
             Children = new Drawable[]
             {
@@ -72,11 +73,11 @@ namespace osu.Game.Overlays
                     Margin = new MarginPadding { Left = SIDEBAR_WIDTH },
                     Children = new[]
                     {
-                        new FlowContainer
+                        new FillFlowContainer
                         {
                             AutoSizeAxes = Axes.Y,
                             RelativeSizeAxes = Axes.X,
-                            Direction = FlowDirections.Vertical,
+                            Direction = FillDirection.Down,
 
                             Children = new Drawable[]
                             {
@@ -93,11 +94,11 @@ namespace osu.Game.Overlays
                                     TextSize = 18,
                                     Margin = new MarginPadding { Left = CONTENT_MARGINS, Bottom = 30 },
                                 },
-                                new FlowContainer
+                                new FillFlowContainer
                                 {
                                     AutoSizeAxes = Axes.Y,
                                     RelativeSizeAxes = Axes.X,
-                                    Direction = FlowDirections.Vertical,
+                                    Direction = FillDirection.Down,
                                     Children = sections,
                                 }
                             }

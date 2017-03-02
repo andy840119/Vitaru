@@ -22,6 +22,7 @@ using osu.Game.Screens.Play;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Modes.Vitaru.Objects;
+using System;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -63,6 +64,11 @@ namespace osu.Desktop.VisualTests.Tests
                 Origin = Anchor.TopLeft
             };
             Add(health);
+        }
+
+        private void AddToggle(string v, Action toggleKiai)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void Update()
