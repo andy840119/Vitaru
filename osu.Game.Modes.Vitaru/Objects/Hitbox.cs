@@ -29,10 +29,5 @@ namespace osu.Game.Modes.Vitaru.Objects
             };
             Hide();
         }
-
-        internal float GetRadius()
-        {
-          return (hitboxWidth * 0.5f);
-        }
     }
 }

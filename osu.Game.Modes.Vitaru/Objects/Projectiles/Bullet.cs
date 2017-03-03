@@ -15,7 +15,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
     {
         public int bulletDamage { get; set; } = 20;
         public float bulletSpeed { get; set; }
-        public Color4 bulletColor { get; internal set; } = Color4.Red;
+        public Color4 bulletColor { get; set; } = Color4.Red;
         public float bulletWidth { get; set; } = 16;
         public float bulletAngle { get; set; }
         public Vector2 bulletVelocity;
@@ -61,11 +61,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             bulletVelocity.Y = bulletSpeed * (-1 * ((float)Math.Cos(bulletAngle * (3.1415f / 180))));
             bulletVelocity.X = bulletSpeed * ((float)Math.Sin(bulletAngle * (3.1415f / 180)));
             return bulletVelocity;
-        }
-
-        internal float getBulletRadius()
-        {
-            return (bulletWidth * 0.5f);
         }
 
         internal void deleteBullet()
