@@ -13,9 +13,9 @@ namespace osu.Game.Modes.Vitaru.Objects
     public class Hitbox : Container
     {
         //Different stats for Hitboxes
-        public Color4 hitboxColor { get; set; } = Color4.White;
-        public float hitboxHealth { get; set; } = 100;
-        public float hitboxWidth { get; set; } = 4f;
+        public Color4 HitboxColor { get; set; } = Color4.White;
+        public float HitboxHealth { get; set; } = 100;
+        public float HitboxWidth { get; set; } = 4f;
 
         private DrawableHitbox hitbox;
 

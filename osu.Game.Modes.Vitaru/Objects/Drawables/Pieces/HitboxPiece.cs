@@ -25,17 +25,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                     Anchor = Anchor.Centre,
                     BorderThickness = 3,
                     Depth = 1,
-                    BorderColour = hitbox.hitboxColor,
+                    BorderColour = hitbox.HitboxColor,
                     Alpha = 1f,
-                    CornerRadius = hitbox.hitboxWidth / 2,
+                    CornerRadius = hitbox.HitboxWidth / 2,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = hitbox.hitboxWidth,
-                            Height = hitbox.hitboxWidth,
+                            Width = hitbox.HitboxWidth,
+                            Height = hitbox.HitboxWidth,
                         },
                     },
                 },
@@ -44,13 +44,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(hitbox.hitboxWidth),
+                        Scale = new Vector2(hitbox.HitboxWidth),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (hitbox.hitboxColor).Opacity(0.4f),
+                            Colour = (hitbox.HitboxColor).Opacity(0.4f),
                             Radius = 2f,
                         }
                 }

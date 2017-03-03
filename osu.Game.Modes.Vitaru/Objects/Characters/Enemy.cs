@@ -34,8 +34,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             Add(hitbox = new Hitbox()
             {
                 Alpha = 1,
-                hitboxWidth = 20,
-                hitboxColor = Color4.Yellow,
+                HitboxWidth = 20,
+                HitboxColor = Color4.Yellow,
             });
         }
         protected override void Update()
@@ -58,9 +58,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                bulletAngle = a,
-                bulletSpeed = 0.2f,
-                bulletColor = Color4.Red,
+                BulletAngle = a,
+                BulletSpeed = 0.2f,
+                BulletColor = Color4.Red,
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
