@@ -13,9 +13,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
     public class Bullet : Projectile
     {
-        public float bulletSpeed { get; set; } = 20;
-        public float bulletAngle { get; set; } = 0;
+        //Different stats for Bullet that should always be changed
         public int bulletDamage { get; set; } = 5;
+        public Color4 bulletColor { get; set; } = Color4.White;
+        public float bulletSpeed { get; set; } = 20;
+        public float bulletWidth { get; set; } = 4;
+        public float bulletAngle { get; set; } = 0;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;

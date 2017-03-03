@@ -9,10 +9,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
 {
     class HitboxPiece : Container
     {
-        //Different stats for Hitboxes
-        public Color4 hitboxColor { get; set; } = Color4.White;
-        public float hitboxWidth { get; set; } = 4f;
-
         private CircularContainer hitboxContainer;
         private object hitbox;
 
@@ -29,17 +25,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                     Anchor = Anchor.Centre,
                     BorderThickness = 3,
                     Depth = 1,
-                    BorderColour = hitboxColor,
+                    BorderColour = hitbox.hitboxColor,
                     Alpha = 1f,
-                    CornerRadius = hitboxWidth / 2,
+                    CornerRadius = hitbox.hitboxWidth / 2,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = hitboxWidth,
-                            Height = hitboxWidth,
+                            Width = hitbox.hitboxWidth,
+                            Height = hitbox.hitboxWidth,
                         },
                     },
                 },
@@ -48,13 +44,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(hitboxWidth),
+                        Scale = new Vector2(hitbox.hitboxWidth),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (hitboxColor).Opacity(0.4f),
+                            Colour = (hitbox.hitboxColor).Opacity(0.4f),
                             Radius = 2f,
                         }
                 }
