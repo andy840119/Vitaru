@@ -13,13 +13,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
     public class Bullet : Projectile
     {
-        public int bulletDamage { get; set; } = 20;
-        public float bulletSpeed { get; set; }
-        public Color4 bulletColor { get; set; } = Color4.Red;
-        public float bulletWidth { get; set; } = 16;
-        public float bulletAngle { get; set; }
-        public Vector2 bulletVelocity;
+        //Different stats for Bullet that should always be changed
+        public int bulletDamage { get; set; } = 5;
+        public Color4 bulletColor { get; set; } = Color4.White;
+        public float bulletSpeed { get; set; } = 20;
+        public float bulletWidth { get; set; } = 4;
+        public float bulletAngle { get; set; } = 0;
 
+        //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
+        private Vector2 bulletVelocity;
+
+        //Debug info
         public static int bulletsLoaded = 0;
         public static int bulletCapHit = 0;
 
@@ -58,8 +62,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         }
         public Vector2 getBulletVelocity()
         {
-            bulletVelocity.Y = bulletSpeed * (-1 * ((float)Math.Cos(bulletAngle * (3.1415f / 180))));
-            bulletVelocity.X = bulletSpeed * ((float)Math.Sin(bulletAngle * (3.1415f / 180)));
+            bulletVelocity.Y = bulletSpeed * (-1 * ((float)Math.Cos(bulletAngle * (Math.PI / 180))));
+            bulletVelocity.X = bulletSpeed * ((float)Math.Sin(bulletAngle * (Math.PI / 180)));
             return bulletVelocity;
         }
 

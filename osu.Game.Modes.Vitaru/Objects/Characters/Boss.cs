@@ -28,7 +28,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     Origin = Anchor.Centre,
                 },
             };
-            Health = 1000;
+            characterHealth = 1000;
             Team = 1;
             Add(hitbox = new Hitbox()
             {

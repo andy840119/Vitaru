@@ -59,7 +59,7 @@ namespace osu.Desktop.VisualTests.Tests
 
             health = new SpriteText()
             {
-                Text = "Health: " + player.Health,
+                Text = "Health: " + player.characterHealth,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft
             };
@@ -74,7 +74,7 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            health.Text = "Health: " + player.Health;
+            health.Text = "Health: " + player.characterHealth;
         }
 
         //Just the Keycounters on the edge of the screen
