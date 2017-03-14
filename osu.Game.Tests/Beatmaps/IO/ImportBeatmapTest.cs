@@ -16,6 +16,7 @@ using osu.Game.Modes.Catch;
 using osu.Game.Modes.Mania;
 using osu.Game.Modes.Osu;
 using osu.Game.Modes.Taiko;
+using osu.Game.Modes.Vitaru;
 
 namespace osu.Game.Tests.Beatmaps.IO
 {
@@ -31,6 +32,7 @@ namespace osu.Game.Tests.Beatmaps.IO
             Ruleset.Register(new TaikoRuleset());
             Ruleset.Register(new ManiaRuleset());
             Ruleset.Register(new CatchRuleset());
+            Ruleset.Register(new VitaruRuleset());
         }
 
         [Test]
