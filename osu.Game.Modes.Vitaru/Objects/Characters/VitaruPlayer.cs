@@ -16,6 +16,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         //stores if a key is pressed or not
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
 
+        public static int velocityCalculation;
         //stores the player position
         public Vector2 playerPosition = new Vector2(0, 200);
         public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);  //MinX,MaxX,MinY,MaxY
@@ -120,7 +121,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         private void Shoot()
         {
-            //Pattern1();
+                Bullet bullet;
+                parent.Add(bullet = new Bullet(Team)
+                {
+                    Depth = 1,
+                    Anchor = Anchor.Centre,
+                    BulletAngle = 0f,
+                    BulletSpeed = 1f,
+                    BulletColor = Color4.Green,
+                });
+                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
 
         //saves if key is pressed

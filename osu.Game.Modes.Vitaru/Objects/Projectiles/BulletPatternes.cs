@@ -13,7 +13,7 @@ namespace osu.Game.Modes.Vitaru.Objects
 {
     public abstract class BulletPatterns : Container
     {
-        public float patternAngle;
+       /* public float patternAngle;
         public int Team;
 
         public void Pattern1(Container parent)
@@ -26,11 +26,11 @@ namespace osu.Game.Modes.Vitaru.Objects
                     Depth = 1,
                     Anchor = Anchor.Centre,
                     BulletAngle = patternAngle,
-                    BulletSpeed = i/10,
+                    BulletSpeed = i/8,
                     BulletColor = Color4.Green,
                 });
                 bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
             }
-        }
+        }*/
     }
 }

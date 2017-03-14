@@ -7,12 +7,12 @@ using OpenTK.Input;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Screens.Play;
+using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
 namespace osu.Desktop.VisualTests.Tests
 {
     class TestCaseVitaruPlayer : TestCase
     {
-
         //private WorkingBeatmap beatmap;
         //private List<HitObject> enemys;
 
@@ -40,7 +40,7 @@ namespace osu.Desktop.VisualTests.Tests
 
            health = new SpriteText()
             {
-                Text = "Health: " + player.characterHealth,
+                Text = "velocity calculations " + VitaruPlayer.velocityCalculation,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft
             };
@@ -55,7 +55,7 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            health.Text = "Health: " + player.characterHealth;
+            health.Text = "velocity calculations: " + VitaruPlayer.velocityCalculation;
         }
 
         //Just the Keycounters on the edge of the screen

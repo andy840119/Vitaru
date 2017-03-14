@@ -5,6 +5,7 @@ using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Modes.Vitaru.Objects.Characters;
 
 namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
@@ -25,10 +26,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public static int bulletCapHit = 0;
 
         private BulletPiece bulletSprite;
-
+        
 
         public Bullet(int team)
         {
+            getBulletVelocity();
             bulletsLoaded++;
             Team = team;
             Children = new[]
@@ -44,7 +46,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
-            getBulletVelocity();
             MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
@@ -61,6 +62,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
             BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
+            VitaruPlayer.velocityCalculation++;
             return BulletVelocity;
         }
 
