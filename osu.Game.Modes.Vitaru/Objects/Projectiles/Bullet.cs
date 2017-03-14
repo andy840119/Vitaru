@@ -46,7 +46,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             base.Update();
             getBulletVelocity();
             MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
                 deleteBullet();
@@ -71,7 +70,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             Dispose();
         }
     }
-
 
     class BulletPiece : Container
     {
