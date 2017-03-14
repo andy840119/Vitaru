@@ -16,12 +16,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         //stores if a key is pressed or not
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
 
+        public static int velocityCalculation;
         //stores the player position
         public Vector2 playerPosition = new Vector2(0, 200);
         public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);  //MinX,MaxX,MinY,MaxY
         public Vector2 playerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
         //useful when mods get involved or slow debuffs become a thing, pixels per millisecond, different values for x and y
-
 
         private bool _kiaiActivated = false;
         public bool KiaiActivated
@@ -33,10 +33,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             set
             {
                 _kiaiActivated = value;
-                player.setKiai(value);
+                //player.setKiai(value);
             }
         }
-        private DrawablePlayer player;
+        private CharacterSprite player;
 
         public VitaruPlayer(Container parent) : base(parent)
         {
@@ -52,9 +52,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             keys[Key.RShift] = false;
             Children = new[]
             {
-                player = new DrawablePlayer()
+                player = new CharacterSprite()
                 {
                     Origin = Anchor.Centre,
+                    CharacterName = "player"
                 },
 
             };
@@ -67,7 +68,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             Team = 0;
             OnShoot = Shoot;
         }
-
+        public void ToggleShoot()
+        {
+            Shooting = !Shooting;
+        }
 
         public void ToggleKiai()
         {
@@ -88,7 +92,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
             if (keys[Key.Z])
             {
-                Shoot();
+                ToggleShoot();
+            }
+            if (keys [Key.X])
+            {
+                //Bomb();
             }
             if (keys[Key.Up])
             {
@@ -113,36 +121,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         private void Shoot()
         {
-            Bullet b;
-            Bullet l;
-            Bullet r;
-            parent.Add(b = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = 0f,
-                BulletSpeed = 1.5f,
-                BulletColor = Color4.Red,
-            });
-            parent.Add(l = new Bullet(Team)
-            {
-                Depth = 2,
-                Anchor = Anchor.Centre,
-                BulletAngle = 355f,
-                BulletSpeed = 1.5f,
-                BulletColor = Color4.Blue,
-            });
-            parent.Add(r = new Bullet(Team)
-            {
-                Depth = 2,
-                Anchor = Anchor.Centre,
-                BulletAngle = 5f,
-                BulletSpeed = 1.5f,
-                BulletColor = Color4.Green,
-            });
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-            r.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), r));
-            l.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), l));
+                Bullet bullet;
+                parent.Add(bullet = new Bullet(Team)
+                {
+                    Depth = 1,
+                    Anchor = Anchor.Centre,
+                    BulletAngle = 0f,
+                    BulletSpeed = 1f,
+                    BulletColor = Color4.Green,
+                });
+                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
 
         //saves if key is pressed

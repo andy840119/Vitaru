@@ -1,13 +1,11 @@
-﻿using osu.Framework.Graphics.Colour;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Characters;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Framework.Graphics;
+﻿using osu.Framework.Graphics;
 using OpenTK;
 using System;
-using osu.Game.Modes.Vitaru.Objects.Drawables.Pieces;
 using OpenTK.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics;
+using osu.Game.Modes.Vitaru.Objects.Characters;
 
 namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
@@ -15,9 +13,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
     {
         //Different stats for Bullet that should always be changed
         public int BulletDamage { get; set; } = 5;
-        public Color4 BulletColor { get; set; } = Color4.White;
+        public Color4 BulletColor { get; set; } = Color4.Red;
         public float BulletSpeed { get; set; } = 20;
-        public float BulletWidth { get; set; } = 4;
+        public float BulletWidth { get; set; } = 12f;
         public float BulletAngle { get; set; } = 0;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
@@ -27,16 +25,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public static int bulletsLoaded = 0;
         public static int bulletCapHit = 0;
 
-        private DrawableBullet bulletSprite;
-
+        private BulletPiece bulletSprite;
+        
 
         public Bullet(int team)
         {
+            getBulletVelocity();
             bulletsLoaded++;
             Team = team;
             Children = new[]
             {
-                bulletSprite = new DrawableBullet(this)
+                bulletSprite = new BulletPiece(this)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -47,7 +46,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
-            getBulletVelocity();
             MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
@@ -64,6 +62,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
             BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
+            VitaruPlayer.velocityCalculation++;
             return BulletVelocity;
         }
 
@@ -71,6 +70,56 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             bulletsLoaded--;
             Dispose();
+        }
+    }
+
+    class BulletPiece : Container
+    {
+        private CircularContainer bulletContainer;
+        private object bullet;
+        public BulletPiece(Bullet bullet)
+        {
+            this.bullet = bullet;
+            Children = new Drawable[]
+            {
+                new Container
+                {
+                    Masking = true,
+                    AutoSizeAxes = Axes.Both,
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    BorderThickness = 3,
+                    Depth = 1,
+                    BorderColour = bullet.BulletColor,
+                    Alpha = 1f,
+                    CornerRadius = bullet.BulletWidth / 2,
+                    Children = new[]
+                    {
+                        new Box
+                        {
+                            Colour = Color4.White,
+                            Alpha = 1,
+                            Width = bullet.BulletWidth,
+                            Height = bullet.BulletWidth,
+                        },
+                    },
+                },
+                bulletContainer = new CircularContainer
+                {
+                        Origin = Anchor.Centre,
+                        Anchor = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Scale = new Vector2(bullet.BulletWidth),
+                        Depth = 2,
+                        Masking = true,
+                        EdgeEffect = new EdgeEffect
+                        {
+                            Type = EdgeEffectType.Shadow,
+                            Colour = (bullet.BulletColor).Opacity(0.75f),
+                            Radius = 2f,
+                        }
+                }
+            };
         }
     }
 }

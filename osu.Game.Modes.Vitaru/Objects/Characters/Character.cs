@@ -89,6 +89,5 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 }
             }
         }
-
     }
 }
