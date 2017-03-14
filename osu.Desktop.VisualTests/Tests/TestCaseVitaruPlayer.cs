@@ -32,7 +32,6 @@ namespace osu.Desktop.VisualTests.Tests
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Shooting = true,
             };
             Add(player);
 
