@@ -44,9 +44,6 @@ namespace osu.Desktop.VisualTests.Tests
         {
             base.Reset();
 
-            //ensure we are at offset 0
-            //Clock = new FramedClock();
-
             player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
@@ -55,26 +52,26 @@ namespace osu.Desktop.VisualTests.Tests
             Add(player);
 
             AddKeyCounters();
-            AddToggle(@"Toggle Kiai", player.ToggleKiai);
+            //AddToggle(@"Toggle Kiai", player.ToggleKiai);
 
-            health = new SpriteText()
+           health = new SpriteText()
             {
-                Text = "Health: " + player.Health,
+                Text = "Health: " + player.characterHealth,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft
             };
             Add(health);
         }
 
-        private void AddToggle(string v, Action toggleKiai)
+        /*private void AddToggle(string v, Action toggleKiai)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         protected override void Update()
         {
             base.Update();
-            health.Text = "Health: " + player.Health;
+            health.Text = "Health: " + player.characterHealth;
         }
 
         //Just the Keycounters on the edge of the screen

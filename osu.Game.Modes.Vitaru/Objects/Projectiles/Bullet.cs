@@ -13,13 +13,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
     public class Bullet : Projectile
     {
-        public int bulletDamage { get; set; } = 20;
-        public float bulletSpeed { get; set; }
-        public Color4 bulletColor { get; internal set; } = Color4.Red;
-        public float bulletWidth { get; set; } = 16;
-        public float bulletAngle { get; set; }
-        public Vector2 bulletVelocity;
+        //Different stats for Bullet that should always be changed
+        public int BulletDamage { get; set; } = 5;
+        public Color4 BulletColor { get; set; } = Color4.White;
+        public float BulletSpeed { get; set; } = 20;
+        public float BulletWidth { get; set; } = 4;
+        public float BulletAngle { get; set; } = 0;
 
+        //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
+        private Vector2 BulletVelocity;
+
+        //Debug info
         public static int bulletsLoaded = 0;
         public static int bulletCapHit = 0;
 
@@ -44,7 +48,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             base.Update();
             getBulletVelocity();
-            MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
+            MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
                 deleteBullet();
@@ -58,14 +62,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         }
         public Vector2 getBulletVelocity()
         {
-            bulletVelocity.Y = bulletSpeed * (-1 * ((float)Math.Cos(bulletAngle * (3.1415f / 180))));
-            bulletVelocity.X = bulletSpeed * ((float)Math.Sin(bulletAngle * (3.1415f / 180)));
-            return bulletVelocity;
-        }
-
-        internal float getBulletRadius()
-        {
-            return (bulletWidth * 0.5f);
+            BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
+            BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
+            return BulletVelocity;
         }
 
         internal void deleteBullet()

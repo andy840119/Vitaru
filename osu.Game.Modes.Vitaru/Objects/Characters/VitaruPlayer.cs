@@ -58,11 +58,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 },
 
             };
-            Health = 100;
+            characterHealth = 100;
             Add(hitbox = new Hitbox()
             {
-                hitboxWidth = 4,
-                hitboxColor = Color4.Cyan,
+                HitboxWidth = 8,
+                HitboxColor = Color4.Cyan,
             });
             Team = 0;
             OnShoot = Shoot;
@@ -120,22 +120,25 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                bulletAngle = 0f,
-                bulletSpeed = 1.5f,
+                BulletAngle = 0f,
+                BulletSpeed = 1.5f,
+                BulletColor = Color4.Red,
             });
             parent.Add(l = new Bullet(Team)
             {
                 Depth = 2,
                 Anchor = Anchor.Centre,
-                bulletAngle = 355f,
-                bulletSpeed = 1.5f,
+                BulletAngle = 355f,
+                BulletSpeed = 1.5f,
+                BulletColor = Color4.Blue,
             });
             parent.Add(r = new Bullet(Team)
             {
                 Depth = 2,
                 Anchor = Anchor.Centre,
-                bulletAngle = 5f,
-                bulletSpeed = 1.5f,
+                BulletAngle = 5f,
+                BulletSpeed = 1.5f,
+                BulletColor = Color4.Green,
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
             r.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), r));
@@ -158,7 +161,5 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 hitbox.Alpha = 0;
             return base.OnKeyUp(state, args);
         }
-
-       
     }
 }

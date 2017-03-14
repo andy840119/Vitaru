@@ -28,13 +28,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     Origin = Anchor.Centre,
                 },
             };
-            Health = 1000;
+            characterHealth = 1000;
             Team = 1;
             Add(hitbox = new Hitbox()
             {
                 Alpha = 1,
-                hitboxWidth = 32,
-                hitboxColor = Color4.Green,
+                HitboxWidth = 32,
+                HitboxColor = Color4.Green,
             });
         }
         protected override void Update()

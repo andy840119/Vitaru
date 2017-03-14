@@ -8,12 +8,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public abstract class Character : Container
     {
-        public float Health { get; internal set; } = 100;
+        public float characterHealth { get; set; } = 100;
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
-        public float HitboxWidth { get; set; } = 12;
-        public float BulletWidth { get; set; } = 16;
         public int BPM { get; set; } = 180;
 
         protected Hitbox hitbox;
@@ -38,8 +36,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         /// <returns>If the Character died</returns>
         public bool TakeDamage(int damage)
         {
-            Health -= (int)(damage * Armor);
-            if (Health <= 0)
+            characterHealth -= (int)(damage * Armor);
+            if (characterHealth <= 0)
             {
                 Dispose();
                 OnDeath();
@@ -52,10 +50,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         /// <summary>
         /// Heals the <see cref="Character"/> by the specified amount
         /// </summary>
-        /// <param name="health">Amount of health to be healed</param>
-        public void Heal(int health)
+        /// <param name="heal">Amount of health to be healed</param>
+        public void Heal(int heal)
         {
-            Health += health;
+            characterHealth += heal;
         }
 
         protected override void Update()
@@ -70,11 +68,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     {
                         Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                         float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = hitbox.GetRadius()+bullet.getBulletRadius();
+                        float minDist = hitbox.HitboxWidth + bullet.BulletWidth;
                         if (distance < minDist)
                         {
                             bullet.deleteBullet();
-                            if (TakeDamage(bullet.bulletDamage))
+                            if (TakeDamage(bullet.BulletDamage))
                                 break;
                         }
                     }

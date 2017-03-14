@@ -31,17 +31,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                     Anchor = Anchor.Centre,
                     BorderThickness = 3,
                     Depth = 1,
-                    BorderColour = bullet.bulletColor,
+                    BorderColour = bullet.BulletColor,
                     Alpha = 1f,
-                    CornerRadius = bullet.bulletWidth / 2,
+                    CornerRadius = bullet.BulletWidth / 2,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = bullet.bulletWidth,
-                            Height = bullet.bulletWidth,
+                            Width = bullet.BulletWidth,
+                            Height = bullet.BulletWidth,
                         },
                     },
                 },
@@ -50,13 +50,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(bullet.bulletWidth),
+                        Scale = new Vector2(bullet.BulletWidth),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (bullet.bulletColor).Opacity(0.75f),
+                            Colour = (bullet.BulletColor).Opacity(0.75f),
                             Radius = 2f,
                         }
                 }
