@@ -17,15 +17,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Vector2 bossPosition = new Vector2(0, -160);
         public Vector2 bossSpeed { get; set; } = new Vector2(1, 1);
 
-        private DrawableBoss boss;
+        private CharacterSprite boss;
 
         public Boss(Container parent) : base(parent)
         {
             Children = new[]
             {
-                boss = new DrawableBoss()
+                boss = new CharacterSprite()
                 {
                     Origin = Anchor.Centre,
+                    CharacterName = "boss"
                 },
             };
             characterHealth = 1000;

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
+namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     class SpellPiece : Container
     {

@@ -1,12 +1,7 @@
-﻿using osu.Framework.Graphics.Colour;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Characters;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+﻿using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using OpenTK;
 using System;
-using osu.Game.Modes.Vitaru.Objects.Drawables.Pieces;
 using OpenTK.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Projectiles
@@ -15,9 +10,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
     {
         //Different stats for Bullet that should always be changed
         public int BulletDamage { get; set; } = 5;
-        public Color4 BulletColor { get; set; } = Color4.White;
+        public Color4 BulletColor { get; set; } = Color4.Red;
         public float BulletSpeed { get; set; } = 20;
-        public float BulletWidth { get; set; } = 4;
+        public float BulletWidth { get; set; } = 12f;
         public float BulletAngle { get; set; } = 0;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
@@ -27,7 +22,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public static int bulletsLoaded = 0;
         public static int bulletCapHit = 0;
 
-        private DrawableBullet bulletSprite;
+        private BulletPiece bulletSprite;
 
 
         public Bullet(int team)
@@ -36,7 +31,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             Team = team;
             Children = new[]
             {
-                bulletSprite = new DrawableBullet(this)
+                bulletSprite = new BulletPiece(this)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -49,6 +44,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             base.Update();
             getBulletVelocity();
             MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
+
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
                 deleteBullet();

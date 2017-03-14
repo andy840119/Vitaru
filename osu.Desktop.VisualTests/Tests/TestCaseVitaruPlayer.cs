@@ -3,26 +3,10 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Framework.Graphics;
-using osu.Game.Graphics.UserInterface;
 using OpenTK.Input;
-using osu.Framework.Timing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
-using osu.Game.Modes.Vitaru.Objects.Drawables.Pieces;
 using osu.Framework.Graphics.Sprites;
-using OpenTK;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Framework.Allocation;
-using osu.Game.Database;
-using osu.Game.Beatmaps;
-using osu.Game.Modes;
-using System.Collections.Generic;
-using osu.Game.Modes.Objects;
-using osu.Game.Beatmaps.Formats;
 using osu.Game.Screens.Play;
-using OpenTK.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Vitaru.Objects;
-using System;
 
 namespace osu.Desktop.VisualTests.Tests
 {

@@ -33,10 +33,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             set
             {
                 _kiaiActivated = value;
-                player.setKiai(value);
+                //player.setKiai(value);
             }
         }
-        private DrawablePlayer player;
+        private CharacterSprite player;
 
         public VitaruPlayer(Container parent) : base(parent)
         {
@@ -52,9 +52,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             keys[Key.RShift] = false;
             Children = new[]
             {
-                player = new DrawablePlayer()
+                player = new CharacterSprite()
                 {
                     Origin = Anchor.Centre,
+                    CharacterName = "player"
                 },
 
             };

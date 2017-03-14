@@ -1,11 +1,7 @@
 ﻿using osu.Framework.Graphics.Containers;
 using OpenTK;
-using OpenTK.Input;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
-using osu.Framework.Input;
-using System.Collections.Generic;
-using System;
 using OpenTK.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
@@ -18,15 +14,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Vector2 enemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
 
         int a = 0;
-        private DrawableEnemy enemy;
+        private CharacterSprite enemy;
 
         public Enemy(Container parent) : base(parent)
         {
             Children = new[]
             {
-                enemy = new DrawableEnemy()
+                enemy = new CharacterSprite()
                 {
                     Origin = Anchor.Centre,
+                    CharacterName = "enemy"
                 },
             };
             characterHealth = 100;

@@ -6,19 +6,19 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
+namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class PlayerSprite : Container
+    public class CharacterSprite : Container
     {
         public Sprite sprite;
+        public string CharacterName;
 
-        public PlayerSprite()
+        public CharacterSprite()
         {
             sprite = new Sprite()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                //Scale = new Vector2 (0.5f,0.5f)
             };
             Add(sprite);
 
@@ -27,7 +27,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
         {
-            sprite.Texture = textures.Get(@"Play/Vitaru/player");
+            sprite.Texture = textures.Get(@"Play/Vitaru/" + CharacterName);
         }
     }
 }

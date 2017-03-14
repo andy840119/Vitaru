@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables.Pieces
+namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     class TotemPiece
     {
