@@ -22,7 +22,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Vector2 playerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
         //useful when mods get involved or slow debuffs become a thing, pixels per millisecond, different values for x and y
 
-
         private bool _kiaiActivated = false;
         public bool KiaiActivated
         {
@@ -37,7 +36,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
         }
         private CharacterSprite player;
-        private float patternAngle = 0f;
 
         public VitaruPlayer(Container parent) : base(parent)
         {
@@ -122,68 +120,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         private void Shoot()
         {
-            Bullet a;
-            Bullet b;
-            Bullet c;
-            Bullet d;
-            Bullet e;
-            Bullet f;
-
-            parent.Add(a = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 1.2f,
-                BulletColor = Color4.Green,
-            });
-            parent.Add(b = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 1f,
-                BulletColor = Color4.Green,
-            });
-            parent.Add(c = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 0.8f,
-                BulletColor = Color4.Green,
-            });
-            parent.Add(d = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 0.6f,
-                BulletColor = Color4.Green,
-            });
-            parent.Add(e = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 0.4f,
-                BulletColor = Color4.Green,
-            });
-            parent.Add(f = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngle = patternAngle,
-                BulletSpeed = 0.2f,
-                BulletColor = Color4.Green,
-            });
-
-            a.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), a));
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-            c.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), c));
-            d.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), d));
-            e.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), e));
-            f.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), f));
+            //Pattern1();
         }
 
         //saves if key is pressed
