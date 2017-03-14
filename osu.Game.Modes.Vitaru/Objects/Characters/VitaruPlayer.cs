@@ -37,6 +37,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
         }
         private CharacterSprite player;
+        private float patternAngle = 0f;
 
         public VitaruPlayer(Container parent) : base(parent)
         {
@@ -68,7 +69,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             Team = 0;
             OnShoot = Shoot;
         }
-
+        public void ToggleShoot()
+        {
+            Shooting = !Shooting;
+        }
 
         public void ToggleKiai()
         {
@@ -89,7 +93,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
             if (keys[Key.Z])
             {
-                Shoot();
+                ToggleShoot();
+            }
+            if (keys [Key.X])
+            {
+                //Bomb();
             }
             if (keys[Key.Up])
             {
@@ -114,36 +122,68 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         private void Shoot()
         {
+            Bullet a;
             Bullet b;
-            Bullet l;
-            Bullet r;
+            Bullet c;
+            Bullet d;
+            Bullet e;
+            Bullet f;
+
+            parent.Add(a = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngle = patternAngle,
+                BulletSpeed = 1.2f,
+                BulletColor = Color4.Green,
+            });
             parent.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngle = 0f,
-                BulletSpeed = 1.5f,
-                BulletColor = Color4.Red,
-            });
-            parent.Add(l = new Bullet(Team)
-            {
-                Depth = 2,
-                Anchor = Anchor.Centre,
-                BulletAngle = 355f,
-                BulletSpeed = 1.5f,
-                BulletColor = Color4.Blue,
-            });
-            parent.Add(r = new Bullet(Team)
-            {
-                Depth = 2,
-                Anchor = Anchor.Centre,
-                BulletAngle = 5f,
-                BulletSpeed = 1.5f,
+                BulletAngle = patternAngle,
+                BulletSpeed = 1f,
                 BulletColor = Color4.Green,
             });
+            parent.Add(c = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngle = patternAngle,
+                BulletSpeed = 0.8f,
+                BulletColor = Color4.Green,
+            });
+            parent.Add(d = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngle = patternAngle,
+                BulletSpeed = 0.6f,
+                BulletColor = Color4.Green,
+            });
+            parent.Add(e = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngle = patternAngle,
+                BulletSpeed = 0.4f,
+                BulletColor = Color4.Green,
+            });
+            parent.Add(f = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngle = patternAngle,
+                BulletSpeed = 0.2f,
+                BulletColor = Color4.Green,
+            });
+
+            a.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), a));
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-            r.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), r));
-            l.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), l));
+            c.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), c));
+            d.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), d));
+            e.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), e));
+            f.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), f));
         }
 
         //saves if key is pressed
