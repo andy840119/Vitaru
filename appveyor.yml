@@ -7,9 +7,12 @@ cache:
   - inspectcode -> appveyor.yml
   - packages -> **\packages.config
 install:
+  - cmd: git submodule update --init --recursive
   - cmd: choco install resharper-clt -y
   - cmd: choco install nvika -y
+  - cmd: appveyor DownloadFile https://github.com/peppy/CodeFileSanity/releases/download/v0.1/CodeFileSanity.exe
 before_build:
+  - cmd: CodeFileSanity.exe
   - cmd: nuget restore
 build:
   project: osu.sln
