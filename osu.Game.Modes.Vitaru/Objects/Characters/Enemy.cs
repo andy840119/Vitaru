@@ -9,7 +9,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public class Enemy : Character
     {
-        public int Pattern = 0;
+        public Vector2 DesiredPosition { get; set; }
 
         int a = 0;
 
