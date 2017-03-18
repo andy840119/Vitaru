@@ -3,6 +3,7 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,14 @@ namespace osu.Desktop.VisualTests.Tests
         public int kills;
         private SpriteText score;
 
+        private void loadNewBoss()
+        {
+            var v = new Boss
+            {
+                Position = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
+            };
+        }
+
         public override void Reset()
         {
             base.Reset();
@@ -44,15 +53,7 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(player);
 
-            AddButton(@"New Boss", NewBoss);
-
-            boss = new Boss(this)
-            {
-                Anchor = Anchor.TopCentre,
-                bossPosition = new Vector2(0, 100),
-                OnDeath = NewBoss,
-            };
-            Add(boss);
+            AddButton(@"New Boss", () => loadNewBoss());
 
             score = new SpriteText()
             {
@@ -61,6 +62,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Origin = Anchor.TopRight
             };
             Add(score);
+            loadNewBoss();
         }
         protected override void Update()
         {
@@ -68,16 +70,12 @@ namespace osu.Desktop.VisualTests.Tests
             score.Text = "" + kills;
         }
 
-        protected void NewBoss()
+        protected void NewBoss(DrawableVitaruCharacter v)
         {
             kills++;
-            boss = new Boss(this)
-            {
-                Anchor = Anchor.TopCentre,
-                bossPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next (50 , 200)),
-                OnDeath = NewBoss,
-            };
-            Add(boss);
+            v.Anchor = Anchor.TopCentre;
+            v.OnDeath = loadNewBoss;
+            Add(v);
         }
     }
 }

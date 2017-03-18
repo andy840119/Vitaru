@@ -1,10 +1,11 @@
 ﻿using OpenTK.Graphics;
+using OpenTK;
 using osu.Framework.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    class DrawableVitaruEnemy : DrawableVitaruCharacter
+    public class DrawableVitaruEnemy : DrawableVitaruCharacter
     {
         public DrawableVitaruEnemy(VitaruHitObject hitObject) : base(hitObject)
         {

@@ -2,6 +2,7 @@
 //Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Screens.Testing;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,15 @@ namespace osu.Desktop.VisualTests.Tests
         private int bad = 10;
         private int graze = 5;
 
+        private void loadNewEnemy()
+        {
+            var v = new Enemy
+            {
+                Position = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
+            };
+            NewEnemy(new DrawableVitaruEnemy(v));
+        }
+
         public override void Reset()
         {
             base.Reset();
@@ -50,15 +60,7 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(player);
 
-            AddButton(@"New Enemy", NewEnemy);
-
-            enemy = new Enemy(this)
-            {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
-                OnDeath = NewEnemy,
-            };
-            Add(enemy);
+            AddButton(@"New Enemy", () => loadNewEnemy());
 
             score = new SpriteText()
             {
@@ -75,6 +77,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Origin = Anchor.BottomLeft
             };
             Add(combox);
+            loadNewEnemy();
         }
         protected override void Update()
         {
@@ -83,17 +86,15 @@ namespace osu.Desktop.VisualTests.Tests
             combox.Text = combo + "X";
         }
 
-        protected void NewEnemy()
+        int depth;
+        protected void NewEnemy(DrawableVitaruCharacter v)
         {
+            v.OnDeath = loadNewEnemy;
             kills++;
             combo++;
-            enemy = new Enemy(this)
-            {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next(50 , 200)),
-                OnDeath = NewEnemy,
-            };
-            Add(enemy);
+            v.Anchor = Anchor.Centre;
+            v.Depth = depth++;
+            Add(v);
         }
     }
 }
