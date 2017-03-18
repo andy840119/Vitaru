@@ -1,0 +1,20 @@
+clone_depth: 1
+version: '{branch}-{build}'
+configuration: Debug
+cache:
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - inspectcode -> appveyor.yml
+  - packages -> **\packages.config
+install:
+  - cmd: choco install resharper-clt -y
+  - cmd: choco install nvika -y
+before_build:
+  - cmd: nuget restore
+build:
+  project: osu.sln
+  parallel: true
+  verbosity: minimal
+after_build:
+  - cmd: inspectcode /o="inspectcodereport.xml" /caches-home="inspectcode" osu.sln
+  - cmd: NVika parsereport "inspectcodereport.xml"
