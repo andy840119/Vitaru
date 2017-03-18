@@ -16,24 +16,16 @@ namespace osu.Game.Modes.Vitaru
     {
         public override ScoreOverlay CreateScoreOverlay() => new VitaruScoreOverlay();
 
-        public override HitObjectParser CreateHitObjectParser() => new VitaruObjectParser();
+        public override HitObjectParser CreateHitObjectParser() => new NullHitObjectParser();
 
-        public ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor();
-
-        public override ScoreProcessor CreateScoreProcessor(int hitObjectCount)
-        {
-            throw new NotImplementedException();
-        }
+        public override ScoreProcessor CreateScoreProcessor(int hitObjectCount) => null;
 
         public override HitRenderer CreateHitRendererWith(Beatmap beatmap)
         {
             throw new NotImplementedException();
         }
 
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap) => new VitaruDifficultyCalculator(beatmap);
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;
 

@@ -14,51 +14,29 @@ namespace osu.Game.Modes.Vitaru.Objects
         public float HitboxHealth { get; set; } = 100;
         public float HitboxWidth { get; set; } = 8f;
 
-        private HitboxPiece hitbox;
+        private CircularContainer hitboxContainer;
 
         public Hitbox()
         {
             Children = new[]
             {
-                hitbox = new HitboxPiece(this)
+                new CircularContainer
                 {
-                    Origin = Anchor.Centre,
-                },
-            };
-            Hide();
-        }
-    }
-
-
-    class HitboxPiece : Container
-    {
-        private CircularContainer hitboxContainer;
-        private object hitbox;
-
-        public HitboxPiece(Hitbox hitbox)
-        {
-            this.hitbox = hitbox;
-            Children = new Drawable[]
-            {
-                new Container
-                {
-                    Masking = true,
                     AutoSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
                     BorderThickness = 3,
                     Depth = 1,
-                    BorderColour = hitbox.HitboxColor,
+                    BorderColour = HitboxColor,
                     Alpha = 1f,
-                    CornerRadius = hitbox.HitboxWidth / 2,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = hitbox.HitboxWidth,
-                            Height = hitbox.HitboxWidth,
+                            Width = HitboxWidth,
+                            Height = HitboxWidth,
                         },
                     },
                 },
@@ -67,17 +45,18 @@ namespace osu.Game.Modes.Vitaru.Objects
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(hitbox.HitboxWidth),
+                        Scale = new Vector2(HitboxWidth),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (hitbox.HitboxColor).Opacity(0.4f),
+                            Colour = (HitboxColor).Opacity(0.4f),
                             Radius = 2f,
                         }
                 }
             };
+            Hide();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace osu.Game.Modes.Vitaru.Object.Projectiles
+namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
     class Laser : Projectile
     {
