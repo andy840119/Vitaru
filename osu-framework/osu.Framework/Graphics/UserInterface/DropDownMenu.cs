@@ -20,7 +20,9 @@ namespace osu.Framework.Graphics.UserInterface
         private List<DropDownMenuItem<T>> items = new List<DropDownMenuItem<T>>();
         private readonly Dictionary<T, int> itemDictionary = new Dictionary<T, int>();
 
-        protected abstract IEnumerable<DropDownMenuItem<T>> GetDropDownItems(IEnumerable<KeyValuePair<string, T>> values);
+        protected IReadOnlyList<DropDownMenuItem<T>> ItemList => items;
+        protected IReadOnlyDictionary<T, int> ItemDictionary => itemDictionary;
+        protected abstract DropDownMenuItem<T> CreateDropDownItem(string key, T value);
 
         public IEnumerable<KeyValuePair<string, T>> Items
         {
@@ -32,28 +34,39 @@ namespace osu.Framework.Graphics.UserInterface
             {
                 listInitialized = false;
                 ClearItems();
-                foreach (var item in GetDropDownItems(value))
-                {
-                    item.PositionIndex = items.Count - 1;
-                    items.Add(item);
-                    if (item.CanSelect)
-                    {
-                        item.Index = selectableItems.Count;
-                        item.Action = delegate
-                        {
-                            if (State == DropDownMenuState.Opened)
-                                SelectedIndex = item.Index;
-                        };
-                        selectableItems.Add(item);
-                        itemDictionary[item.Value] = item.Index;
-                    }
-                }
+                if (value == null)
+                    return;
+
+                foreach (var entry in value)
+                    AddDropDownItem(entry.Key, entry.Value);
             }
         }
 
-        protected DropDownHeader Header;
+        public void AddDropDownItem(string key, T value)
+        {
+            var item = CreateDropDownItem(key, value);
+            item.PositionIndex = items.Count - 1;
+            items.Add(item);
+            if (item.CanSelect)
+            {
+                item.Index = selectableItems.Count;
+                item.Action = delegate
+                {
+                    if (State == DropDownMenuState.Opened)
+                        SelectedIndex = item.Index;
+                };
+                selectableItems.Add(item);
+                itemDictionary[item.Value] = item.Index;
+            }
+            if (listInitialized)
+                DropDownItemsContainer.Add(item);
+        }
+        // TODO: RemoveDropDownItem?
+
+        protected internal DropDownHeader Header;
 
         protected Container ContentContainer;
+        protected ScrollContainer ScrollContainer;
         protected FlowContainer<DropDownMenuItem<T>> DropDownItemsContainer;
 
         protected abstract DropDownHeader CreateHeader();
@@ -170,7 +183,7 @@ namespace osu.Framework.Graphics.UserInterface
         protected DropDownMenu()
         {
             AutoSizeAxes = Axes.Y;
-            Direction = FillDirection.Down;
+            Direction = FillDirection.Vertical;
 
             Children = new Drawable[]
             {
@@ -186,7 +199,7 @@ namespace osu.Framework.Graphics.UserInterface
                             RelativeSizeAxes = Axes.Both,
                             Colour = Color4.Black,
                         },
-                        new ScrollContainer
+                        ScrollContainer = new ScrollContainer
                         {
                             RelativeSizeAxes = Axes.Both,
                             Masking = false,
@@ -196,7 +209,7 @@ namespace osu.Framework.Graphics.UserInterface
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
-                                    Direction = FillDirection.Down,
+                                    Direction = FillDirection.Vertical,
                                 },
                             },
                         },
@@ -278,6 +291,26 @@ namespace osu.Framework.Graphics.UserInterface
             itemDictionary.Clear();
             DropDownItemsContainer.Clear();
         }
+
+        internal void HideItem(T val)
+        {
+            int index;
+            if (ItemDictionary.TryGetValue(val, out index))
+                ItemList[index]?.Hide();
+
+            updateHeaderVisibility();
+        }
+
+        internal void ShowItem(T val)
+        {
+            int index;
+            if (ItemDictionary.TryGetValue(val, out index))
+                ItemList[index]?.Show();
+
+            updateHeaderVisibility();
+        }
+
+        private void updateHeaderVisibility() => Header.Alpha = ItemList.Any(i => i.IsPresent) ? 1 : 0;
 
         private void initializeDropDownList()
         {

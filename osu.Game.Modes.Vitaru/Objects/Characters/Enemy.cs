@@ -4,6 +4,7 @@ using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using OpenTK.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using System;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
@@ -49,13 +50,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
         private void enemyShoot()
         {
-            a = (a + 31);
+            float a = ((float)Math.Atan2((enemyPosition.X - VitaruPlayer.playerPosition.X),(enemyPosition.Y - VitaruPlayer.playerPosition.Y)) * (float)(180 / Math.PI));
             Bullet b;
             parent.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngle = a,
+                BulletAngleRadian = a,
                 BulletSpeed = 0.2f,
                 BulletColor = Color4.Red,
             });

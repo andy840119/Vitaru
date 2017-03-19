@@ -16,8 +16,6 @@ namespace osu.Desktop.VisualTests.Tests
         //private WorkingBeatmap beatmap;
         //private List<HitObject> enemys;
 
-        public override string Name => @"Vitaru Player";
-
         public override string Description => @"Showing Player";
 
         private SpriteText health;
@@ -35,7 +33,6 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(player);
 
-            AddKeyCounters();
             //AddToggle(@"Toggle Kiai", player.ToggleKiai);
 
            health = new SpriteText()
@@ -56,67 +53,6 @@ namespace osu.Desktop.VisualTests.Tests
         {
             base.Update();
             health.Text = "velocity calculations: " + VitaruPlayer.velocityCalculation;
-        }
-
-        //Just the Keycounters on the edge of the screen
-        public void AddKeyCounters()
-        {
-            Add(new[]
-            {
-            new KeyCounterCollection
-                {
-                    Origin = Anchor.TopCentre,
-                    Anchor = Anchor.TopCentre,
-                    IsCounting = true,
-                    Children = new KeyCounter[]
-                    {
-                        new KeyCounterKeyboard(@"Up", Key.Up),
-                    },
-                },
-            new KeyCounterCollection
-                {
-                    Origin = Anchor.BottomCentre,
-                    Anchor = Anchor.BottomCentre,
-                    IsCounting = true,
-                    Children = new KeyCounter[]
-                    {
-                        new KeyCounterKeyboard(@"Down", Key.Down),
-                    },
-                },
-            new KeyCounterCollection
-                {
-                    Origin = Anchor.CentreLeft,
-                    Anchor = Anchor.CentreLeft,
-                    IsCounting = true,
-                    Children = new KeyCounter[]
-                    {
-                        new KeyCounterKeyboard(@"Left", Key.Left),
-                    },
-                },
-            new KeyCounterCollection
-                {
-                    Origin = Anchor.CentreRight,
-                    Anchor = Anchor.CentreRight,
-                    IsCounting = true,
-                    Children = new KeyCounter[]
-                    {
-                        new KeyCounterKeyboard(@"Right", Key.Right),
-                    },
-                },
-            new KeyCounterCollection
-                {
-                    Origin = Anchor.BottomRight,
-                    Anchor = Anchor.BottomRight,
-                    IsCounting = true,
-                    Children = new KeyCounter[]
-                    {
-                        new KeyCounterKeyboard(@"LS", Key.LShift),
-                        new KeyCounterKeyboard(@"Z", Key.Z),
-                        new KeyCounterKeyboard(@"X", Key.X),
-                        new KeyCounterKeyboard(@"RS", Key.RShift),
-                    },
-                },
-            });
         }
     }
 }

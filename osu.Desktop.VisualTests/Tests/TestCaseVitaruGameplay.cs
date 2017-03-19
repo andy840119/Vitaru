@@ -20,7 +20,6 @@ namespace osu.Desktop.VisualTests.Tests
 {
     class TestCaseVitaruGameplay : TestCase
     {
-        public override string Name => @"Vitaru Gameplay";
         public override string Description => @"Showing everything to play osu!vitaru";
 
         private VitaruPlayer player;

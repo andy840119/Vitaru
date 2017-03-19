@@ -15,9 +15,7 @@ namespace osu.Desktop.VisualTests.Tests
 {
     class TestCaseVitaruShootingRange : TestCase
     {
-
-        public override string Name => @"Shooting Range";
-        public override string Description => @"Player Shooting mechanics";
+        public override string Description => @"Debug stats";
 
         private VitaruPlayer player;
         private SpriteText bulletsOnScreen;

@@ -6,11 +6,8 @@ using osu.Game.Modes.Vitaru.Objects;
 
 namespace osu.Game.Modes.Vitaru.UI
 {
-    internal class VitaruHitObjectConverter : HitObjectConverter<VitaruHitObject>
+    internal class VitaruHitObjectConverter
     {
-        public override List<VitaruHitObject> Convert(Beatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

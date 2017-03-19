@@ -15,13 +15,6 @@ namespace osu.Game.Modes.Vitaru.Objects
 
         public virtual Vector2 EndPosition => Position;
 
-        public override void SetDefaultsFromBeatmap(Beatmap beatmap)
-        {
-            base.SetDefaultsFromBeatmap(beatmap);
-
-            Scale = (1.0f - 0.7f * (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 5) / 5) / 2;
-        }
-
         [Flags]
         internal enum HitObjectType
         {

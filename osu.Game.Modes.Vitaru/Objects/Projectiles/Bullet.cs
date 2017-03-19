@@ -6,6 +6,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Framework.Extensions.Color4Extensions;
 
 namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
@@ -16,7 +17,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public Color4 BulletColor { get; set; } = Color4.Red;
         public float BulletSpeed { get; set; } = 20;
         public float BulletWidth { get; set; } = 12f;
-        public float BulletAngle { get; set; } = 0;
+        public float BulletAngleDegree { get; set; } = 0;
+        public float BulletAngleRadian { get; set; } = -1;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 BulletVelocity;
@@ -30,7 +32,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         public Bullet(int team)
         {
-            getBulletVelocity();
+
             bulletsLoaded++;
             Team = team;
             Children = new[]
@@ -45,6 +47,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         protected override void Update()
         {
+            getBulletVelocity();
             base.Update();
             MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
@@ -60,10 +63,20 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         }
         public Vector2 getBulletVelocity()
         {
-            BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
-            BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
-            VitaruPlayer.velocityCalculation++;
-            return BulletVelocity;
+            if (BulletAngleRadian != -1)
+            {
+                BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleRadian)));
+                BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
+                VitaruPlayer.velocityCalculation++;
+                return BulletVelocity;
+            }
+            else
+            {
+                BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
+                BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
+                VitaruPlayer.velocityCalculation++;
+                return BulletVelocity;
+            }
         }
 
         internal void deleteBullet()
@@ -72,6 +85,110 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             Dispose();
         }
     }
+
+/*using osu.Framework.Graphics;
+using OpenTK;
+using System;
+using OpenTK.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics;
+using osu.Game.Modes.Vitaru.Objects.Characters;
+
+namespace osu.Game.Modes.Vitaru.Objects.Projectiles
+{
+    public class Bullet : Projectile
+    {
+        //Different stats for Bullet that should always be changed
+        public int BulletDamage { get; set; } = 5;
+        public Color4 BulletColor { get; set; } = Color4.Red;
+        public float BulletWidth { get; set; } = 12f;
+        private float bulletSpeed;
+        public float BulletSpeed
+        {
+            get
+            {
+                return bulletSpeed;
+            }
+            set
+            {
+                bulletSpeed = value;
+                calculateBulletVelocity();
+            }
+        }
+
+        private float bulletAngle;
+        public float BulletAngle
+        {
+            get
+            {
+                return bulletAngle;
+            }
+            set
+            {
+                bulletAngle = value;
+                calculateBulletVelocity();
+            }
+        }
+
+
+        //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
+        private Vector2 bulletVelocity;
+
+        //Debug info
+        public static int BulletsLoaded = 0;
+        public static int BulletCapHit = 0;
+
+        private BulletPiece bulletSprite;
+
+
+        public Bullet(int team)
+        {
+            BulletsLoaded++;
+            Team = team;
+            Children = new[]
+            {
+                bulletSprite = new BulletPiece(this)
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                },
+            };
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
+            if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
+            {
+                Dispose();
+            }
+
+            if (Clock.ElapsedFrameTime > 40)
+            {
+                BulletCapHit++;
+                Dispose();
+            }
+        }
+        private void calculateBulletVelocity()
+        {
+            bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
+            bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
+            VitaruPlayer.velocityCalculation++;
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            BulletsLoaded--;
+            base.Dispose(isDisposing);
+        }
+
+        internal void deleteBullet()
+        {
+            Dispose();
+        }
+    }*/
 
     class BulletPiece : Container
     {

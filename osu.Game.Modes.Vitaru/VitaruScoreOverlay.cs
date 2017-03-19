@@ -5,7 +5,7 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Modes.Vitaru
 {
-    internal class VitaruScoreOverlay : ScoreOverlay
+    internal class VitaruHudOverlay : HudOverlay
     {
         protected override PercentageCounter CreateAccuracyCounter()
         {
@@ -13,6 +13,11 @@ namespace osu.Game.Modes.Vitaru
         }
 
         protected override ComboCounter CreateComboCounter()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override HealthDisplay CreateHealthDisplay()
         {
             throw new NotImplementedException();
         }

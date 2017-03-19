@@ -4,6 +4,7 @@ using OpenTK.Graphics;
 using OpenTK;
 using osu.Game.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Extensions.Color4Extensions;
 
 namespace osu.Game.Modes.Vitaru.Objects
 {

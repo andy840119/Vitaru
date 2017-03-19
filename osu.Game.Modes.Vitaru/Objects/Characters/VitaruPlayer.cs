@@ -18,7 +18,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         public static int velocityCalculation;
         //stores the player position
-        public Vector2 playerPosition = new Vector2(0, 200);
+        public static Vector2 playerPosition = new Vector2(0, 200);
         public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);  //MinX,MaxX,MinY,MaxY
         public Vector2 playerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
         //useful when mods get involved or slow debuffs become a thing, pixels per millisecond, different values for x and y
@@ -126,7 +126,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 {
                     Depth = 1,
                     Anchor = Anchor.Centre,
-                    BulletAngle = 0f,
+                    BulletAngleDegree = 0f,
                     BulletSpeed = 1f,
                     BulletColor = Color4.Green,
                 });

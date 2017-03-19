@@ -24,7 +24,6 @@ namespace osu.Desktop.VisualTests.Tests
         //private WorkingBeatmap beatmap;
         //private List<HitObject> enemysLoaded;
 
-        public override string Name => @"Vitaru Boss";
         public override string Description => @"Showing Boss stuff";
 
         private VitaruPlayer player;
