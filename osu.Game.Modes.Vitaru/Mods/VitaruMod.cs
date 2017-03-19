@@ -22,13 +22,13 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModHidden : ModHidden
     {
-        public override string Description => @"Play with no approach circles and fading notes for a slight score advantage.";
-        public override double ScoreMultiplier => 1.06;
+        public override string Description => @"Play with bullets dissapearing once they are close to you.";
+        public override double ScoreMultiplier => 1.18;
     }
 
     public class VitaruModHardRock : ModHardRock
     {
-        public override double ScoreMultiplier => 1.06;
+        public override double ScoreMultiplier => 1.08;
         public override bool Ranked => true;
     }
 
@@ -39,7 +39,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModDoubleTime : ModDoubleTime
     {
-        public override double ScoreMultiplier => 1.12;
+        public override double ScoreMultiplier => 1.36;
     }
 
     public class VitaruModHalfTime : ModHalfTime
@@ -49,12 +49,13 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModNightcore : ModNightcore
     {
-        public override double ScoreMultiplier => 1.12;
+        public override double ScoreMultiplier => 1.36;
     }
 
     public class VitaruModDoubleTrouble : ModDoubleTrouble
     {
-        public override double ScoreMultiplier => 1.12;
+        public override string Description => @"Twice as many Bosses, twice as much fun!";
+        public override double ScoreMultiplier => 1.18;
     }
 
     public class VitaruModPerfect : ModPerfect
