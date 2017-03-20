@@ -59,6 +59,8 @@ namespace osu.Game.Modes.Vitaru
                     {
                         new VitaruModDoubleTrouble(),
                         new VitaruModMirror(),
+                        new VitaruModCoop(),
+                        new VitaruMod1v1(),
                         new MultiMod
                         {
                             Mods = new Mod[]
@@ -68,9 +70,7 @@ namespace osu.Game.Modes.Vitaru
                             },
                         },
                     };
-
-                default:
-                    return new Mod[] { };
+                default : return new Mod[] { };
             }
         }
 

@@ -881,6 +881,14 @@ namespace osu.Game.Graphics
         fa_osu_insane_mania = 0xe027,
         fa_osu_expert_mania = 0xe028,
 
+        // vitaru difficulties
+        fa_osu_easy_vitaru = 0xe029,
+        fa_osu_normal_vitaru = 0xe030,
+        fa_osu_hard_vitaru = 0xe031,
+        fa_osu_insane_vitaru = 0xe032,
+        fa_osu_expert_vitaru = 0xe033,
+
+
         // mod icons
         fa_osu_mod_perfect = 0xe02d,
         fa_osu_mod_autopilot = 0xe03a,

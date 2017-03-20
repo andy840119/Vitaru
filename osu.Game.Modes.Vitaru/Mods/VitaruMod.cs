@@ -68,6 +68,18 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override double ScoreMultiplier => 1.18;
     }
 
+    public class VitaruModCoop : ModCoop
+    {
+        public override double ScoreMultiplier => 0.5;
+        public override bool Ranked => true;
+    }
+
+    public class VitaruMod1v1 : Mod1v1
+    {
+        public override double ScoreMultiplier => 0.5;
+        public override bool Ranked => false;
+    }
+
     public class VitaruModAutoplay : ModAutoplay<OsuHitObject>
     {
         protected override Score CreateReplayScore(Beatmap<OsuHitObject> beatmap) => new Score
