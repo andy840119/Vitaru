@@ -16,7 +16,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public static bool shoot = false;
         public Vector2 enemyPosition = new Vector2(0, -160);
         public Vector2 enemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
-        private float playerAngle = 0;
+        private float playerAngleRadian = 0;
 
         private CharacterSprite enemy;
 
@@ -44,7 +44,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             base.Update();
             if (shoot == true)
             {
-                enemyShoot();
+                Shooting = true;
+                OnShoot = enemyShoot;
             }
 
             float ySpeed = enemySpeed.Y * (float)(Clock.ElapsedFrameTime);
@@ -59,24 +60,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngleRadian = playerAngle,
-                BulletSpeed = 0.2f,
+                BulletAngleRadian = playerAngleRadian,
+                BulletSpeed = 0.5f,
                 BulletColor = Color4.Red,
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
         private float playerRelativePositionAngle()
         {
-            playerAngle = (float)Math.Atan2((VitaruPlayer.playerPosition.X - enemyPosition.X) , -1 * (VitaruPlayer.playerPosition.Y - enemyPosition.Y));
-            if (playerAngle < 0)
-            {
-                //playerAngle = playerAngle + (float)(2 * Math.PI);
-                return playerAngle;
-            }
-            else
-            {
-                return playerAngle;
-            }
+            playerAngleRadian = (float)Math.Atan2((VitaruPlayer.playerPosition.X - enemyPosition.X) , -1 * (VitaruPlayer.playerPosition.Y - enemyPosition.Y));
+            return playerAngleRadian;
         }
     }
 }

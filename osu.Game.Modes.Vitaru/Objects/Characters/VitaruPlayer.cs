@@ -130,7 +130,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     Depth = 1,
                     Anchor = Anchor.Centre,
                     BulletAngleDegree = 0f,
-                    BulletAngleRadian = 0f,
                     BulletSpeed = 1f,
                     BulletColor = Color4.Green,
                 });

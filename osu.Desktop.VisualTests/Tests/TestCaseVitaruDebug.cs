@@ -15,6 +15,7 @@ using OpenTK;
 using osu.Game.Beatmaps;
 using osu.Game.Modes.Objects;
 using osu.Framework.Timing;
+using osu.Framework.MathUtils;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -43,7 +44,7 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.Centre,
-                enemyPosition = new Vector2(0, -300),
+                enemyPosition = new Vector2(0, -200),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
@@ -68,7 +69,7 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.Centre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
+                enemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
