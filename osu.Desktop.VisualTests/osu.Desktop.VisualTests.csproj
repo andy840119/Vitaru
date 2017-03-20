@@ -205,7 +205,7 @@
     <Compile Include="Tests\TestCaseVitaruEnemy.cs" />
     <Compile Include="Tests\TestCaseVitaruGameplay.cs" />
     <Compile Include="Tests\TestCaseVitaruPlayer.cs" />
-    <Compile Include="Tests\TestCaseVitaruShootingRange.cs" />
+    <Compile Include="Tests\TestCaseVitaruDebug.cs" />
     <Compile Include="VisualTestGame.cs" />
     <Compile Include="Platform\TestStorage.cs" />
     <Compile Include="Tests\TestCaseOptions.cs" />

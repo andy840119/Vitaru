@@ -16,8 +16,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public static bool shoot = false;
         public Vector2 enemyPosition = new Vector2(0, -160);
         public Vector2 enemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        private float playerAngle = 0;
 
-        int a = 0;
         private CharacterSprite enemy;
 
         public Enemy(Container parent) : base(parent)
@@ -59,7 +59,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngleRadian = a,
+                BulletAngleRadian = playerAngle,
                 BulletSpeed = 0.2f,
                 BulletColor = Color4.Red,
             });
@@ -67,15 +67,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
         private float playerRelativePositionAngle()
         {
-            float a = ((float)Math.Atan2((enemyPosition.X - VitaruPlayer.playerPosition.X), (enemyPosition.Y - VitaruPlayer.playerPosition.Y)) * (float)(180 / Math.PI));
-            if (a < 0)
+            playerAngle = (float)Math.Atan2((VitaruPlayer.playerPosition.X - enemyPosition.X) , -1 * (VitaruPlayer.playerPosition.Y - enemyPosition.Y));
+            if (playerAngle < 0)
             {
-                a = (a + (float)(2 * Math.PI));
-                return a;
+                //playerAngle = playerAngle + (float)(2 * Math.PI);
+                return playerAngle;
             }
             else
             {
-                return a;
+                return playerAngle;
             }
         }
     }

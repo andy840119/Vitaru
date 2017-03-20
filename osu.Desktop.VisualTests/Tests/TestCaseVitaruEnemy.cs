@@ -54,7 +54,7 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
+                enemyPosition = new Vector2(0, -500),
                 OnDeath = NewEnemy,
             };
             Add(enemy);

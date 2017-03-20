@@ -18,31 +18,19 @@ using osu.Framework.Timing;
 
 namespace osu.Desktop.VisualTests.Tests
 {
-    class TestCaseVitaruGameplay : TestCase
+    class TestCaseVitaruDebug : TestCase
     {
-        public override string Description => @"Showing everything to play osu!vitaru";
+        public override string Description => @"Debug info";
 
         private VitaruPlayer player;
         private Enemy enemy;
-        public int kills;
-        public int combo;
-        private SpriteText score;
-        private SpriteText combox;
 
-        //Score will probably be changed to reward points based on enemy difficulty
-        private int perfect = 30;
-        private int good = 20;
-        private int bad = 10;
-        private int graze = 5;
+        private SpriteText DebugInfo;
 
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
-            combo = 0;
             Enemy.shoot = true;
-            //ensure we are at offset 0
-            //Clock = new FramedClock();
 
             player = new VitaruPlayer(this)
             {
@@ -54,45 +42,33 @@ namespace osu.Desktop.VisualTests.Tests
 
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
+                Anchor = Anchor.Centre,
+                enemyPosition = new Vector2(0, -300),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
 
-            score = new SpriteText()
+            DebugInfo = new SpriteText()
             {
-                Text = "" + (combo * (kills * perfect)),
-                TextSize = 50,
+                Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y,
+                TextSize = 25,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
-            Add(score);
-
-            combox = new SpriteText()
-            {
-                Text = combo + "x",
-                TextSize = 40,
-                Anchor = Anchor.BottomLeft,
-                Origin = Anchor.BottomLeft
-            };
-            Add(combox);
+            Add(DebugInfo);
         }
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + (combo * (kills * perfect));
-            combox.Text = combo + "x";
+            DebugInfo.Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y;
         }
 
         protected void NewEnemy()
         {
-            kills++;
-            combo++;
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
+                Anchor = Anchor.Centre,
+                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
@@ -100,7 +76,6 @@ namespace osu.Desktop.VisualTests.Tests
         protected void NewPlayer()
         {
             VitaruPlayer.playerPosition = new Vector2(0, 200);
-            combo = 0;
             player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
