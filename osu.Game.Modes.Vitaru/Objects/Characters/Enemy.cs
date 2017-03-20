@@ -53,7 +53,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
         private void enemyShoot()
         {
-            float a = ((float)Math.Atan2((enemyPosition.X - VitaruPlayer.playerPosition.X),(enemyPosition.Y - VitaruPlayer.playerPosition.Y)) * (float)(180 / Math.PI));
+            playerRelativePositionAngle();
             Bullet b;
             parent.Add(b = new Bullet(Team)
             {
@@ -64,6 +64,19 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 BulletColor = Color4.Red,
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+        }
+        private float playerRelativePositionAngle()
+        {
+            float a = ((float)Math.Atan2((enemyPosition.X - VitaruPlayer.playerPosition.X), (enemyPosition.Y - VitaruPlayer.playerPosition.Y)) * (float)(180 / Math.PI));
+            if (a < 0)
+            {
+                a = (a + (float)(2 * Math.PI));
+                return a;
+            }
+            else
+            {
+                return a;
+            }
         }
     }
 }
