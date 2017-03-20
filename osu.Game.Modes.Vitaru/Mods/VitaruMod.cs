@@ -80,6 +80,11 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override bool Ranked => false;
     }
 
+    public class VitaruRelax : ModRelax
+    {
+        public override bool Ranked => false;
+    }
+
     public class VitaruModAutoplay : ModAutoplay<OsuHitObject>
     {
         protected override Score CreateReplayScore(Beatmap<OsuHitObject> beatmap) => new Score

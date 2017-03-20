@@ -143,7 +143,7 @@ namespace osu.Game.Modes.Mods
     public abstract class ModDoubleTrouble : Mod
     {
         public override string Name => "Double Trouble";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        public override FontAwesome Icon => FontAwesome.fa_osu_gear;
         public override string Description => "Twice as many Bosses!";
         public override bool Ranked => true;
     }
@@ -151,7 +151,7 @@ namespace osu.Game.Modes.Mods
     public abstract class ModMirror : Mod
     {
         public override string Name => "Mirror";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        public override FontAwesome Icon => FontAwesome.fa_osu_mod_hidden;
         public override string Description => "Play backwards";
         public override bool Ranked => true;
     }
@@ -159,7 +159,7 @@ namespace osu.Game.Modes.Mods
     public abstract class ModCoop : Mod
     {
         public override string Name => "Coop";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        public override FontAwesome Icon => FontAwesome.fa_osu_multi;
         public override string Description => "Play with a Friend";
         public override bool Ranked => true;
     }
@@ -167,7 +167,7 @@ namespace osu.Game.Modes.Mods
     public abstract class Mod1v1 : Mod
     {
         public override string Name => "1 v 1";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        public override FontAwesome Icon => FontAwesome.fa_osu_multi;
         public override string Description => "Play against a Friend, or an Enemy";
         public override bool Ranked => false;
     }

@@ -40,7 +40,14 @@ namespace osu.Game.Modes.Vitaru
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new VitaruModHardRock(),
+                        new MultiMod
+                        {
+                            Mods = new Mod[]
+                            {
+                                new VitaruModMirror(),
+                                new VitaruModHardRock(),
+                            },
+                        },
                         new VitaruModSuddenDeath(),
                         new MultiMod
                         {
@@ -50,17 +57,29 @@ namespace osu.Game.Modes.Vitaru
                                 new VitaruModNightcore(),
                             },
                         },
-                        new VitaruModHidden(),
-                        new VitaruModFlashlight(),
+                        new MultiMod
+                        {
+                            Mods = new Mod[]
+                            {
+                                new VitaruModHidden(),
+                                new VitaruModFlashlight(),
+                            },
+                        },
+                        new VitaruModDoubleTrouble(),
                     };
 
                 case ModType.Special:
                     return new Mod[]
                     {
-                        new VitaruModDoubleTrouble(),
-                        new VitaruModMirror(),
-                        new VitaruModCoop(),
-                        new VitaruMod1v1(),
+                        new MultiMod
+                        {
+                            Mods = new Mod[]
+                            {
+                                new VitaruModCoop(),
+                                new VitaruMod1v1(),
+                            }
+                        },
+                        new VitaruRelax(),
                         new MultiMod
                         {
                             Mods = new Mod[]
