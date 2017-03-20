@@ -320,6 +320,8 @@ namespace osu.Game.Configuration
         RawInput,
         AbsoluteToOsuWindow,
         ConfineMouse,
+        StopPcDeath,
+        AllowVitaruSkins,
         [Obsolete]
         ConfineMouseToFullscreen,
         ShowMenuTips,

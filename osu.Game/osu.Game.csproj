@@ -165,6 +165,9 @@
     <Compile Include="Overlays\Options\Sections\DebugSection.cs" />
     <Compile Include="Overlays\Options\Sections\Debug\GeneralOptions.cs" />
     <Compile Include="Overlays\Options\Sections\Debug\GCOptions.cs" />
+    <Compile Include="Overlays\Options\Sections\VitaruSection.cs" />
+    <Compile Include="Overlays\Options\Sections\Vitaru\GameOptions.cs" />
+    <Compile Include="Overlays\Options\Sections\Vitaru\OnlineOptions.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarHomeButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarMusicButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarNotificationButton.cs" />
