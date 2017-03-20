@@ -17,12 +17,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public static bool shoot = false;
         public Vector2 enemyPosition = new Vector2(0, -160);
         public Vector2 enemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public Vector2 enemyVelocity;
+        public float enemyAngle;
+
         private float playerAngleRadian = 0;
 
         private CharacterSprite enemy;
 
         public bool randomMovement { get; set; } = false;
 
+        //Main Enemy Function
         public Enemy(Container parent) : base(parent)
         {
             Children = new[]
@@ -42,6 +46,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 HitboxColor = Color4.Yellow,
             });
         }
+
+        //Update Loop
         protected override void Update()
         {
             base.Update();
@@ -54,6 +60,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             float xSpeed = enemySpeed.X * (float)(Clock.ElapsedFrameTime);
             Position = enemyPosition;
         }
+
+        //Shoot Function for enemy
         private void enemyShoot()
         {
             playerRelativePositionAngle();
@@ -68,6 +76,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
+
+        //Finds Player angle from Enemy position (only works with one player and enemy ATM*)
         private float playerRelativePositionAngle()
         {
             playerAngleRadian = (float)Math.Atan2((VitaruPlayer.playerPosition.X - enemyPosition.X) , -1 * (VitaruPlayer.playerPosition.Y - enemyPosition.Y));

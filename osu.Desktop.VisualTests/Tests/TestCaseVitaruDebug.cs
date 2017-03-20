@@ -28,11 +28,14 @@ namespace osu.Desktop.VisualTests.Tests
 
         private SpriteText DebugInfo;
 
+        //Reset function (runs when you start this testcase)
         public override void Reset()
         {
             base.Reset();
             Enemy.shoot = true;
 
+
+            //Player
             player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
@@ -41,6 +44,7 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(player);
 
+            //Enemy
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.Centre,
@@ -50,6 +54,7 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(enemy);
 
+            //Debug stats, change to whatever you need to debug
             DebugInfo = new SpriteText()
             {
                 Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y,
@@ -59,12 +64,15 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(DebugInfo);
         }
+
+        //Update loop
         protected override void Update()
         {
             base.Update();
             DebugInfo.Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y;
         }
 
+        //New Enemy Function
         protected void NewEnemy()
         {
             enemy = new Enemy(this)
@@ -76,6 +84,8 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(enemy);
         }
+
+        //New Player (VitaruPlayer) Function
         protected void NewPlayer()
         {
             VitaruPlayer.playerPosition = new Vector2(0, 200);
