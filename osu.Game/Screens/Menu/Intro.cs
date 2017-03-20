@@ -31,6 +31,9 @@ namespace osu.Game.Screens.Menu
         private SpriteText m;
         private SpriteText e_;
 
+        private int textSize = 60;
+        private float textSpace = 1.5f;
+
         private CircularContainer lowCircleGray;
         private CircularContainer lowCircleBlack;
         private CircularContainer highCircleBlack;
@@ -141,8 +144,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "w",
-                            TextSize = 40,
-                            Position = new Vector2(-60, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(-60 * textSpace, 0),
                         },
                         e = new SpriteText
                         {
@@ -150,8 +153,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "e",
-                            TextSize = 40,
-                            Position = new Vector2(-37.5f, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(-37.5f * textSpace, 0),
                         },
                         l = new SpriteText
                         {
@@ -159,8 +162,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "l",
-                            TextSize = 40,
-                            Position = new Vector2(-19, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(-19 * textSpace, 0),
                         },
                         c = new SpriteText
                         {
@@ -168,8 +171,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "c",
-                            TextSize = 40,
-                            Position = new Vector2(-3f, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(-3f * textSpace, 0),
                         },
                         o = new SpriteText
                         {
@@ -177,8 +180,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "o",
-                            TextSize = 40,
-                            Position = new Vector2(16.5f, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(16.5f * textSpace, 0),
                         },
                         m = new SpriteText
                         {
@@ -186,8 +189,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "m",
-                            TextSize = 40,
-                            Position = new Vector2(38f, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(38f * textSpace, 0),
                         },
                         e_ = new SpriteText
                         {
@@ -195,8 +198,8 @@ namespace osu.Game.Screens.Menu
                             Origin = Anchor.Centre,
                             Font = @"Exo2.0-regular",
                             Text = "e",
-                            TextSize = 40,
-                            Position = new Vector2(60, 0),
+                            TextSize = textSize,
+                            Position = new Vector2(60 * textSpace, 0),
                         },
                         borderContainer = new CircularContainer
                         {
