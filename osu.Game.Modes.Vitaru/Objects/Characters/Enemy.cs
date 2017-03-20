@@ -9,6 +9,7 @@ using OpenTK.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using System;
 using osu.Framework.MathUtils;
+using osu.Framework.Graphics.Transforms;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
@@ -47,10 +48,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             });
         }
 
-        //Update Loop
+        //Main Update Loop
         protected override void Update()
         {
             base.Update();
+            if (randomMovement == true)
+            {
+                RandomMovements();
+            }
             if (shoot == true)
             {
                 Shooting = true;
@@ -82,6 +87,26 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             playerAngleRadian = (float)Math.Atan2((VitaruPlayer.playerPosition.X - enemyPosition.X) , -1 * (VitaruPlayer.playerPosition.Y - enemyPosition.Y));
             return playerAngleRadian;
+        }
+        private Vector2 randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
+        private float v = RNG.Next(1, 3);
+        private float t = RNG.Next(1, 3);
+        private bool enemyMoving;
+
+        private void RandomMovements()
+        {
+            if (enemyMoving == false)
+            {
+                v = RNG.Next(1, 5);
+                t = RNG.Next(1, 4);
+                randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
+                MoveTo(Direction.Horizontal, randomPlace.X, 3 , EasingTypes.InOutQuad);
+                MoveTo(Direction.Vertical, randomPlace.Y, 3, EasingTypes.InOutQuad);
+            }
+            if(enemyPosition == randomPlace)
+            {
+                enemyMoving = false;
+            }
         }
     }
 }
