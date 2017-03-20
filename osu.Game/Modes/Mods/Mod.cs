@@ -148,6 +148,14 @@ namespace osu.Game.Modes.Mods
         public override bool Ranked => true;
     }
 
+    public abstract class ModMirror : Mod
+    {
+        public override string Name => "Mirror";
+        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        public override string Description => "Play backwards";
+        public override bool Ranked => true;
+    }
+
     public class ModAutoplay : Mod
     {
         public override string Name => "Autoplay";

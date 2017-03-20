@@ -51,12 +51,14 @@ namespace osu.Game.Modes.Vitaru
                             },
                         },
                         new VitaruModHidden(),
-                        new VitaruModDoubleTrouble(),
+                        new VitaruModFlashlight(),
                     };
 
                 case ModType.Special:
                     return new Mod[]
                     {
+                        new VitaruModDoubleTrouble(),
+                        new VitaruModMirror(),
                         new MultiMod
                         {
                             Mods = new Mod[]

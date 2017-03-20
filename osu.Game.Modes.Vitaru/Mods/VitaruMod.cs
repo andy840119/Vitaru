@@ -52,15 +52,20 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override double ScoreMultiplier => 1.36;
     }
 
-    public class VitaruModDoubleTrouble : ModDoubleTrouble
+    public class VitaruModFlashlight : ModFlashlight
     {
-        public override string Description => @"Twice as many Bosses, twice as much fun!";
+        public override string Description => @"Good Luck.";
         public override double ScoreMultiplier => 1.18;
     }
 
-    public class VitaruModPerfect : ModPerfect
+    public class VitaruModDoubleTrouble : ModDoubleTrouble
     {
+        public override double ScoreMultiplier => 1.18;
+    }
 
+    public class VitaruModMirror : ModMirror
+    {
+        public override double ScoreMultiplier => 1.18;
     }
 
     public class VitaruModAutoplay : ModAutoplay<OsuHitObject>
