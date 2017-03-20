@@ -35,7 +35,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         public Bullet(int team)
         {
-
             bulletsLoaded++;
             Team = team;
             Children = new[]

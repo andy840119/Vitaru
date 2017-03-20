@@ -19,7 +19,7 @@ namespace osu.Game.Modes.Vitaru.Objects
        /* public float patternAngle;
         public int Team;
 
-        public void Pattern1(Container parent)
+        public void SlowingStream(Container parent)
         {
             for (int i = 0; i < 6; i++)
             {

@@ -71,10 +71,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             Team = 0;
             OnShoot = Shoot;
         }
-        public void ToggleShoot()
-        {
-            Shooting = !Shooting;
-        }
 
         public void ToggleKiai()
         {
@@ -95,7 +91,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
             if (keys[Key.Z])
             {
-                ToggleShoot();
+                Shooting = true;
+            }
+            if (keys[Key.Z] == false)
+            {
+                Shooting = false;
             }
             if (keys [Key.X])
             {
@@ -130,6 +130,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     Depth = 1,
                     Anchor = Anchor.Centre,
                     BulletAngleDegree = 0f,
+                    BulletAngleRadian = 0f,
                     BulletSpeed = 1f,
                     BulletColor = Color4.Green,
                 });
