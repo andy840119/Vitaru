@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using OpenTK.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using System;
+using osu.Framework.MathUtils;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
@@ -19,6 +20,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         private float playerAngleRadian = 0;
 
         private CharacterSprite enemy;
+
+        public bool randomMovement { get; set; } = false;
 
         public Enemy(Container parent) : base(parent)
         {
@@ -47,7 +50,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 Shooting = true;
                 OnShoot = enemyShoot;
             }
-
             float ySpeed = enemySpeed.Y * (float)(Clock.ElapsedFrameTime);
             float xSpeed = enemySpeed.X * (float)(Clock.ElapsedFrameTime);
             Position = enemyPosition;

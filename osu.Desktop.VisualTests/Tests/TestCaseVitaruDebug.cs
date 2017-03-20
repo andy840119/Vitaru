@@ -46,6 +46,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.Centre,
                 enemyPosition = new Vector2(0, -200),
                 OnDeath = NewEnemy,
+                randomMovement = true,
             };
             Add(enemy);
 
@@ -71,6 +72,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.Centre,
                 enemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
+                randomMovement = true,
             };
             Add(enemy);
         }
