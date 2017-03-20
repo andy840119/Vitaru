@@ -41,7 +41,7 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             kills = 0;
             combo = 0;
-            Enemy.shoot = true;
+            /*Enemy.shoot = true;
             //ensure we are at offset 0
             //Clock = new FramedClock();
 
@@ -77,36 +77,36 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft
             };
-            Add(combox);
+            Add(combox);*/
         }
-        protected override void Update()
+        /*protected override void Update()
         {
             base.Update();
             score.Text = "" + (combo * (kills * perfect));
             combox.Text = combo + "x";
-        }
+        }*/
 
         protected void NewEnemy()
         {
             kills++;
             combo++;
-            enemy = new Enemy(this)
+            /*enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,
                 enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
                 OnDeath = NewEnemy,
             };
-            Add(enemy);
+            Add(enemy);*/
         }
         protected void NewPlayer()
         {
             combo = 0;
-            player = new VitaruPlayer(this)
+            /*player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 OnDeath = NewPlayer,
             };
-            Add(player);
+            Add(player);*/
         }
     }
 }

@@ -28,19 +28,19 @@ namespace osu.Desktop.VisualTests.Tests
         {
             base.Reset();
 
-            player = new VitaruPlayer(this)
+            /*player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             };
-            Add(player);
+            Add(player);*/
 
             AddKeyCounters();
             //AddToggle(@"Toggle Kiai", player.ToggleKiai);
 
            health = new SpriteText()
             {
-                Text = "velocity calculations " + VitaruPlayer.velocityCalculation,
+                //Text = "velocity calculations " + VitaruPlayer.velocityCalculation,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft
             };
@@ -55,7 +55,7 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            health.Text = "velocity calculations: " + VitaruPlayer.velocityCalculation;
+            //health.Text = "velocity calculations: " + VitaruPlayer.velocityCalculation;
         }
 
         //Just the Keycounters on the edge of the screen

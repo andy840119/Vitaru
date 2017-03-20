@@ -25,7 +25,9 @@ namespace osu.Game.Modes.Vitaru.Objects
 
                     h = new Enemy();
                 }
+                output.Add(h);
             }
+            return output;
         }
     }
 }

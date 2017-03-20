@@ -27,7 +27,7 @@ namespace osu.Desktop.VisualTests.Tests
         public override void Reset()
         {
             base.Reset();
-            Bullet.bulletsLoaded = 0;
+            /*Bullet.bulletsLoaded = 0;
 
             player = new VitaruPlayer(this)
             {
@@ -59,7 +59,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
-            Add(bulletCapHit);
+            Add(bulletCapHit);*/
         }
         protected override void Update()
         {
@@ -70,22 +70,22 @@ namespace osu.Desktop.VisualTests.Tests
 
         protected void NewEnemy()
         {
-            enemy = new Enemy(this)
+            /*enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,
                 enemyPosition = new Vector2(new Random().Next(-200, 200), 100),
                 OnDeath = NewEnemy,
             };
-            Add(enemy);
+            Add(enemy);*/
         }
         protected void NewPlayer()
         {
-            player = new VitaruPlayer(this)
+            /*player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 OnDeath = NewPlayer,
             };
-            Add(player);
+            Add(player);*/
         }
     }
 }

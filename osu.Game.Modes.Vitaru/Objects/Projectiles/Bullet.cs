@@ -62,7 +62,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngle * (Math.PI / 180))));
             BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngle * (Math.PI / 180)));
-            VitaruPlayer.velocityCalculation++;
+            //VitaruPlayer.velocityCalculation++;
             return BulletVelocity;
         }
 

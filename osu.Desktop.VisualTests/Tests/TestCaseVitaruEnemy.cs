@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using osu.Framework.MathUtils;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Modes.Vitaru.Objects;
@@ -43,7 +44,7 @@ namespace osu.Desktop.VisualTests.Tests
         {
             var v = new Enemy
             {
-                Position = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
+                Position = new Vector2(RNG.Next(-200, 200), RNG.Next(50, 200)),
             };
             NewEnemy(new DrawableVitaruEnemy(v));
         }
@@ -53,12 +54,12 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             kills = 0;
 
-            player = new VitaruPlayer(this)
+            /*player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 Shooting = true,
             };
-            Add(player);
+            Add(player);*/
 
             AddButton(@"New Enemy", () => loadNewEnemy());
 

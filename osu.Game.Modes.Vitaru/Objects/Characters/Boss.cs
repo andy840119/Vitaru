@@ -12,6 +12,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public class Boss : Character
     {
-        public override Vector2 Speed => new Vector2(1, 1);
+        public Vector2 DesiredPosition { get; set; }
     }
 }

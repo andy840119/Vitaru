@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using osu.Framework.MathUtils;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Modes.Vitaru.Objects;
@@ -27,18 +28,25 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Name => @"Vitaru Boss";
         public override string Description => @"Showing Boss stuff";
-
-        private VitaruPlayer player;
-        private Boss boss;
+        
         public int kills;
         private SpriteText score;
 
-        private void loadNewBoss()
+        private void loadPlayer()
+        {
+            Add(new DrawableVitaruPlayer(new VitaruPlayer())
+            {
+                Anchor = Anchor.TopCentre,
+                OnDeath = loadPlayer,
+            });
+        }
+        private void loadBoss()
         {
             var v = new Boss
             {
-                Position = new Vector2(new Random().Next(-200, 200), new Random().Next(50, 200)),
+                Position = new Vector2(RNG.Next(-200, 200), RNG.Next(50, 200)),
             };
+            NewBoss(new DrawableVitaruBoss(v));
         }
 
         public override void Reset()
@@ -46,14 +54,7 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             kills = 0;
 
-            player = new VitaruPlayer(this)
-            {
-                Anchor = Anchor.Centre,
-                Shooting = true,
-            };
-            Add(player);
-
-            AddButton(@"New Boss", () => loadNewBoss());
+            AddButton(@"New Boss", () => loadBoss());
 
             score = new SpriteText()
             {
@@ -62,7 +63,7 @@ namespace osu.Desktop.VisualTests.Tests
                 Origin = Anchor.TopRight
             };
             Add(score);
-            loadNewBoss();
+            loadPlayer();
         }
         protected override void Update()
         {
@@ -74,7 +75,7 @@ namespace osu.Desktop.VisualTests.Tests
         {
             kills++;
             v.Anchor = Anchor.TopCentre;
-            v.OnDeath = loadNewBoss;
+            v.OnDeath = loadBoss;
             Add(v);
         }
     }

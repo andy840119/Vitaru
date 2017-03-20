@@ -9,6 +9,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         public DrawableVitaruEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
+            Position = hitObject.Position;
             CharacterType = CharacterType.Enemy;
             characterHealth = 100;
             Team = 1;

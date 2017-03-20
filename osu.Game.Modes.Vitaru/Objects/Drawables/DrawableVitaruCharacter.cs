@@ -23,7 +23,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public int BPM { get; set; } = 180;
 
         protected Hitbox hitbox;
-        protected Container parent;
+        protected Container parent = new Container();
 
         public bool Shooting { get; set; } = false;
 
@@ -48,7 +48,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 },
                 hitbox = new Hitbox()
                 {
-                    Alpha = 1,
+                    Alpha = 0,
                     HitboxWidth = HitboxWidth,
                     HitboxColor = HitboxColor,
                 }
@@ -83,7 +83,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
-            base.Update();
+            if (parent != null)
             foreach (Drawable draw in parent.Children)
             {
                 if (draw is Bullet)
@@ -113,6 +113,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
                 }
             }
+        }
+
+        protected void ShowHitbox()
+        {
+            hitbox.FadeIn();
+        }
+
+        protected void HideHitbox()
+        {
+            hitbox.FadeOut();
         }
 
         [BackgroundDependencyLoader]

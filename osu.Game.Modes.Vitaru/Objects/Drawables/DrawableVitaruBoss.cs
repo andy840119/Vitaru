@@ -2,11 +2,12 @@
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    class DrawableVitaruBoss : DrawableVitaruCharacter
+    public class DrawableVitaruBoss : DrawableVitaruCharacter
     {
 
         public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
         {
+            Position = hitObject.Position;
             CharacterType = CharacterType.Boss;
             characterHealth = 1000;
             Team = 1;

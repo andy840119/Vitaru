@@ -8,6 +8,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public abstract class Character : VitaruHitObject
     {
-        public virtual Vector2 Speed { get; set; } = new Vector2(1);
+        public virtual Vector2 Speed { get; set; } = Vector2.One;
     }
 }
