@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using OpenTK;
 using osu.Framework.MathUtils;
+using osu.Framework.Graphics.Transforms;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -17,6 +18,12 @@ namespace osu.Desktop.VisualTests.Tests
         private VitaruPlayer player;
         private Enemy enemy;
 
+        //Gross Shit, ignore it
+        public bool RandomMovement = false;
+        private Vector2 randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
+        private float t = RNG.Next(1, 3);
+        private bool enemyMoving;
+
         private SpriteText debugInfo;
 
         //Reset function (runs when you start this testcase)
@@ -24,7 +31,6 @@ namespace osu.Desktop.VisualTests.Tests
         {
             base.Reset();
             Enemy.Shoot = true;
-
 
             //Player
             player = new VitaruPlayer(this)
@@ -41,7 +47,6 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.Centre,
                 EnemyPosition = new Vector2(0, -200),
                 OnDeath = NewEnemy,
-                //RandomMovement = true,
             };
             Add(enemy);
 
@@ -59,6 +64,10 @@ namespace osu.Desktop.VisualTests.Tests
         //Update loop
         protected override void Update()
         {
+            if (RandomMovement == true)
+            {
+                randomMovements();
+            }
             base.Update();
             debugInfo.Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
         }
@@ -71,7 +80,6 @@ namespace osu.Desktop.VisualTests.Tests
                 Anchor = Anchor.Centre,
                 EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
-                //RandomMovement = true,
             };
             Add(enemy);
         }
@@ -86,6 +94,19 @@ namespace osu.Desktop.VisualTests.Tests
                 OnDeath = NewPlayer,
             };
             Add(player);
+        }
+        private void randomMovements()
+        {
+            if (enemyMoving == false)
+            {
+                t = RNG.Next(100, 500);
+                randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
+                enemy.MoveTo(randomPlace, t, EasingTypes.InOutQuad);
+            }
+            if (Enemy.EnemyPos == randomPlace)
+            {
+                enemyMoving = false;
+            }
         }
     }
 }

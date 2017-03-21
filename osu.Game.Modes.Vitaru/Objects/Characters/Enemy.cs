@@ -21,11 +21,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Vector2 EnemyVelocity;
         public float EnemyAngle;
 
+        public static Vector2 EnemyPos;
         private float playerAngleRadian = 0;
 
         private CharacterSprite enemy;
 
-        public bool RandomMovement { get; set; } = false;
+        
 
         //Main Enemy Function
         public Enemy(Container parent) : base(parent)
@@ -52,10 +53,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         protected override void Update()
         {
             base.Update();
-            if (RandomMovement == true)
-            {
-                randomMovements();
-            }
+            EnemyPos = EnemyPosition;
             if (Shoot == true)
             {
                 Shooting = true;
@@ -88,25 +86,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             playerAngleRadian = (float)Math.Atan2((VitaruPlayer.PlayerPosition.X - EnemyPosition.X) , -1 * (VitaruPlayer.PlayerPosition.Y - EnemyPosition.Y));
             return playerAngleRadian;
         }
-        private Vector2 randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
-        private float v = RNG.Next(1, 3);
-        private float t = RNG.Next(1, 3);
-        private bool enemyMoving;
 
-        private void randomMovements()
-        {
-            if (enemyMoving == false)
-            {
-                v = RNG.Next(1, 5);
-                t = RNG.Next(1, 4);
-                randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
-                MoveTo(Direction.Horizontal, randomPlace.X, 3 , EasingTypes.InOutQuad);
-                MoveTo(Direction.Vertical, randomPlace.Y, 3, EasingTypes.InOutQuad);
-            }
-            if(EnemyPosition == randomPlace)
-            {
-                enemyMoving = false;
-            }
-        }
+
+
     }
 }
