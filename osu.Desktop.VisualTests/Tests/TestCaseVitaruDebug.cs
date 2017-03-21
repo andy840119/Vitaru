@@ -23,7 +23,7 @@ namespace osu.Desktop.VisualTests.Tests
         public override void Reset()
         {
             base.Reset();
-            Enemy.shoot = true;
+            Enemy.Shoot = true;
 
 
             //Player
@@ -39,16 +39,16 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.Centre,
-                enemyPosition = new Vector2(0, -200),
+                EnemyPosition = new Vector2(0, -200),
                 OnDeath = NewEnemy,
-                randomMovement = true,
+                RandomMovement = true,
             };
             Add(enemy);
 
             //Debug stats, change to whatever you need to debug
             DebugInfo = new SpriteText()
             {
-                Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y,
+                Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y,
                 TextSize = 25,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
@@ -60,7 +60,7 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            DebugInfo.Text = "PlayerPos " + VitaruPlayer.playerPosition.X + " , " + VitaruPlayer.playerPosition.Y;
+            DebugInfo.Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
         }
 
         //New Enemy Function
@@ -69,9 +69,9 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.Centre,
-                enemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
+                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
-                randomMovement = true,
+                RandomMovement = true,
             };
             Add(enemy);
         }
@@ -79,7 +79,7 @@ namespace osu.Desktop.VisualTests.Tests
         //New Player (VitaruPlayer) Function
         protected void NewPlayer()
         {
-            VitaruPlayer.playerPosition = new Vector2(0, 200);
+            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
             player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,

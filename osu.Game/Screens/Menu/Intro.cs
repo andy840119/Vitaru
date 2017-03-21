@@ -56,7 +56,7 @@ namespace osu.Game.Screens.Menu
         /// </summary>
         internal bool DidLoadMenu;
 
-        MainMenu mainMenu;
+        private MainMenu mainMenu;
         private SampleChannel welcome;
         private SampleChannel seeya;
         private Track bgm;

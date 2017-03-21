@@ -32,7 +32,7 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             Kills = 0;
             Combo = 0;
-            Enemy.shoot = true;
+            Enemy.Shoot = true;
             //ensure we are at offset 0
             //Clock = new FramedClock();
 
@@ -47,7 +47,7 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
+                EnemyPosition = new Vector2(0, 100),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
@@ -84,14 +84,14 @@ namespace osu.Desktop.VisualTests.Tests
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
+                EnemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
         }
         protected void NewPlayer()
         {
-            VitaruPlayer.playerPosition = new Vector2(0, 200);
+            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
             Combo = 0;
             player = new VitaruPlayer(this)
             {

@@ -5,8 +5,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Osu.Objects;
-using System;
-using System.Linq;
 
 namespace osu.Game.Modes.Vitaru.Mods
 {

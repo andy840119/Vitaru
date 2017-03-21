@@ -23,13 +23,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public static int VelocityCalculation;
 
         //stores the player position
-        public static Vector2 playerPosition = new Vector2(0, 200);
+        public static Vector2 PlayerPosition = new Vector2(0, 200);
 
         //(MinX,MaxX,MinY,MaxY)
         public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);
 
         //useful when mods get involved or slow debuffs become a thing, pixels per millisecond, different values for x and y
-        public Vector2 playerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public Vector2 PlayerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
 
         private bool _kiaiActivated = false;
         public bool KiaiActivated
@@ -89,8 +89,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             base.Update();
 
             //Handles Player Speed
-            float ySpeed = playerSpeed.Y * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = playerSpeed.X * (float)(Clock.ElapsedFrameTime);
+            float ySpeed = PlayerSpeed.Y * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = PlayerSpeed.X * (float)(Clock.ElapsedFrameTime);
 
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
@@ -112,25 +112,25 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
             if (keys[Key.Up])
             {
-                playerPosition.Y -= ySpeed;
+                PlayerPosition.Y -= ySpeed;
             }
             if (keys[Key.Left])
             {
-                playerPosition.X -= xSpeed;
+                PlayerPosition.X -= xSpeed;
             }
             if (keys[Key.Down])
             {
-                playerPosition.Y += ySpeed;
+                PlayerPosition.Y += ySpeed;
             }
             if (keys[Key.Right])
             {
-                playerPosition.X += xSpeed;
+                PlayerPosition.X += xSpeed;
             }
 
             //Handles VitaruPlayer Position
-            playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-            playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
-            Position = playerPosition;
+            PlayerPosition = Vector2.ComponentMin(PlayerPosition, PlayerBounds.Yw);
+            PlayerPosition = Vector2.ComponentMax(PlayerPosition, PlayerBounds.Xz);
+            Position = PlayerPosition;
         }
 
         //Shoot function for VitaruPlayer
