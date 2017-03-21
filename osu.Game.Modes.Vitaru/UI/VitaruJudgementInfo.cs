@@ -2,7 +2,6 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Judgements;
 
 namespace osu.Game.Modes.Vitaru.UI

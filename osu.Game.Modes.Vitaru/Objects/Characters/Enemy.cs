@@ -38,9 +38,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     CharacterName = "enemy"
                 },
             };
-            characterHealth = 100;
+            CharacterHealth = 100;
             Team = 1;
-            Add(hitbox = new Hitbox()
+            Add(Hitbox = new Hitbox()
             {
                 Alpha = 1,
                 HitboxWidth = 20,
@@ -54,7 +54,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             base.Update();
             if (RandomMovement == true)
             {
-                RandomMovements();
+                randomMovements();
             }
             if (Shoot == true)
             {
@@ -71,7 +71,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             playerRelativePositionAngle();
             Bullet b;
-            parent.Add(b = new Bullet(Team)
+            MainParent.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
@@ -93,7 +93,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         private float t = RNG.Next(1, 3);
         private bool enemyMoving;
 
-        private void RandomMovements()
+        private void randomMovements()
         {
             if (enemyMoving == false)
             {

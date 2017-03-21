@@ -11,24 +11,23 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class CharacterSprite : Container
     {
-        public Sprite sprite;
+        public Sprite Sprite;
         public string CharacterName;
 
         public CharacterSprite()
         {
-            sprite = new Sprite()
+            Sprite = new Sprite()
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
             };
-            Add(sprite);
-
+            Add(Sprite);
         }
 
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
         {
-            sprite.Texture = textures.Get(@"Play/Vitaru/" + CharacterName);
+            Sprite.Texture = textures.Get(@"Play/Vitaru/" + CharacterName);
         }
     }
 }

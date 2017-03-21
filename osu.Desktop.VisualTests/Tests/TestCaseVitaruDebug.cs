@@ -17,7 +17,7 @@ namespace osu.Desktop.VisualTests.Tests
         private VitaruPlayer player;
         private Enemy enemy;
 
-        private SpriteText DebugInfo;
+        private SpriteText debugInfo;
 
         //Reset function (runs when you start this testcase)
         public override void Reset()
@@ -46,21 +46,21 @@ namespace osu.Desktop.VisualTests.Tests
             Add(enemy);
 
             //Debug stats, change to whatever you need to debug
-            DebugInfo = new SpriteText()
+            debugInfo = new SpriteText()
             {
                 Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y,
                 TextSize = 25,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
-            Add(DebugInfo);
+            Add(debugInfo);
         }
 
         //Update loop
         protected override void Update()
         {
             base.Update();
-            DebugInfo.Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
+            debugInfo.Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
         }
 
         //New Enemy Function

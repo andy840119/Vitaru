@@ -72,7 +72,7 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override bool Ranked => true;
     }
 
-    public class VitaruMod1v1 : Mod1v1
+    public class VitaruMod1V1 : Mod1V1
     {
         public override double ScoreMultiplier => 0.5;
         public override bool Ranked => false;

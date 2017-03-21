@@ -11,14 +11,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public abstract class Character : Container
     {
-        public float characterHealth { get; set; } = 100;
+        public float CharacterHealth { get; set; } = 100;
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
         public int BPM { get; set; } = 180;
 
-        protected Hitbox hitbox;
-        protected Container parent;
+        protected Hitbox Hitbox;
+        protected Container MainParent;
 
         public bool Shooting { get; set; } = false;
 
@@ -30,7 +30,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         public Character(Container parent)
         {
-            this.parent = parent;
+            MainParent = parent;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         /// <returns>If the Character died</returns>
         public bool TakeDamage(int damage)
         {
-            characterHealth -= (int)(damage * Armor);
-            if (characterHealth <= 0)
+            CharacterHealth -= (int)(damage * Armor);
+            if (CharacterHealth <= 0)
             {
                 Dispose();
                 OnDeath();
@@ -57,13 +57,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         /// <param name="heal">Amount of health to be healed</param>
         public void Heal(int heal)
         {
-            characterHealth += heal;
+            CharacterHealth += heal;
         }
 
         protected override void Update()
         {
             base.Update();
-            foreach (Drawable draw in parent.Children)
+            foreach (Drawable draw in MainParent.Children)
             {
                 if (draw is Bullet)
                 {
@@ -72,10 +72,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     {
                         Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                         float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = hitbox.HitboxWidth + bullet.BulletWidth;
+                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
                         if (distance < minDist)
                         {
-                            bullet.deleteBullet();
+                            bullet.DeleteBullet();
                             if (TakeDamage(bullet.BulletDamage))
                                 break;
                         }

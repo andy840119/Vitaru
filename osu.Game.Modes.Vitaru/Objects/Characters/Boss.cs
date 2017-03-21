@@ -13,8 +13,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
     {
         public int StartTime { get; set; }
 
-        public Vector2 bossPosition = new Vector2(0, -160);
-        public Vector2 bossSpeed { get; set; } = new Vector2(1, 1);
+        public Vector2 BossPosition = new Vector2(0, -160);
+        public Vector2 BossSpeed { get; set; } = new Vector2(1, 1);
 
         public Boss(Container parent) : base(parent)
         {
@@ -26,9 +26,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     CharacterName = "boss"
                 },
             };
-            characterHealth = 1000;
+            CharacterHealth = 1000;
             Team = 1;
-            Add(hitbox = new Hitbox()
+            Add(Hitbox = new Hitbox()
             {
                 Alpha = 1,
                 HitboxWidth = 32,
@@ -38,9 +38,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         protected override void Update()
         {
             base.Update();
-            float ySpeed = bossSpeed.Y * (float)Clock.ElapsedFrameTime;
-            float xSpeed = bossSpeed.X * (float)Clock.ElapsedFrameTime;
-            Position = bossPosition;
+            float ySpeed = BossSpeed.Y * (float)Clock.ElapsedFrameTime;
+            float xSpeed = BossSpeed.X * (float)Clock.ElapsedFrameTime;
+            Position = BossPosition;
         }
     }
 }

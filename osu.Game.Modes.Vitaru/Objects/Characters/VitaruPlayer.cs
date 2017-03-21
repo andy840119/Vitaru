@@ -8,7 +8,6 @@ using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using System.Collections.Generic;
-using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 
@@ -67,8 +66,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 },
 
             };
-            characterHealth = 100;
-            Add(hitbox = new Hitbox()
+            CharacterHealth = 100;
+            Add(Hitbox = new Hitbox()
             {
                 HitboxWidth = 8,
                 HitboxColor = Color4.Cyan,
@@ -134,10 +133,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
 
         //Shoot function for VitaruPlayer
-        private void Shoot()
+        private void shoot()
         {
                 Bullet bullet;
-                parent.Add(bullet = new Bullet(Team)
+                MainParent.Add(bullet = new Bullet(Team)
                 {
                     Depth = 1,
                     Anchor = Anchor.Centre,
@@ -153,7 +152,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             keys[args.Key] = true;
             if (args.Key == Key.LShift || args.Key == Key.RShift)
-                hitbox.Alpha = 1;
+                Hitbox.Alpha = 1;
             return base.OnKeyDown(state, args);
         }
         //saves if key is released
@@ -161,7 +160,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             keys[args.Key] = false;
             if (args.Key == Key.LShift || args.Key == Key.RShift)
-                hitbox.Alpha = 0;
+                Hitbox.Alpha = 0;
             return base.OnKeyUp(state, args);
         }
     }

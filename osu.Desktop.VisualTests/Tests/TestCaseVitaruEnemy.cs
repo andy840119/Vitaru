@@ -18,12 +18,12 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Enemy stuff";
 
-        internal VitaruPlayer player;
+        internal VitaruPlayer Player;
         private Enemy enemy;
         public int Kills;
         public int Combo;
         private SpriteText score;
-        private SpriteText Combox;
+        private SpriteText combox;
         private int perfect = 30;
         private int good = 20;
         private int bad = 10;
@@ -34,12 +34,12 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             Kills = 0;
 
-            player = new VitaruPlayer(this)
+            Player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 Shooting = true,
             };
-            Add(player);
+            Add(Player);
 
             AddButton(@"New Enemy", NewEnemy);
 
@@ -59,19 +59,19 @@ namespace osu.Desktop.VisualTests.Tests
             };
             Add(score);
 
-            Combox = new SpriteText()
+            combox = new SpriteText()
             {
                 Text = Combo + "X",
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft
             };
-            Add(Combox);
+            Add(combox);
         }
         protected override void Update()
         {
             base.Update();
             score.Text = "" + (Combo * (Kills * perfect));
-            Combox.Text = Combo + "X";
+            combox.Text = Combo + "X";
         }
 
         protected void NewEnemy()

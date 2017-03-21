@@ -2,10 +2,8 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osu.Game.Beatmaps.Samples;
 using osu.Game.Modes.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
 
 namespace osu.Game.Modes.Vitaru.Objects
 {

@@ -18,36 +18,36 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Boss stuff";
 
-        internal VitaruPlayer player;
+        internal VitaruPlayer Player;
         private Boss boss;
-        public int kills;
+        public int Kills;
         private SpriteText score;
 
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
+            Kills = 0;
 
-            player = new VitaruPlayer(this)
+            Player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 Shooting = true,
             };
-            Add(player);
+            Add(Player);
 
             AddButton(@"New Boss", NewBoss);
 
             boss = new Boss(this)
             {
                 Anchor = Anchor.TopCentre,
-                bossPosition = new Vector2(0, 100),
+                BossPosition = new Vector2(0, 100),
                 OnDeath = NewBoss,
             };
             Add(boss);
 
             score = new SpriteText()
             {
-                Text = "" + kills,
+                Text = "" + Kills,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
@@ -56,16 +56,16 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + kills;
+            score.Text = "" + Kills;
         }
 
         protected void NewBoss()
         {
-            kills++;
+            Kills++;
             boss = new Boss(this)
             {
                 Anchor = Anchor.TopCentre,
-                bossPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next (50 , 200)),
+                BossPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next (50 , 200)),
                 OnDeath = NewBoss,
             };
             Add(boss);

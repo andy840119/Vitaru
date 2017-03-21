@@ -164,7 +164,7 @@ namespace osu.Game.Modes.Mods
         public override bool Ranked => true;
     }
 
-    public abstract class Mod1v1 : Mod
+    public abstract class Mod1V1 : Mod
     {
         public override string Name => "1 v 1";
         public override FontAwesome Icon => FontAwesome.fa_osu_multi;

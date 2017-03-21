@@ -15,7 +15,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private Sprite sprite;
         public float DegreesPerSecond = 80;
         public float NormalSize = 200;
-        public float sineHeight = 100;
+        public float SineHeight = 100;
         public float SineSpeed = 0.001f;
 
         public SpellPiece()
@@ -39,7 +39,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.Update();
 
-            sprite.ResizeTo((float)Math.Abs(Math.Sin(Clock.CurrentTime * SineSpeed)) * sineHeight + NormalSize);
+            sprite.ResizeTo((float)Math.Abs(Math.Sin(Clock.CurrentTime * SineSpeed)) * SineHeight + NormalSize);
             sprite.RotateTo((float)((Clock.CurrentTime / 1000) * DegreesPerSecond));
         }
     }
