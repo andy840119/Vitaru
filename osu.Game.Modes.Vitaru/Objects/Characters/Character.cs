@@ -25,6 +25,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         private double timeSinceLastShoot;
 
         public Action OnDeath { get; set; }
+
         public Action OnShoot { get; set; }
 
         public Character(Container parent)
