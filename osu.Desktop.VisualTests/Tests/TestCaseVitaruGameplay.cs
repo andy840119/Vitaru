@@ -46,7 +46,7 @@ namespace osu.Desktop.VisualTests.Tests
 
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
+                Anchor = Anchor.Centre,
                 EnemyPosition = new Vector2(0, 100),
                 OnDeath = NewEnemy,
             };
@@ -83,7 +83,7 @@ namespace osu.Desktop.VisualTests.Tests
             Combo++;
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
+                Anchor = Anchor.Centre,
                 EnemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
                 OnDeath = NewEnemy,
             };

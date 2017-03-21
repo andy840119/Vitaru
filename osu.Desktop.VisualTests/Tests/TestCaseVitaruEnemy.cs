@@ -7,6 +7,7 @@ using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using OpenTK;
+using osu.Framework.MathUtils;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -18,7 +19,6 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Enemy stuff";
 
-        internal VitaruPlayer Player;
         private Enemy enemy;
         public int Kills;
         public int Combo;
@@ -28,6 +28,7 @@ namespace osu.Desktop.VisualTests.Tests
         private int good = 20;
         private int bad = 10;
         private int graze = 5;
+        private VitaruPlayer Player;
 
         public override void Reset()
         {
@@ -38,6 +39,7 @@ namespace osu.Desktop.VisualTests.Tests
             {
                 Anchor = Anchor.Centre,
                 Shooting = true,
+                OnDeath = NewPlayer,
             };
             Add(Player);
 
@@ -45,8 +47,8 @@ namespace osu.Desktop.VisualTests.Tests
 
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                EnemyPosition = new Vector2(0, -500),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
@@ -74,14 +76,25 @@ namespace osu.Desktop.VisualTests.Tests
             combox.Text = Combo + "X";
         }
 
+        protected void NewPlayer()
+        {
+            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
+            Player = new VitaruPlayer(this)
+            {
+                Anchor = Anchor.Centre,
+                OnDeath = NewPlayer,
+            };
+            Add(Player);
+        }
+
         protected void NewEnemy()
         {
             Kills++;
             Combo++;
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                EnemyPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next(50 , 200)),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
