@@ -4,17 +4,9 @@
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -26,12 +18,12 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Enemy stuff";
 
-        private VitaruPlayer player;
+        internal VitaruPlayer player;
         private Enemy enemy;
-        public int kills;
-        public int combo;
+        public int Kills;
+        public int Combo;
         private SpriteText score;
-        private SpriteText combox;
+        private SpriteText Combox;
         private int perfect = 30;
         private int good = 20;
         private int bad = 10;
@@ -40,7 +32,7 @@ namespace osu.Desktop.VisualTests.Tests
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
+            Kills = 0;
 
             player = new VitaruPlayer(this)
             {
@@ -61,31 +53,31 @@ namespace osu.Desktop.VisualTests.Tests
 
             score = new SpriteText()
             {
-                Text = "" + (combo * (kills * perfect)),
+                Text = "" + (Combo * (Kills * perfect)),
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
             Add(score);
 
-            combox = new SpriteText()
+            Combox = new SpriteText()
             {
-                Text = combo + "X",
+                Text = Combo + "X",
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft
             };
-            Add(combox);
+            Add(Combox);
         }
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + (combo * (kills * perfect));
-            combox.Text = combo + "X";
+            score.Text = "" + (Combo * (Kills * perfect));
+            Combox.Text = Combo + "X";
         }
 
         protected void NewEnemy()
         {
-            kills++;
-            combo++;
+            Kills++;
+            Combo++;
             enemy = new Enemy(this)
             {
                 Anchor = Anchor.TopCentre,

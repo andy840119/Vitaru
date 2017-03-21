@@ -4,17 +4,9 @@
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -26,7 +18,7 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Boss stuff";
 
-        private VitaruPlayer player;
+        internal VitaruPlayer player;
         private Boss boss;
         public int kills;
         private SpriteText score;

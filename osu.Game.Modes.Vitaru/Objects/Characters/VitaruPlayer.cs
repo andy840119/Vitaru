@@ -20,7 +20,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
 
         //Was used for debugging performance
-        public static int velocityCalculation;
+        public static int VelocityCalculation;
 
         //stores the player position
         public static Vector2 playerPosition = new Vector2(0, 200);

@@ -3,11 +3,8 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Framework.Graphics;
-using OpenTK.Input;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Screens.Play;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -37,7 +34,7 @@ namespace osu.Desktop.VisualTests.Tests
 
            health = new SpriteText()
             {
-                Text = "velocity calculations " + VitaruPlayer.velocityCalculation,
+                Text = "velocity calculations " + VitaruPlayer.VelocityCalculation,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.TopLeft
             };
@@ -52,7 +49,7 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            health.Text = "velocity calculations: " + VitaruPlayer.velocityCalculation;
+            health.Text = "velocity calculations: " + VitaruPlayer.VelocityCalculation;
         }
     }
 }

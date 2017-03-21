@@ -2,11 +2,8 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
-using osu.Game.Modes.Objects;
 using osu.Game.Modes.UI;
-using osu.Game.Modes.Vitaru.Objects;
 using System;
-using osu.Game.Modes.Vitaru.UI;
 using osu.Game.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Screens.Play;

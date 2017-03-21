@@ -87,8 +87,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 timeSinceLastShoot += Clock.ElapsedFrameTime;
                 if ((timeSinceLastShoot / 1000.0) > 1 / (BPM / 30.0))
                 {
-                    if(OnShoot != null)
-                        OnShoot();
+                    OnShoot?.Invoke();
                     timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
                 }
             }

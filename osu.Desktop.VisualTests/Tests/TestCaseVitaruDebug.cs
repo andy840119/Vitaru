@@ -3,18 +3,9 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
 using osu.Framework.MathUtils;
 
 namespace osu.Desktop.VisualTests.Tests

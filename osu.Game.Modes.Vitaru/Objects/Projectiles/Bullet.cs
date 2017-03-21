@@ -7,7 +7,6 @@ using System;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Extensions.Color4Extensions;
 
@@ -24,7 +23,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public float BulletAngleRadian { get; set; } = -1;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
-        private Vector2 BulletVelocity;
+        private Vector2 bulletVelocity;
 
         //Debug info
         public static int bulletsLoaded = 0;
@@ -51,7 +50,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             getBulletVelocity();
             base.Update();
-            MoveToOffset(new Vector2(BulletVelocity.X * (float)Clock.ElapsedFrameTime, BulletVelocity.Y * (float)Clock.ElapsedFrameTime));
+            MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
             if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
                 deleteBullet();
@@ -67,17 +66,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         {
             if (BulletAngleRadian != -1)
             {
-                BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleRadian)));
-                BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
-                VitaruPlayer.velocityCalculation++;
-                return BulletVelocity;
+                bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleRadian)));
+                bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
+                VitaruPlayer.VelocityCalculation++;
+                return bulletVelocity;
             }
             else
             {
-                BulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
-                BulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
-                VitaruPlayer.velocityCalculation++;
-                return BulletVelocity;
+                bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
+                bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
+                VitaruPlayer.VelocityCalculation++;
+                return bulletVelocity;
             }
         }
 
