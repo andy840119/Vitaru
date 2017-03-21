@@ -73,7 +73,7 @@ namespace osu.Game.Modes.Vitaru
                             Mods = new Mod[]
                             {
                                 new VitaruModCoop(),
-                                new VitaruMod1v1(),
+                                new VitaruMod1V1(),
                             }
                         },
                         new VitaruRelax(),

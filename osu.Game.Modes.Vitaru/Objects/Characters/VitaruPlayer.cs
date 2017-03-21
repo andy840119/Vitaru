@@ -73,7 +73,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 HitboxColor = Color4.Cyan,
             });
             Team = 0;
-            OnShoot = Shoot;
+            OnShoot = shoot;
         }
 
         //Kiai toggle
