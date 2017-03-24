@@ -1,25 +1,22 @@
-﻿using osu.Framework.Allocation;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     class SpellPiece : Container
     {
         private Sprite sprite;
-
-        public float degreesPerSecond = 80;
-        public float normalSize = 200;
-        public float sineHeight = 100;
-        public float sineSpeed = 0.001f;
+        public float DegreesPerSecond = 80;
+        public float NormalSize = 200;
+        public float SineHeight = 100;
+        public float SineSpeed = 0.001f;
 
         public SpellPiece()
         {
@@ -42,8 +39,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.Update();
 
-            sprite.ResizeTo((float)Math.Abs(Math.Sin(Clock.CurrentTime * sineSpeed)) * sineHeight + normalSize);
-            sprite.RotateTo((float)((Clock.CurrentTime / 1000) * degreesPerSecond));
+            sprite.ResizeTo((float)Math.Abs(Math.Sin(Clock.CurrentTime * SineSpeed)) * SineHeight + NormalSize);
+            sprite.RotateTo((float)((Clock.CurrentTime / 1000) * DegreesPerSecond));
         }
     }
 }

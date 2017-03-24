@@ -17,6 +17,7 @@ using osu.Framework.Graphics.Transforms;
 using osu.Framework.Timing;
 using osu.Framework.Caching;
 using System.Linq;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Framework.Graphics.Containers
 {
@@ -197,14 +198,13 @@ namespace osu.Framework.Graphics.Containers
                 return Content.Remove(drawable);
 
             bool result = internalChildren.Remove(drawable);
-            drawable.Parent = null;
-
             if (!result) return false;
 
-            drawable.Invalidate();
+            Trace.Assert(drawable.Parent == this, $@"Removed a drawable ({drawable}) whose parent was not this ({this}), but {drawable.Parent}.");
+            drawable.Parent = null;
 
             if (AutoSizeAxes != Axes.None)
-                InvalidateFromChild(Invalidation.Geometry, drawable);
+                InvalidateFromChild(Invalidation.Geometry);
 
             return true;
         }
@@ -249,6 +249,8 @@ namespace osu.Framework.Graphics.Containers
                 return;
             }
 
+            pendingChildren?.Clear();
+
             foreach (T t in internalChildren)
             {
                 if (disposeChildren)
@@ -258,17 +260,15 @@ namespace osu.Framework.Graphics.Containers
                     t.Dispose();
                 }
                 else
-                {
                     t.Parent = null;
-                    t.Invalidate();
-                }
 
                 Trace.Assert(t.Parent == null);
             }
 
             internalChildren.Clear();
 
-            Invalidate(Invalidation.Geometry);
+            if (AutoSizeAxes != Axes.None)
+                InvalidateFromChild(Invalidation.Geometry);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace osu.Framework.Graphics.Containers
         protected void AddInternal(T drawable)
         {
             if (drawable == null)
-                throw new ArgumentNullException("null-Drawables may not be added to Containers.", nameof(drawable));
+                throw new ArgumentNullException(nameof(drawable), "null Drawables may not be added to Containers.");
             if (drawable == this)
                 throw new InvalidOperationException("Container may not be added to itself.");
 
@@ -296,12 +296,12 @@ namespace osu.Framework.Graphics.Containers
             }
 
             if (AutoSizeAxes != Axes.None)
-                InvalidateFromChild(Invalidation.Geometry, drawable);
+                InvalidateFromChild(Invalidation.Geometry);
         }
 
         /// <summary>
         /// Adds a range of children to <see cref="InternalChildren"/>. This is equivalent to calling
-        /// <see cref="AddInternal"/> on each element of the range in order.
+        /// <see cref="AddInternal(T)"/> on each element of the range in order.
         /// </summary>
         protected void AddInternal(IEnumerable<T> range)
         {
@@ -328,7 +328,7 @@ namespace osu.Framework.Graphics.Containers
             return changed;
         }
 
-        internal sealed override void UpdateClock(IFrameBasedClock clock)
+        public sealed override void UpdateClock(IFrameBasedClock clock)
         {
             if (Clock == clock)
                 return;
@@ -369,7 +369,7 @@ namespace osu.Framework.Graphics.Containers
         }
 
         /// <summary>
-        /// An opportunity to update state once-per-frame after <see cref="Update"/> has been called
+        /// An opportunity to update state once-per-frame after <see cref="Drawable.Update"/> has been called
         /// for all <see cref="InternalChildren"/>.
         /// </summary>		
         protected virtual void UpdateAfterChildren()
@@ -384,11 +384,12 @@ namespace osu.Framework.Graphics.Containers
         /// Informs this container that a child has been invalidated.
         /// </summary>
         /// <param name="invalidation">The type of invalidation applied to the child.</param>
-        /// <param name="source">The child that got invalidated.</param>
-        public virtual void InvalidateFromChild(Invalidation invalidation, IDrawable source)
+        public virtual void InvalidateFromChild(Invalidation invalidation)
         {
             if (AutoSizeAxes == Axes.None) return;
 
+            //Colour captures potential changes in IsPresent. If this ever becomes a bottleneck,
+            //Invalidation could be further separated into presence changes.
             if ((invalidation & (Invalidation.Geometry | Invalidation.Colour)) > 0)
                 autoSize.Invalidate();
         }
@@ -404,6 +405,7 @@ namespace osu.Framework.Graphics.Containers
             // or directly indexing a SortedList<T>. This part of the code is often
             // hot, so an optimization like this makes sense here.
             List<T> current = internalChildren;
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < current.Count; ++i)
             {
                 T c = current[i];
@@ -478,6 +480,7 @@ namespace osu.Framework.Graphics.Containers
         private static void addFromContainer(int treeIndex, ref int j, Container<T> parentContainer, List<DrawNode> target, RectangleF maskingBounds)
         {
             List<T> current = parentContainer.internalChildren.AliveItems;
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < current.Count; ++i)
             {
                 Drawable drawable = current[i];
@@ -615,14 +618,14 @@ namespace osu.Framework.Graphics.Containers
         // TODO: Evaluate effects of this on performance and address.
         public override bool HandleInput => true;
 
-        public override bool Contains(Vector2 screenSpacePos)
+        protected override bool InternalContains(Vector2 screenSpacePos)
         {
-            float cornerRadius = CornerRadius;
+            float cRadius = CornerRadius;
 
             // Select a cheaper contains method when we don't need rounded edges.
-            if (!Masking || cornerRadius == 0.0f)
-                return base.Contains(screenSpacePos);
-            return DrawRectangle.Shrink(cornerRadius).DistanceSquared(ToLocalSpace(screenSpacePos)) <= cornerRadius * cornerRadius;
+            if (!Masking || cRadius == 0.0f)
+                return base.InternalContains(screenSpacePos);
+            return DrawRectangle.Shrink(cRadius).DistanceSquared(ToLocalSpace(screenSpacePos)) <= cRadius * cRadius;
         }
 
         internal override bool BuildKeyboardInputQueue(List<Drawable> queue)
@@ -785,17 +788,17 @@ namespace osu.Framework.Graphics.Containers
         {
             get
             {
-                float cornerRadius = CornerRadius;
-                if (!Masking || cornerRadius == 0.0f)
+                float cRadius = CornerRadius;
+                if (!Masking || cRadius == 0.0f)
                     return base.BoundingBox;
 
-                RectangleF drawRect = LayoutRectangle.Shrink(cornerRadius);
+                RectangleF drawRect = LayoutRectangle.Shrink(cRadius);
 
                 // Inflate bounding box in parent space by the half-size of the bounding box of the
                 // ellipse obtained by transforming the unit circle into parent space.
                 Vector2 offset = ToParentSpace(Vector2.Zero);
-                Vector2 u = ToParentSpace(new Vector2(cornerRadius, 0)) - offset;
-                Vector2 v = ToParentSpace(new Vector2(0, cornerRadius)) - offset;
+                Vector2 u = ToParentSpace(new Vector2(cRadius, 0)) - offset;
+                Vector2 v = ToParentSpace(new Vector2(0, cRadius)) - offset;
                 Vector2 inflation = new Vector2((float)Math.Sqrt(u.X * u.X + v.X * v.X), (float)Math.Sqrt(u.Y * u.Y + v.Y * v.Y));
 
                 RectangleF result = ToParentSpace(drawRect).AABBFloat.Inflate(inflation);
@@ -818,6 +821,7 @@ namespace osu.Framework.Graphics.Containers
                 if (padding.Equals(value)) return;
 
                 padding = value;
+                padding.ThrowIfNegative();
 
                 foreach (T c in internalChildren)
                     c.Invalidate(Invalidation.Geometry);
@@ -853,7 +857,7 @@ namespace osu.Framework.Graphics.Containers
         /// <summary>
         /// Controls which <see cref="Axes"/> are automatically sized w.r.t. <see cref="InternalChildren"/>.
         /// Children's <see cref="Drawable.BypassAutoSizeAxes"/> are ignored for automatic sizing.
-        /// Most notably, <see cref="RelativePositionAxes"/> and <see cref="RelativeSizeAxes"/> of children
+        /// Most notably, <see cref="Drawable.RelativePositionAxes"/> and <see cref="RelativeSizeAxes"/> of children
         /// do not affect automatic sizing to avoid circular size dependencies.
         /// It is not allowed to manually set <see cref="Size"/> (or <see cref="Width"/> / <see cref="Height"/>)
         /// on any <see cref="Axes"/> which are automatically sized.
@@ -878,7 +882,7 @@ namespace osu.Framework.Graphics.Containers
 
         /// <summary>
         /// The duration which automatic sizing should take. If zero, then it is instantaneous.
-        /// Otherwise, this is equivalent to applying an automatic size via <see cref="Drawable.ResizeTo"/>.
+        /// Otherwise, this is equivalent to applying an automatic size via <see cref="Drawable.ResizeTo(Vector2, double, EasingTypes)"/>.
         /// </summary>
         public float AutoSizeDuration { get; set; }
 
@@ -896,7 +900,7 @@ namespace osu.Framework.Graphics.Containers
         {
             get
             {
-                if (!StaticCached.ALWAYS_STALE && !isComputingAutosize && (AutoSizeAxes & Axes.X) > 0)
+                if (!StaticCached.BypassCache && !isComputingAutosize && (AutoSizeAxes & Axes.X) > 0)
                     updateAutoSize();
                 return base.Width;
             }
@@ -913,7 +917,7 @@ namespace osu.Framework.Graphics.Containers
         {
             get
             {
-                if (!StaticCached.ALWAYS_STALE && !isComputingAutosize && (AutoSizeAxes & Axes.Y) > 0)
+                if (!StaticCached.BypassCache && !isComputingAutosize && (AutoSizeAxes & Axes.Y) > 0)
                     updateAutoSize();
                 return base.Height;
             }
@@ -931,7 +935,7 @@ namespace osu.Framework.Graphics.Containers
         {
             get
             {
-                if (!StaticCached.ALWAYS_STALE && !isComputingAutosize && AutoSizeAxes != Axes.None)
+                if (!StaticCached.BypassCache && !isComputingAutosize && AutoSizeAxes != Axes.None)
                     updateAutoSize();
                 return base.Size;
             }
@@ -982,8 +986,8 @@ namespace osu.Framework.Graphics.Containers
 
         private Vector2 computeAutoSize()
         {
-            MarginPadding padding = Padding;
-            MarginPadding margin = Margin;
+            MarginPadding originalPadding = Padding;
+            MarginPadding originalMargin = Margin;
 
             try
             {
@@ -1000,7 +1004,7 @@ namespace osu.Framework.Graphics.Containers
                     if (!c.IsPresent)
                         continue;
 
-                    Vector2 cBound = c.BoundingSizeWithOrigin;
+                    Vector2 cBound = c.RequiredParentSizeToFit;
 
                     if ((c.BypassAutoSizeAxes & Axes.X) == 0)
                         maxBoundSize.X = Math.Max(maxBoundSize.X, cBound.X);
@@ -1018,8 +1022,8 @@ namespace osu.Framework.Graphics.Containers
             }
             finally
             {
-                Padding = padding;
-                Margin = margin;
+                Padding = originalPadding;
+                Margin = originalMargin;
             }
         }
 

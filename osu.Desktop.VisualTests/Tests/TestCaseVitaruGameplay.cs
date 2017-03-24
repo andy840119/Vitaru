@@ -1,32 +1,23 @@
-﻿//Copyright (c) 2007-2016 ppy Pty Ltd <contact@ppy.sh>.
-//Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
 
 namespace osu.Desktop.VisualTests.Tests
 {
     class TestCaseVitaruGameplay : TestCase
     {
-        public override string Name => @"Vitaru Gameplay";
         public override string Description => @"Showing everything to play osu!vitaru";
 
         private VitaruPlayer player;
         private Enemy enemy;
-        public int kills;
-        public int combo;
+        public int Kills;
+        public int Combo;
         private SpriteText score;
         private SpriteText combox;
 
@@ -39,9 +30,9 @@ namespace osu.Desktop.VisualTests.Tests
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
-            combo = 0;
-            Enemy.shoot = true;
+            Kills = 0;
+            Combo = 0;
+            Enemy.Shoot = true;
             //ensure we are at offset 0
             //Clock = new FramedClock();
 
@@ -55,15 +46,15 @@ namespace osu.Desktop.VisualTests.Tests
 
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(0, 100),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
 
             score = new SpriteText()
             {
-                Text = "" + (combo * (kills * perfect)),
+                Text = "" + Combo * (Kills * perfect),
                 TextSize = 50,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
@@ -72,7 +63,7 @@ namespace osu.Desktop.VisualTests.Tests
 
             combox = new SpriteText()
             {
-                Text = combo + "x",
+                Text = Combo + "x",
                 TextSize = 40,
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft
@@ -82,25 +73,26 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + (combo * (kills * perfect));
-            combox.Text = combo + "x";
+            score.Text = "" + Combo * (Kills * perfect);
+            combox.Text = Combo + "x";
         }
 
         protected void NewEnemy()
         {
-            kills++;
-            combo++;
+            Kills++;
+            Combo++;
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(new Random().Next(-200, 200), new Random().Next (50 , 200)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
         }
         protected void NewPlayer()
         {
-            combo = 0;
+            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
+            Combo = 0;
             player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,

@@ -9,18 +9,23 @@ using OpenTK.Graphics;
 
 namespace osu.Framework.Graphics.Cursor
 {
-    public class CursorContainer : Container
+    public class CursorContainer : OverlayContainer
     {
         protected Drawable ActiveCursor;
 
-        public override bool Contains(Vector2 screenSpacePos) => true;
+        protected override bool BlockPassThroughInput => false;
+
+        protected override bool HideOnEscape => false;
 
         public CursorContainer()
         {
+            AlwaysReceiveInput = true;
             Depth = float.MinValue;
             RelativeSizeAxes = Axes.Both;
 
             Add(ActiveCursor = CreateCursor());
+
+            State = Visibility.Visible;
         }
 
         protected virtual Drawable CreateCursor() => new Cursor();
@@ -31,7 +36,17 @@ namespace osu.Framework.Graphics.Cursor
             return base.OnMouseMove(state);
         }
 
-        class Cursor : CircularContainer
+        protected override void PopIn()
+        {
+            Alpha = 1;
+        }
+
+        protected override void PopOut()
+        {
+            Alpha = 0;
+        }
+
+        private class Cursor : CircularContainer
         {
             public Cursor()
             {

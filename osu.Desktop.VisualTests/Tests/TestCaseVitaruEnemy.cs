@@ -1,20 +1,13 @@
-﻿//Copyright (c) 2007-2016 ppy Pty Ltd <contact@ppy.sh>.
-//Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
+using osu.Framework.MathUtils;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -24,45 +17,45 @@ namespace osu.Desktop.VisualTests.Tests
         //private WorkingBeatmap beatmap;
         //private List<HitObject> enemysLoaded;
 
-        public override string Name => @"Vitaru Enemy";
         public override string Description => @"Showing Enemy stuff";
 
-        private VitaruPlayer player;
         private Enemy enemy;
-        public int kills;
-        public int combo;
+        public int Kills;
+        public int Combo;
         private SpriteText score;
         private SpriteText combox;
         private int perfect = 30;
         private int good = 20;
         private int bad = 10;
         private int graze = 5;
+        private VitaruPlayer Player;
 
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
+            Kills = 0;
 
-            player = new VitaruPlayer(this)
+            Player = new VitaruPlayer(this)
             {
                 Anchor = Anchor.Centre,
                 Shooting = true,
+                OnDeath = NewPlayer,
             };
-            Add(player);
+            Add(Player);
 
             AddButton(@"New Enemy", NewEnemy);
 
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(0, 100),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);
 
             score = new SpriteText()
             {
-                Text = "" + (combo * (kills * perfect)),
+                Text = "" + (Combo * (Kills * perfect)),
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
@@ -70,7 +63,7 @@ namespace osu.Desktop.VisualTests.Tests
 
             combox = new SpriteText()
             {
-                Text = combo + "X",
+                Text = Combo + "X",
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft
             };
@@ -79,18 +72,29 @@ namespace osu.Desktop.VisualTests.Tests
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + (combo * (kills * perfect));
-            combox.Text = combo + "X";
+            score.Text = "" + (Combo * (Kills * perfect));
+            combox.Text = Combo + "X";
+        }
+
+        protected void NewPlayer()
+        {
+            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
+            Player = new VitaruPlayer(this)
+            {
+                Anchor = Anchor.Centre,
+                OnDeath = NewPlayer,
+            };
+            Add(Player);
         }
 
         protected void NewEnemy()
         {
-            kills++;
-            combo++;
+            Kills++;
+            Combo++;
             enemy = new Enemy(this)
             {
-                Anchor = Anchor.TopCentre,
-                enemyPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next(50 , 200)),
+                Anchor = Anchor.Centre,
+                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
                 OnDeath = NewEnemy,
             };
             Add(enemy);

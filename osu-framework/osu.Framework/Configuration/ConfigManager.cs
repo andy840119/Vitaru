@@ -14,15 +14,15 @@ namespace osu.Framework.Configuration
         /// <summary>
         /// The backing file used to store the config. Null means no persistent storage.
         /// </summary>
-        public virtual string Filename => @"game.ini";
+        protected virtual string Filename => @"game.ini";
 
-        public virtual bool AddMissingEntries => true;
+        protected virtual bool AddMissingEntries => true;
 
-        bool hasUnsavedChanges;
+        private bool hasUnsavedChanges;
 
-        Dictionary<T, IBindable> configStore = new Dictionary<T, IBindable>();
+        private Dictionary<T, IBindable> configStore = new Dictionary<T, IBindable>();
 
-        Storage storage;
+        private Storage storage;
 
         public ConfigManager(Storage storage)
         {

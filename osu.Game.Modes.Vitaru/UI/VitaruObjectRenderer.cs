@@ -1,16 +1,5 @@
-﻿//Copyright (c) 2007-2016 ppy Pty Ltd <contact@ppy.sh>.
-//Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
-
-using System;
-using osu.Game.Modes.Objects;
-using osu.Game.Modes.Objects.Drawables;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Characters;
-using osu.Game.Modes.Vitaru.UI;
-using osu.Game.Modes.UI;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using System.Collections.Generic;
-
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 namespace osu.Game.Modes.Vitaru.UI
 {
     /*public class VitaruObjectRenderer : HitRenderer<VitaruHitObject>

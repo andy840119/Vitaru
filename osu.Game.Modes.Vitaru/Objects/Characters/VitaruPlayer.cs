@@ -1,11 +1,13 @@
-﻿using osu.Framework.Graphics.Containers;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using osu.Framework.Graphics.Containers;
 using OpenTK;
 using OpenTK.Input;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using System.Collections.Generic;
-using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 
@@ -16,12 +18,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         //stores if a key is pressed or not
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
 
-        public static int velocityCalculation;
+        //Was used for debugging performance
+        public static int VelocityCalculation;
+
         //stores the player position
-        public Vector2 playerPosition = new Vector2(0, 200);
-        public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);  //MinX,MaxX,MinY,MaxY
-        public Vector2 playerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public static Vector2 PlayerPosition = new Vector2(0, 200);
+
+        //(MinX,MaxX,MinY,MaxY)
+        public Vector4 PlayerBounds = new Vector4(-200, 200, -200, 300);
+
         //useful when mods get involved or slow debuffs become a thing, pixels per millisecond, different values for x and y
+        public Vector2 PlayerSpeed { get; set; } = new Vector2(0.5f, 0.5f);
 
         private bool _kiaiActivated = false;
         public bool KiaiActivated
@@ -59,40 +66,44 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 },
 
             };
-            characterHealth = 100;
-            Add(hitbox = new Hitbox()
+            CharacterHealth = 100;
+            Add(Hitbox = new Hitbox()
             {
                 HitboxWidth = 8,
                 HitboxColor = Color4.Cyan,
             });
             Team = 0;
-            OnShoot = Shoot;
-        }
-        public void ToggleShoot()
-        {
-            Shooting = !Shooting;
+            OnShoot = shoot;
         }
 
+        //Kiai toggle
         public void ToggleKiai()
         {
             KiaiActivated = !KiaiActivated;
         }
 
-        //multi-key-input should work with this
+        //Update Loop
         protected override void Update()
         {
             base.Update();
-            float ySpeed = playerSpeed.Y * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = playerSpeed.X * (float)(Clock.ElapsedFrameTime);
+
+            //Handles Player Speed
+            float ySpeed = PlayerSpeed.Y * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = PlayerSpeed.X * (float)(Clock.ElapsedFrameTime);
+
+            //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
             {
                 xSpeed /= 2;
                 ySpeed /= 2;
-                //Add hitbox showing here
             }
             if (keys[Key.Z])
             {
-                ToggleShoot();
+                Shooting = true;
+            }
+            if (keys[Key.Z] == false)
+            {
+                Shooting = false;
             }
             if (keys [Key.X])
             {
@@ -100,33 +111,36 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             }
             if (keys[Key.Up])
             {
-                playerPosition.Y -= ySpeed;
+                PlayerPosition.Y -= ySpeed;
             }
             if (keys[Key.Left])
             {
-                playerPosition.X -= xSpeed;
+                PlayerPosition.X -= xSpeed;
             }
             if (keys[Key.Down])
             {
-                playerPosition.Y += ySpeed;
+                PlayerPosition.Y += ySpeed;
             }
             if (keys[Key.Right])
             {
-                playerPosition.X += xSpeed;
+                PlayerPosition.X += xSpeed;
             }
-            playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-            playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
-            Position = playerPosition;
+
+            //Handles VitaruPlayer Position
+            PlayerPosition = Vector2.ComponentMin(PlayerPosition, PlayerBounds.Yw);
+            PlayerPosition = Vector2.ComponentMax(PlayerPosition, PlayerBounds.Xz);
+            Position = PlayerPosition;
         }
 
-        private void Shoot()
+        //Shoot function for VitaruPlayer
+        private void shoot()
         {
                 Bullet bullet;
-                parent.Add(bullet = new Bullet(Team)
+                MainParent.Add(bullet = new Bullet(Team)
                 {
                     Depth = 1,
                     Anchor = Anchor.Centre,
-                    BulletAngle = 0f,
+                    BulletAngleDegree = 0f,
                     BulletSpeed = 1f,
                     BulletColor = Color4.Green,
                 });
@@ -138,7 +152,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             keys[args.Key] = true;
             if (args.Key == Key.LShift || args.Key == Key.RShift)
-                hitbox.Alpha = 1;
+                Hitbox.Alpha = 1;
             return base.OnKeyDown(state, args);
         }
         //saves if key is released
@@ -146,7 +160,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             keys[args.Key] = false;
             if (args.Key == Key.LShift || args.Key == Key.RShift)
-                hitbox.Alpha = 0;
+                Hitbox.Alpha = 0;
             return base.OnKeyUp(state, args);
         }
     }

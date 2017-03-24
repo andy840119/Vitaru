@@ -26,11 +26,6 @@ namespace osu.Game.Graphics
                 Text = ((char)icon).ToString();
             }
         }
-
-        public TextAwesome()
-        {
-            Origin = Framework.Graphics.Anchor.Centre;
-        }
     }
 
     public enum FontAwesome
@@ -886,6 +881,16 @@ namespace osu.Game.Graphics
         fa_osu_insane_mania = 0xe027,
         fa_osu_expert_mania = 0xe028,
 
+        // vitaru difficulties
+        /*
+        fa_osu_easy_vitaru = 0xe04s,
+        fa_osu_normal_vitaru = 0xe04n,
+        fa_osu_hard_vitaru = 0xe04h,
+        fa_osu_insane_vitaru = 0xe04i,
+        fa_osu_expert_vitaru = 0xe04x,
+        */
+
+
         // mod icons
         fa_osu_mod_perfect = 0xe02d,
         fa_osu_mod_autopilot = 0xe03a,
@@ -903,6 +908,6 @@ namespace osu.Game.Graphics
         fa_osu_mod_spunout = 0xe046,
         fa_osu_mod_suddendeath = 0xe047,
         fa_osu_mod_target = 0xe048,
-        fa_osu_mod_bg = 0xe049,
+        fa_osu_mod_bg = 0xe04a,
     }
 }

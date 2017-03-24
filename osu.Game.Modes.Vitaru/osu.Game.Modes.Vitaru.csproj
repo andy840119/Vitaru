@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mods\VitaruAutoReplay.cs" />
+    <Compile Include="Mods\VitaruMod.cs" />
     <Compile Include="Objects\Characters\Boss.cs" />
     <Compile Include="Objects\Characters\Character.cs" />
     <Compile Include="Objects\Drawables\LaserPiece.cs" />
@@ -52,7 +54,7 @@
     <Compile Include="Objects\Drawables\SpellPiece.cs" />
     <Compile Include="Objects\Drawables\TotemPiece.cs" />
     <Compile Include="Objects\Hitbox.cs" />
-    <Compile Include="Objects\Projectiles\BulletPatternes.cs" />
+    <Compile Include="Objects\Projectiles\BulletPatterns.cs" />
     <Compile Include="Objects\Projectiles\Laser.cs" />
     <Compile Include="Objects\Projectiles\Projectile.cs" />
     <Compile Include="Objects\VitaruHitObject.cs" />

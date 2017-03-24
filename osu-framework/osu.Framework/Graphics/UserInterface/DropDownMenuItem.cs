@@ -55,7 +55,7 @@ namespace osu.Framework.Graphics.UserInterface
         protected Container Foreground;
 
         private Color4 backgroundColour = Color4.DarkSlateGray;
-        protected Color4 BackgroundColour
+        public Color4 BackgroundColour
         {
             get { return backgroundColour; }
             set
@@ -64,8 +64,61 @@ namespace osu.Framework.Graphics.UserInterface
                 FormatBackground();
             }
         }
-        protected Color4 BackgroundColourHover { get; set; } = Color4.DarkGray;
-        protected Color4 BackgroundColourSelected { get; set; } = Color4.SlateGray;
+
+        private Color4 foregroundColour = Color4.White;
+        public Color4 ForegroundColour
+        {
+            get { return foregroundColour; }
+            set
+            {
+                foregroundColour = value;
+                FormatForeground();
+            }
+        }
+
+        private Color4 backgroundColourHover = Color4.DarkGray;
+        public Color4 BackgroundColourHover
+        {
+            get { return backgroundColourHover; }
+            set
+            {
+                backgroundColourHover = value;
+                FormatBackground();
+            }
+        }
+
+        private Color4 backgroundColourSelected = Color4.SlateGray;
+        public Color4 BackgroundColourSelected
+        {
+            get { return backgroundColourSelected; }
+            set
+            {
+                backgroundColourSelected = value;
+                FormatBackground();
+            }
+        }
+
+        private Color4 foregroundColourHover = Color4.White;
+        public Color4 ForegroundColourHover
+        {
+            get { return foregroundColourHover; }
+            set
+            {
+                foregroundColourHover = value;
+                FormatForeground();
+            }
+        }
+
+        private Color4 foregroundColourSelected = Color4.White;
+        public Color4 ForegroundColourSelected
+        {
+            get { return foregroundColourSelected; }
+            set
+            {
+                foregroundColourSelected = value;
+                FormatForeground();
+            }
+        }
 
         protected override Container<Drawable> Content => Foreground;
 
@@ -95,11 +148,17 @@ namespace osu.Framework.Graphics.UserInterface
             if (!IsLoaded)
                 return;
             FormatBackground();
+            FormatForeground();
         }
 
         protected virtual void FormatBackground(bool hover = false)
         {
             Background.FadeColour(hover ? BackgroundColourHover : (IsSelected ? BackgroundColourSelected : BackgroundColour));
+        }
+
+        protected virtual void FormatForeground(bool hover = false)
+        {
+            Foreground.FadeColour(hover ? ForegroundColourHover : (IsSelected ? ForegroundColourSelected : ForegroundColour));
         }
 
         protected override void LoadComplete()
@@ -111,6 +170,7 @@ namespace osu.Framework.Graphics.UserInterface
         protected override bool OnHover(InputState state)
         {
             FormatBackground(true);
+            FormatForeground(true);
             return base.OnHover(state);
         }
 
@@ -118,6 +178,7 @@ namespace osu.Framework.Graphics.UserInterface
         {
             base.OnHover(state);
             FormatBackground();
+            FormatForeground();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace osu.Framework.Graphics.UserInterface
 
         public int? LengthLimit;
 
-        public bool AllowClipboardExport => true;
+        public virtual bool AllowClipboardExport => true;
 
         //represents the left/right selection coordinates of the word double clicked on when dragging
         private int[] doubleClickWord;
@@ -95,7 +95,7 @@ namespace osu.Framework.Graphics.UserInterface
                         },
                         TextFlow = new FillFlowContainer
                         {
-                            Direction = FillDirection.Right,
+                            Direction = FillDirection.Horizontal,
                             AutoSizeAxes = Axes.X,
                             RelativeSizeAxes = Axes.Y,
                         },
@@ -119,9 +119,9 @@ namespace osu.Framework.Graphics.UserInterface
                     textUpdateScheduler.Add(() => onImeComposition(s));
                     cursorAndLayout.Invalidate();
                 };
-                textInput.OnNewImeResult += delegate (string s)
+                textInput.OnNewImeResult += delegate
                 {
-                    textUpdateScheduler.Add(() => onImeResult(s));
+                    textUpdateScheduler.Add(onImeResult);
                     cursorAndLayout.Invalidate();
                 };
             }
@@ -159,7 +159,7 @@ namespace osu.Framework.Graphics.UserInterface
                 textUpdateScheduler.Update();
 
                 Vector2 cursorPos = Vector2.Zero;
-                if (text?.Length > 0)
+                if (text.Length > 0)
                     cursorPos.X = getPositionAt(selectionLeft);
 
                 float cursorPosEnd = getPositionAt(selectionEnd);
@@ -232,7 +232,7 @@ namespace osu.Framework.Graphics.UserInterface
 
         private int getCharacterClosestTo(Vector2 pos)
         {
-            pos = TextFlow.ToLocalSpace(pos * DrawInfo.Matrix);
+            pos = Parent.ToSpaceOfOtherDrawable(pos, TextFlow);
 
             int i = 0;
             foreach (Drawable d in TextFlow.Children)
@@ -245,15 +245,15 @@ namespace osu.Framework.Graphics.UserInterface
             return i;
         }
 
-        int selectionStart;
-        int selectionEnd;
+        private int selectionStart;
+        private int selectionEnd;
 
-        int selectionLength => Math.Abs(selectionEnd - selectionStart);
+        private int selectionLength => Math.Abs(selectionEnd - selectionStart);
 
-        int selectionLeft => Math.Min(selectionStart, selectionEnd);
-        int selectionRight => Math.Max(selectionStart, selectionEnd);
+        private int selectionLeft => Math.Min(selectionStart, selectionEnd);
+        private int selectionRight => Math.Max(selectionStart, selectionEnd);
 
-        Cached<Vector2> cursorAndLayout = new Cached<Vector2>();
+        private Cached<Vector2> cursorAndLayout = new Cached<Vector2>();
 
         private void moveSelection(int offset, bool expand)
         {
@@ -412,6 +412,8 @@ namespace osu.Framework.Graphics.UserInterface
             {
                 if (value == text)
                     return;
+
+                value = value ?? string.Empty;
 
                 Placeholder.FadeTo(value.Length == 0 ? 1 : 0);
 
@@ -657,6 +659,9 @@ namespace osu.Framework.Graphics.UserInterface
         {
             if (HasFocus) return true;
 
+            if (!state.Mouse.PositionMouseDown.HasValue)
+                throw new ArgumentNullException(nameof(state.Mouse.PositionMouseDown));
+
             Vector2 posDiff = state.Mouse.PositionMouseDown.Value - state.Mouse.Position;
 
             return Math.Abs(posDiff.X) > Math.Abs(posDiff.Y);
@@ -668,13 +673,21 @@ namespace osu.Framework.Graphics.UserInterface
 
             if (text.Length == 0) return true;
 
-            int hover = Math.Min(text.Length - 1, getCharacterClosestTo(state.Mouse.Position));
+            if (AllowClipboardExport)
+            {
+                int hover = Math.Min(text.Length - 1, getCharacterClosestTo(state.Mouse.Position));
+            
+                int lastSeparator = findSeparatorIndex(text, hover, -1);
+                int nextSeparator = findSeparatorIndex(text, hover, 1);
 
-            int lastSeparator = findSeparatorIndex(text, hover, -1);
-            int nextSeparator = findSeparatorIndex(text, hover, 1);
-
-            selectionStart = lastSeparator >= 0 ? lastSeparator + 1 : 0;
-            selectionEnd = nextSeparator >= 0 ? nextSeparator : text.Length;
+                selectionStart = lastSeparator >= 0 ? lastSeparator + 1 : 0;
+                selectionEnd = nextSeparator >= 0 ? nextSeparator : text.Length;
+            }
+            else
+            {
+                selectionStart = 0;
+                selectionEnd = text.Length;
+            }
 
             //in order to keep the home word selected
             doubleClickWord = new[] { selectionStart, selectionEnd };
@@ -763,13 +776,11 @@ namespace osu.Framework.Graphics.UserInterface
             textInput.Activate(this);
         }
 
-        private void onImeResult(string s)
+        private void onImeResult()
         {
             //we only succeeded if there is pending data in the textbox
             if (imeDrawables.Count > 0)
             {
-                audio.Sample.Get(@"Keyboard/key-confirm")?.Play();
-
                 foreach (Drawable d in imeDrawables)
                 {
                     d.Colour = Color4.White;

@@ -1,13 +1,26 @@
-﻿//Copyright (c) 2007-2016 ppy Pty Ltd <contact@ppy.sh>.
-//Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Game.Modes.Osu.UI;
-using OpenTK.Graphics;
+using osu.Game.Modes.UI;
+using System;
 
 namespace osu.Game.Modes.Vitaru.UI
 {
-    public class VitaruComboCounter : OsuComboCounter
+    public class VitaruComboCounter : ComboCounter
     {
+        protected override void OnDisplayedCountChange(int newValue)
+        {
+            throw new NotImplementedException();
+        }
 
+        protected override void OnDisplayedCountIncrement(int newValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void OnDisplayedCountRolling(int currentValue, int newValue)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

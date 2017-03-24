@@ -1,21 +1,34 @@
-﻿using osu.Framework.Graphics.Containers;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using osu.Framework.Graphics.Containers;
 using OpenTK;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using OpenTK.Graphics;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using System;
+using osu.Framework.MathUtils;
+using osu.Framework.Graphics.Transforms;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public class Enemy : Character
     {
-        public static bool shoot = false;
-        public Vector2 enemyPosition = new Vector2(0, -160);
-        public Vector2 enemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public static bool Shoot = false;
+        public Vector2 EnemyPosition = new Vector2(0, -160);
+        public Vector2 EnemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public Vector2 EnemyVelocity;
+        public float EnemyAngle;
 
-        int a = 0;
+        public static Vector2 EnemyPos;
+        private float playerAngleRadian = 0;
+
         private CharacterSprite enemy;
 
+        
+
+        //Main Enemy Function
         public Enemy(Container parent) : base(parent)
         {
             Children = new[]
@@ -26,40 +39,55 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                     CharacterName = "enemy"
                 },
             };
-            characterHealth = 100;
+            CharacterHealth = 100;
             Team = 1;
-            Add(hitbox = new Hitbox()
+            Add(Hitbox = new Hitbox()
             {
                 Alpha = 1,
                 HitboxWidth = 20,
                 HitboxColor = Color4.Yellow,
             });
         }
+
+        //Main Update Loop
         protected override void Update()
         {
             base.Update();
-            if (shoot == true)
+            EnemyPos = EnemyPosition;
+            if (Shoot == true)
             {
-                enemyShoot();
+                Shooting = true;
+                OnShoot = enemyShoot;
             }
-
-            float ySpeed = enemySpeed.Y * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = enemySpeed.X * (float)(Clock.ElapsedFrameTime);
-            Position = enemyPosition;
+            float ySpeed = EnemySpeed.Y * (float)Clock.ElapsedFrameTime;
+            float xSpeed = EnemySpeed.X * (float)Clock.ElapsedFrameTime;
+            Position = EnemyPosition;
         }
+
+        //Shoot Function for enemy
         private void enemyShoot()
         {
-            a = (a + 31);
+            playerRelativePositionAngle();
             Bullet b;
-            parent.Add(b = new Bullet(Team)
+            MainParent.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngle = a,
-                BulletSpeed = 0.2f,
+                BulletAngleRadian = playerAngleRadian,
+                BulletSpeed = 0.5f,
                 BulletColor = Color4.Red,
             });
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
+
+        //Finds Player angle from Enemy position (only works with one player and enemy ATM*)
+        private float playerRelativePositionAngle()
+        {
+            playerAngleRadian = (float)Math.Atan2((VitaruPlayer.PlayerPosition.X - EnemyPosition.X) , -1 * (VitaruPlayer.PlayerPosition.Y - EnemyPosition.Y));
+            return playerAngleRadian;
+        }
+
+
+
     }
 }

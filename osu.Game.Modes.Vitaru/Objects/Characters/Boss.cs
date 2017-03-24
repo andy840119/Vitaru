@@ -1,11 +1,10 @@
-﻿using osu.Framework.Graphics.Containers;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using osu.Framework.Graphics.Containers;
 using OpenTK;
-using OpenTK.Input;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
-using osu.Framework.Input;
-using System.Collections.Generic;
-using System;
 using OpenTK.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
@@ -14,24 +13,22 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
     {
         public int StartTime { get; set; }
 
-        public Vector2 bossPosition = new Vector2(0, -160);
-        public Vector2 bossSpeed { get; set; } = new Vector2(1, 1);
-
-        private CharacterSprite boss;
+        public Vector2 BossPosition = new Vector2(0, -160);
+        public Vector2 BossSpeed { get; set; } = new Vector2(1, 1);
 
         public Boss(Container parent) : base(parent)
         {
             Children = new[]
             {
-                boss = new CharacterSprite()
+                new CharacterSprite()
                 {
                     Origin = Anchor.Centre,
                     CharacterName = "boss"
                 },
             };
-            characterHealth = 1000;
+            CharacterHealth = 1000;
             Team = 1;
-            Add(hitbox = new Hitbox()
+            Add(Hitbox = new Hitbox()
             {
                 Alpha = 1,
                 HitboxWidth = 32,
@@ -41,9 +38,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         protected override void Update()
         {
             base.Update();
-            float ySpeed = bossSpeed.Y * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = bossSpeed.X * (float)(Clock.ElapsedFrameTime);
-            Position = bossPosition;
+            float ySpeed = BossSpeed.Y * (float)Clock.ElapsedFrameTime;
+            float xSpeed = BossSpeed.X * (float)Clock.ElapsedFrameTime;
+            Position = BossPosition;
         }
     }
 }
