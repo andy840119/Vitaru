@@ -18,13 +18,17 @@ namespace osu.Desktop.VisualTests.Tests
         private VitaruPlayer player;
         private Enemy enemy;
 
+        //Debug info, Change at will
+        private SpriteText debugSpriteTextTopLeft;
+        private SpriteText debugSpriteTextTopRight;
+        private string debugTextTopLeft = "Player Position (x,y): ";
+        private string debugTextTopRight;
+
         //Gross Shit, ignore it
         public bool RandomMovement = false;
         private Vector2 randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
         private float t = RNG.Next(1, 3);
         private bool enemyMoving;
-
-        private SpriteText debugInfo;
 
         //Reset function (runs when you start this testcase)
         public override void Reset()
@@ -51,14 +55,14 @@ namespace osu.Desktop.VisualTests.Tests
             Add(enemy);
 
             //Debug stats, change to whatever you need to debug
-            debugInfo = new SpriteText()
+            debugSpriteTextTopLeft = new SpriteText()
             {
-                Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y,
+                Text = debugTextTopLeft + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y,
                 TextSize = 25,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
-            Add(debugInfo);
+            Add(debugSpriteTextTopLeft);
         }
 
         //Update loop
@@ -69,7 +73,7 @@ namespace osu.Desktop.VisualTests.Tests
                 randomMovements();
             }
             base.Update();
-            debugInfo.Text = "PlayerPos " + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
+            debugSpriteTextTopLeft.Text = debugTextTopLeft + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
         }
 
         //New Enemy Function
