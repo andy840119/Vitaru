@@ -1,54 +1,38 @@
-﻿using osu.Framework.Graphics;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using System;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Modes.UI;
-using osu.Game.Modes.Osu.UI;
-using OpenTK;
-using OpenTK.Input;
-using osu.Framework.Graphics.Primitives;
 using osu.Game.Screens.Play;
 
 namespace osu.Game.Modes.Vitaru
 {
-    internal class VitaruScoreOverlay : ScoreOverlay
+    internal class VitaruHudOverlay : HudOverlay
     {
-        protected override PercentageCounter CreateAccuracyCounter() => new PercentageCounter()
+        protected override PercentageCounter CreateAccuracyCounter()
         {
-            Anchor = Anchor.TopCentre,
-            Origin = Anchor.TopCentre,
-            Position = new Vector2(0, 65),
-            TextSize = 20,
-            Margin = new MarginPadding { Right = 5 },
-        };
+            throw new NotImplementedException();
+        }
 
-        protected override ComboCounter CreateComboCounter() => new OsuComboCounter()
+        protected override ComboCounter CreateComboCounter()
         {
-            Anchor = Anchor.BottomLeft,
-            Origin = Anchor.BottomLeft,
-        };
+            throw new NotImplementedException();
+        }
 
-        protected override KeyCounterCollection CreateKeyCounter() => new KeyCounterCollection
+        protected override HealthDisplay CreateHealthDisplay()
         {
-            IsCounting = true,
-            FadeTime = 50,
-            Anchor = Anchor.BottomRight,
-            Origin = Anchor.BottomRight,
-            Margin = new MarginPadding(10),
-            Children = new KeyCounter[]
-            {
-                new KeyCounterKeyboard(@"W", Key.W),
-                new KeyCounterKeyboard(@"A", Key.A),
-                new KeyCounterKeyboard(@"S", Key.S),
-                new KeyCounterKeyboard(@"D", Key.D),
-            }
-        };
+            throw new NotImplementedException();
+        }
 
-        protected override ScoreCounter CreateScoreCounter() => new ScoreCounter(6)
+        protected override KeyCounterCollection CreateKeyCounter()
         {
-            Anchor = Anchor.TopCentre,
-            Origin = Anchor.TopCentre,
-            TextSize = 40,
-            Position = new Vector2(0, 30),
-            Margin = new MarginPadding { Right = 5 },
-        };
+            throw new NotImplementedException();
+        }
+
+        protected override ScoreCounter CreateScoreCounter()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

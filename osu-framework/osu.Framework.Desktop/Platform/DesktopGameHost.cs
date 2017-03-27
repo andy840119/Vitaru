@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Platform;
-using OpenTK;
 using osu.Framework.Desktop.Input;
 using osu.Framework.Input;
 
@@ -40,7 +39,7 @@ namespace osu.Framework.Desktop.Platform
                 if (IsPrimaryInstance)
                 {
                     ipcProvider.MessageReceived += OnMessageReceived;
-                    ipcTask = ipcProvider.StartAsync();
+                    ipcTask = Task.Factory.StartNew(ipcProvider.StartAsync, TaskCreationOptions.LongRunning);
                 }
             }
         }
@@ -71,6 +70,8 @@ namespace osu.Framework.Desktop.Platform
             }
 
             string shadowExe = exe?.Replace(@".exe", @"_shadow.exe");
+
+            if (shadowExe == null) return;
 
             int attempts = 5;
             while (attempts-- > 0)

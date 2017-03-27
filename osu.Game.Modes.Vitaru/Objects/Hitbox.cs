@@ -1,9 +1,12 @@
-﻿using osu.Framework.Graphics.Containers;
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics;
 using OpenTK.Graphics;
 using OpenTK;
-using osu.Game.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Extensions.Color4Extensions;
 
 namespace osu.Game.Modes.Vitaru.Objects
 {
@@ -14,14 +17,15 @@ namespace osu.Game.Modes.Vitaru.Objects
         public float HitboxHealth { get; set; } = 100;
         public float HitboxWidth { get; set; } = 8f;
 
-        private CircularContainer hitboxContainer;
-
+        private Container hitboxContainer;
+        
         public Hitbox()
         {
-            Children = new[]
+            Children = new Drawable[]
             {
-                new CircularContainer
+                new Container
                 {
+                    Masking = true,
                     AutoSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
@@ -29,6 +33,7 @@ namespace osu.Game.Modes.Vitaru.Objects
                     Depth = 1,
                     BorderColour = HitboxColor,
                     Alpha = 1f,
+                    CornerRadius = HitboxWidth / 2,
                     Children = new[]
                     {
                         new Box
@@ -56,7 +61,6 @@ namespace osu.Game.Modes.Vitaru.Objects
                         }
                 }
             };
-            Hide();
         }
     }
 }

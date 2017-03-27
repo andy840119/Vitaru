@@ -10,11 +10,11 @@ namespace osu.Framework.Audio.Sample
     {
         protected bool WasStarted;
 
-        public Sample Sample { get; protected set; }
+        protected Sample Sample { get; set; }
 
         private Action<SampleChannel> onPlay;
 
-        public SampleChannel(Sample sample, Action<SampleChannel> onPlay)
+        protected SampleChannel(Sample sample, Action<SampleChannel> onPlay)
         {
             if (sample == null)
                 throw new ArgumentNullException(nameof(sample));

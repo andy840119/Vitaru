@@ -11,20 +11,13 @@ namespace osu.Framework.Input
     {
         public IMouseState LastState;
 
-        public List<ButtonState> ButtonStates = new List<ButtonState>(new[]
-        {
-            new ButtonState(MouseButton.Left),
-            new ButtonState(MouseButton.Middle),
-            new ButtonState(MouseButton.Right),
-            new ButtonState(MouseButton.Button1),
-            new ButtonState(MouseButton.Button2)
-        });
+        public HashSet<MouseButton> PressedButtons = new HashSet<MouseButton>();
 
-        public bool LeftButton => ButtonStates.Find(b => b.Button == MouseButton.Left).State;
-        public bool RightButton => ButtonStates.Find(b => b.Button == MouseButton.Right).State;
-        public bool MiddleButton => ButtonStates.Find(b => b.Button == MouseButton.Middle).State;
-        public bool BackButton => ButtonStates.Find(b => b.Button == MouseButton.Button1).State;
-        public bool ForwardButton => ButtonStates.Find(b => b.Button == MouseButton.Button2).State;
+        public bool LeftButton => PressedButtons.Contains(MouseButton.Left);
+        public bool RightButton => PressedButtons.Contains(MouseButton.Right);
+        public bool MiddleButton => PressedButtons.Contains(MouseButton.Middle);
+        public bool BackButton => PressedButtons.Contains(MouseButton.Button1);
+        public bool ForwardButton => PressedButtons.Contains(MouseButton.Button2);
 
         public IMouseState NativeState => this;
 
@@ -34,6 +27,8 @@ namespace osu.Framework.Input
 
         public bool HasMainButtonPressed => LeftButton || RightButton;
 
+        public bool HasAnyButtonPressed => PressedButtons.Count > 0;
+
         public Vector2 Delta => Position - (LastState?.Position ?? Vector2.Zero);
 
         public Vector2 Position { get; protected set; }
@@ -41,18 +36,6 @@ namespace osu.Framework.Input
         public Vector2 LastPosition => LastState?.Position ?? Position;
 
         public Vector2? PositionMouseDown { get; internal set; }
-
-        public class ButtonState
-        {
-            public MouseButton Button;
-            public bool State;
-
-            public ButtonState(MouseButton button)
-            {
-                Button = button;
-                State = false;
-            }
-        }
 
         public void SetLast(IMouseState last)
         {
@@ -62,5 +45,15 @@ namespace osu.Framework.Input
             if (last != null)
                 PositionMouseDown = last.PositionMouseDown;
         }
+
+        public MouseState Clone()
+        {
+            var clone = (MouseState)MemberwiseClone();
+            clone.PressedButtons = new HashSet<MouseButton>(PressedButtons);
+            clone.LastState = null;
+            return clone;
+        }
+
+        public bool IsPressed(MouseButton button) => PressedButtons.Contains(button);
     }
 }

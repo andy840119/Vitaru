@@ -45,31 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mods\VitaruAutoReplay.cs" />
+    <Compile Include="Mods\VitaruMod.cs" />
     <Compile Include="Objects\Characters\Boss.cs" />
     <Compile Include="Objects\Characters\Character.cs" />
-    <Compile Include="Objects\Drawables\DrawableVitaruEnemy.cs" />
-    <Compile Include="Objects\Drawables\DrawableVitaruBoss.cs" />
-    <Compile Include="Objects\Drawables\DrawableVitaruPlayer.cs" />
     <Compile Include="Objects\Drawables\LaserPiece.cs" />
-    <Compile Include="Objects\Drawables\DrawableVitaruCharacter.cs" />
+    <Compile Include="Objects\Drawables\CharacterSprite.cs" />
     <Compile Include="Objects\Drawables\SpellPiece.cs" />
     <Compile Include="Objects\Drawables\TotemPiece.cs" />
     <Compile Include="Objects\Hitbox.cs" />
+    <Compile Include="Objects\Projectiles\BulletPatterns.cs" />
     <Compile Include="Objects\Projectiles\Laser.cs" />
-    <Compile Include="Objects\Projectiles\Patterns\BulletPattern.cs" />
-    <Compile Include="Objects\Projectiles\Patterns\PatternFlower.cs" />
     <Compile Include="Objects\Projectiles\Projectile.cs" />
     <Compile Include="Objects\VitaruHitObject.cs" />
     <Compile Include="Objects\Characters\VitaruPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\Projectiles\Bullet.cs" />
-    <Compile Include="VitaruDifficultyCalculator.cs" />
     <Compile Include="VitaruHitRenderer.cs" />
     <Compile Include="VitaruObjectParser.cs" />
     <Compile Include="VitaruScoreOverlay.cs" />
     <Compile Include="VitaruScoreProcessor.cs" />
     <Compile Include="UI\VitaruComboCounter.cs" />
-    <Compile Include="Objects\VitaruConverter.cs" />
+    <Compile Include="UI\VitaruHitObjectConverter.cs" />
     <Compile Include="UI\VitaruJudgementInfo.cs" />
     <Compile Include="UI\VitaruObjectRenderer.cs" />
     <Compile Include="UI\VitaruPlayfield.cs" />

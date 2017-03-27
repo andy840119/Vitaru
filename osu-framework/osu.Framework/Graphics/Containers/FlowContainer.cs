@@ -54,7 +54,7 @@ namespace osu.Framework.Graphics.Containers
 
         protected void InvalidateLayout() => layout.Invalidate();
 
-        Vector2 maximumSize;
+        private Vector2 maximumSize;
 
         /// <summary>
         /// Optional maximum dimensions for this container. Note that the meaning of this value can change
@@ -77,7 +77,7 @@ namespace osu.Framework.Graphics.Containers
         public override bool Invalidate(Invalidation invalidation = Invalidation.All, Drawable source = null, bool shallPropagate = true)
         {
             if ((invalidation & Invalidation.SizeInParentSpace) > 0)
-                layout.Invalidate();
+                InvalidateLayout();
 
             return base.Invalidate(invalidation, source, shallPropagate);
         }
@@ -87,17 +87,19 @@ namespace osu.Framework.Graphics.Containers
             bool changed = base.UpdateChildrenLife();
 
             if (changed)
-                layout.Invalidate();
+                InvalidateLayout();
 
             return changed;
         }
 
-        public override void InvalidateFromChild(Invalidation invalidation, IDrawable source)
+        public override void InvalidateFromChild(Invalidation invalidation)
         {
-            if ((invalidation & Invalidation.SizeInParentSpace) > 0)
-                layout.Invalidate();
+            //Colour captures potential changes in IsPresent. If this ever becomes a bottleneck,
+            //Invalidation could be further separated into presence changes.
+            if ((invalidation & (Invalidation.SizeInParentSpace | Invalidation.Colour)) > 0)
+                InvalidateLayout();
 
-            base.InvalidateFromChild(invalidation, source);
+            base.InvalidateFromChild(invalidation);
         }
 
         protected virtual IEnumerable<T> FlowingChildren => AliveInternalChildren.Where(d => d.IsPresent);
@@ -127,11 +129,11 @@ namespace osu.Framework.Graphics.Containers
 
                         if ((d.RelativeSizeAxes & AutoSizeAxes) != 0)
                             throw new InvalidOperationException(
-                                $"Drawables inside a flow container may not have a relative size axis that the flow container is auto sizing for." +
-                                $"The flow container is set to autosize in {AutoSizeAxes} axes and the child is set to relative size in {RelativeSizeAxes} axes.");
+                                "Drawables inside a flow container may not have a relative size axis that the flow container is auto sizing for." +
+                                $"The flow container is set to autosize in {AutoSizeAxes} axes and the child is set to relative size in {d.RelativeSizeAxes} axes.");
 
                         if (d.RelativePositionAxes != Axes.None)
-                            throw new InvalidOperationException($"A flow container cannot contain a child with relative positioning (it is {RelativePositionAxes}).");
+                            throw new InvalidOperationException($"A flow container cannot contain a child with relative positioning (it is {d.RelativePositionAxes}).");
 
                         var finalPos = positions[i];
                         if (d.Position != finalPos)

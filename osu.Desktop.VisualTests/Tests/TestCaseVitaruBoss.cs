@@ -1,22 +1,12 @@
-﻿//Copyright (c) 2007-2016 ppy Pty Ltd <contact@ppy.sh>.
-//Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using osu.Framework.MathUtils;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects;
 using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Framework.Timing;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -26,57 +16,59 @@ namespace osu.Desktop.VisualTests.Tests
         //private WorkingBeatmap beatmap;
         //private List<HitObject> enemysLoaded;
 
-        public override string Name => @"Vitaru Boss";
         public override string Description => @"Showing Boss stuff";
-        
-        public int kills;
-        private SpriteText score;
 
-        private void loadPlayer()
-        {
-            Add(new DrawableVitaruPlayer(new VitaruPlayer())
-            {
-                Anchor = Anchor.TopCentre,
-                OnDeath = loadPlayer,
-            });
-        }
-        private void loadBoss()
-        {
-            var v = new Boss
-            {
-                Position = new Vector2(RNG.Next(-200, 200), RNG.Next(50, 200)),
-            };
-            NewBoss(new DrawableVitaruBoss(v));
-        }
+        internal VitaruPlayer Player;
+        private Boss boss;
+        public int Kills;
+        private SpriteText score;
 
         public override void Reset()
         {
             base.Reset();
-            kills = 0;
+            Kills = 0;
 
-            AddButton(@"New Boss", () => loadBoss());
+            Player = new VitaruPlayer(this)
+            {
+                Anchor = Anchor.Centre,
+                Shooting = true,
+            };
+            Add(Player);
+
+            AddButton(@"New Boss", NewBoss);
+
+            boss = new Boss(this)
+            {
+                Anchor = Anchor.TopCentre,
+                BossPosition = new Vector2(0, 100),
+                OnDeath = NewBoss,
+            };
+            Add(boss);
 
             score = new SpriteText()
             {
-                Text = "" + kills,
+                Text = "" + Kills,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight
             };
             Add(score);
-            loadPlayer();
         }
         protected override void Update()
         {
             base.Update();
-            score.Text = "" + kills;
+            score.Text = "" + Kills;
         }
 
-        protected void NewBoss(DrawableVitaruCharacter v)
+        protected void NewBoss()
         {
-            kills++;
-            v.Anchor = Anchor.TopCentre;
-            v.OnDeath = loadBoss;
-            Add(v);
+            Kills++;
+            boss = new Boss(this)
+            {
+                Anchor = Anchor.TopCentre,
+                BossPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next (50 , 200)),
+                OnDeath = NewBoss,
+            };
+            Add(boss);
         }
     }
 }
