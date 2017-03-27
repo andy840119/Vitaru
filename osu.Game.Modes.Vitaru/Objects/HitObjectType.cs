@@ -5,8 +5,10 @@ namespace osu.Game.Modes.Vitaru.Objects
 {
     public enum HitObjectType
     {
-        //Should probably be the different pattern types
+        Player,
         Enemy,
-        Boss
+        Boss,
+        Bullet,
+        Laser
     }
 }

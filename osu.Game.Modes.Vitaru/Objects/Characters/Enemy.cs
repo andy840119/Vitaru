@@ -31,8 +31,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         private CharacterSprite enemy;
 
-        
-
         //Main Enemy Function
         public Enemy(Container parent) : base(parent)
         {
@@ -93,6 +91,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
 
 
-
+        //public override HitObjectType Type => HitObjectType.Enemy;
     }
 }
