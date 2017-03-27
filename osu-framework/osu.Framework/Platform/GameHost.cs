@@ -249,7 +249,7 @@ namespace osu.Framework.Platform
             GLWrapper.Initialize(this);
 
             if (Window != null)
-                Window.VSync = VSyncMode.On;
+                Window.VSync = VSyncMode.Off;
         }
 
         private long lastDrawFrameId;
