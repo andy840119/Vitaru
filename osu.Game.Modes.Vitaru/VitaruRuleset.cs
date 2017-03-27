@@ -103,7 +103,7 @@ namespace osu.Game.Modes.Vitaru
             new KeyCounterKeyboard(Key.Down),
             new KeyCounterKeyboard(Key.X),
             new KeyCounterKeyboard(Key.Z),
-            new KeyCounterKeyboard(Key.ControlLeft),
+            new KeyCounterKeyboard(Key.LShift),
         };
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;
