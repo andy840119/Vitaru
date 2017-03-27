@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Screens.Play;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Vitaru.Mods;
+using OpenTK.Input;
 
 namespace osu.Game.Modes.Vitaru
 {
@@ -90,20 +91,20 @@ namespace osu.Game.Modes.Vitaru
             }
         }
 
-        public override HitRenderer CreateHitRendererWith(WorkingBeatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+        public override HitRenderer CreateHitRendererWith(WorkingBeatmap beatmap) => new VitaruHitRenderer(beatmap);
 
-        public override ScoreProcessor CreateScoreProcessor()
-        {
-            throw new NotImplementedException();
-        }
+        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor();
 
-        public override IEnumerable<KeyCounter> CreateGameplayKeys()
+        public override IEnumerable<KeyCounter> CreateGameplayKeys() => new KeyCounter[]
         {
-            throw new NotImplementedException();
-        }
+            new KeyCounterKeyboard(Key.Up),
+            new KeyCounterKeyboard(Key.Right),
+            new KeyCounterKeyboard(Key.Left),
+            new KeyCounterKeyboard(Key.Down),
+            new KeyCounterKeyboard(Key.X),
+            new KeyCounterKeyboard(Key.Z),
+            new KeyCounterKeyboard(Key.ControlLeft),
+        };
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;
 

@@ -5,12 +5,39 @@ using System;
 using System.Collections.Generic;
 using osu.Game.Modes.Objects;
 using osu.Game.Modes.UI;
+using osu.Game.Modes.Vitaru.Judgements;
+using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Beatmaps;
+using osu.Game.Modes.Vitaru.UI;
+using osu.Game.Beatmaps;
+using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru
 {
-    internal class VitaruHitRenderer : HitRenderer
+    internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
     {
         public List<HitObject> Enemy { get; set; }
+        public VitaruHitRenderer(WorkingBeatmap beatmap)
+            : base(beatmap)
+        {
+        }
+        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
+
+        protected override IBeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
+
+        protected override IBeatmapProcessor<VitaruHitObject> CreateBeatmapProcessor() => new VitaruBeatmapProcessor();
+
+        protected override Playfield<VitaruHitObject, VitaruJudgementInfo> CreatePlayfield() => new VitaruPlayfield();
+
+        protected override DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> GetVisualRepresentation(VitaruHitObject h)
+        {
+            var enemy = h as Enemy;
+            if (enemy != null)
+                return new DrawableVitaruEnemy(enemy);
+            return null;
+        }
 
         protected override bool AllObjectsJudged
         {
@@ -20,9 +47,5 @@ namespace osu.Game.Modes.Vitaru
             }
         }
 
-        public override ScoreProcessor CreateScoreProcessor()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

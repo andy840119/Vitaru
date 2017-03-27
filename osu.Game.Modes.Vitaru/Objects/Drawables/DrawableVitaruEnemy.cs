@@ -11,7 +11,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             Position = hitObject.Position;
             CharacterType = CharacterType.Enemy;
-            characterHealth = 100;
+            CharacterHealth = 100;
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
@@ -21,18 +21,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.Update();
         }
-
-        int a;
+        
 
         private void enemyShoot()
         {
-            a = (a + 31);
             Bullet b;
             parent.Add(b = new Bullet(1)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,
-                BulletAngle = a,
                 BulletSpeed = 0.2f,
                 BulletColor = Color4.Red,
             });

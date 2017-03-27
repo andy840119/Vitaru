@@ -10,20 +10,21 @@ using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public abstract class DrawableVitaruCharacter : Container
+    public abstract class DrawableVitaruCharacter : DrawableVitaruHitObject
     {
         public CharacterType CharacterType;
 
         protected Sprite CharacterSprite;
-        
-        public float characterHealth { get; set; } = 100;
+
+        public Vector2 Speed { get; set; } = Vector2.Zero;
+        public float CharacterHealth { get; set; } = 100;
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
         public int BPM { get; set; } = 180;
 
-        protected Hitbox hitbox;
-        protected Container parent = new Container();
+        protected Hitbox Hitbox;
+        protected Container Parent = new Container();
 
         public bool Shooting { get; set; } = false;
 
@@ -35,7 +36,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public Action OnDeath { get; set; }
         public Action OnShoot { get; set; }
 
-        public DrawableVitaruCharacter(VitaruHitObject hitObject)
+        public DrawableVitaruCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -46,7 +47,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
                 },
-                hitbox = new Hitbox()
+                Hitbox = new Hitbox()
                 {
                     Alpha = 0,
                     HitboxWidth = HitboxWidth,
@@ -62,8 +63,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         /// <returns>If the Character died</returns>
         public bool TakeDamage(int damage)
         {
-            characterHealth -= (int)(damage * Armor);
-            if (characterHealth <= 0)
+            CharacterHealth -= (int)(damage * Armor);
+            if (CharacterHealth <= 0)
             {
                 Dispose();
                 OnDeath();
@@ -78,7 +79,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         /// <param name="healing">Amount of health to be healed</param>
         public void Heal(int healing)
         {
-            characterHealth = 100 >= healing + characterHealth ? 100 : characterHealth + healing;
+            CharacterHealth = 100 >= healing + CharacterHealth ? 100 : CharacterHealth + healing;
         }
 
         protected override void Update()
@@ -93,10 +94,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     {
                         Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                         float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = hitbox.HitboxWidth + bullet.BulletWidth;
+                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
                         if (distance < minDist)
                         {
-                            bullet.deleteBullet();
+                            bullet.DeleteBullet();
                             if (TakeDamage(bullet.BulletDamage))
                                 break;
                         }
@@ -117,22 +118,22 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected void ShowHitbox()
         {
-            hitbox.FadeIn();
+            Hitbox.FadeIn();
         }
 
         protected void HideHitbox()
         {
-            hitbox.FadeOut();
+            Hitbox.FadeOut();
         }
 
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
         {
-            string characterType = "reimu";
+            string characterType = "player";
             switch(CharacterType)
             {
                 case CharacterType.Player:
-                    characterType = "reimu";
+                    characterType = "player";
                     break;
                 case CharacterType.Enemy:
                     characterType = "enemy";
