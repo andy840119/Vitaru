@@ -17,5 +17,10 @@ namespace osu.Game.Modes.Vitaru
         {
             return 0;
         }
+        public enum DifficultyType
+        {
+            Speed = 0,
+            Aim,
+        };
     }
 }

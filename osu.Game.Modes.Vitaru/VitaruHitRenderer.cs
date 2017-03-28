@@ -43,7 +43,8 @@ namespace osu.Game.Modes.Vitaru
         {
             get
             {
-                throw new NotImplementedException();
+                //Placeholder
+                return true;
             }
         }
 

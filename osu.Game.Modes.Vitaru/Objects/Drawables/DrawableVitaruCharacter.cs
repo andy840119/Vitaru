@@ -24,7 +24,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public int BPM { get; set; } = 180;
 
         protected Hitbox Hitbox;
-        protected Container Parent = new Container();
+        protected Container parent = new Container();
 
         public bool Shooting { get; set; } = false;
 

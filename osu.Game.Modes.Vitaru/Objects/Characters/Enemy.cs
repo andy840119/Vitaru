@@ -10,6 +10,7 @@ using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using System;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Transforms;
+using osu.Game.Beatmaps.Samples;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
@@ -18,6 +19,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public static bool Shoot = false;
         public Vector2 EnemyPosition = new Vector2(0, -160);
         public Vector2 EnemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
+        public double StartTime { get; internal set; }
+        public HitSampleInfo Sample { get; internal set; }
+        public bool NewCombo { get; internal set; }
+
         public Vector2 EnemyVelocity;
         public float EnemyAngle;
 
@@ -25,8 +30,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         private float playerAngleRadian = 0;
 
         private CharacterSprite enemy;
-
-        
 
         //Main Enemy Function
         public Enemy(Container parent) : base(parent)
@@ -88,6 +91,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
 
 
-
+        //public override HitObjectType Type => HitObjectType.Enemy;
     }
 }
