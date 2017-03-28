@@ -12,9 +12,9 @@ namespace osu.Game.Modes.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgementInfo>
     {
-        private Container characters;
+        internal Container characters;
         private Container judgementLayer;
-        private Container projectiles;
+        internal Container projectiles;
 
         public override Vector2 Size
         {
