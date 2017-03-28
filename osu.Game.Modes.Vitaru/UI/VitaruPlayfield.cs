@@ -55,5 +55,18 @@ namespace osu.Game.Modes.Vitaru.UI
                 }
             });
         }
+
+        public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> h)
+        {
+            h.Depth = (float)h.HitObject.StartTime;
+
+            DrawableEnemy e = h as DrawableEnemy;
+            if (e != null)
+            {
+                e.MainParent = characters;
+            }
+
+            base.Add(e);
+        }
     }
 }
