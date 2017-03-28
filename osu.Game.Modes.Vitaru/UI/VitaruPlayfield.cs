@@ -16,13 +16,14 @@ namespace osu.Game.Modes.Vitaru.UI
     {
         internal Container characters;
         private Container judgementLayer;
+        internal Container projectiles;
 
         public override Vector2 Size
         {
             get
             {
                 var parentSize = Parent.DrawSize;
-                var aspectSize = parentSize.X * 0.75 < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 4f / 3f, parentSize.Y);
+                var aspectSize = parentSize.X * 0.9 < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.9f) : new Vector2(parentSize.Y * 9f / 16f, parentSize.Y);
 
                 return new Vector2(aspectSize.X / parentSize.X, aspectSize.Y / parentSize.Y) * base.Size;
             }
@@ -41,6 +42,11 @@ namespace osu.Game.Modes.Vitaru.UI
                 {
                     RelativeSizeAxes = Axes.Both,
                     Depth = 1,
+                },
+                projectiles = new Container
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Depth = 0,
                 },
                 characters = new Container
                 {
