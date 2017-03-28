@@ -1,16 +1,19 @@
 ﻿using OpenTK.Graphics;
 using OpenTK;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Modes.Vitaru.Objects;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruEnemy : DrawableVitaruCharacter
+    public class DrawableEnemy : DrawableVitaruCharacter
     {
-        public DrawableVitaruEnemy(VitaruHitObject hitObject) : base(hitObject)
+        public static bool Shoot = false;
+        public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
             Position = hitObject.Position;
-            CharacterType = CharacterType.Enemy;
+            CharacterType = HitObjectType.Enemy;
             CharacterHealth = 100;
             Team = 1;
             HitboxWidth = 20;
@@ -26,7 +29,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private void enemyShoot()
         {
             Bullet b;
-            parent.Add(b = new Bullet(1)
+            MainParent.Add(b = new Bullet(1)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,

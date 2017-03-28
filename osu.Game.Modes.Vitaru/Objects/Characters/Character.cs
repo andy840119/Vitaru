@@ -9,7 +9,7 @@ using OpenTK;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
-    public abstract class Character : Container
+    public abstract class Character : VitaruHitObject
     {
         public float CharacterHealth { get; set; } = 100;
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
@@ -17,47 +17,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public int ProjectileDamage { get; set; }
         public int BPM { get; set; } = 180;
 
-        protected Hitbox Hitbox;
-        protected Container MainParent;
-
-        public bool Shooting { get; set; } = false;
-
-        private double timeSinceLastShoot;
-
-        public Action OnDeath { get; set; }
-
-        public Action OnShoot { get; set; }
-
         public Character(Container parent)
         {
             MainParent = parent;
-        }
-
-        /// <summary>
-        /// The <see cref="Character"/> gets damaged, with a multiplier of <see cref="DamageMultiplier"/>
-        /// </summary>
-        /// <param name="damage">Damage without the Resistance applied</param>
-        /// <returns>If the Character died</returns>
-        public bool TakeDamage(int damage)
-        {
-            CharacterHealth -= (int)(damage * Armor);
-            if (CharacterHealth <= 0)
-            {
-                Dispose();
-                OnDeath();
-                return true;
-            }
-            return false;
-        }
-
-
-        /// <summary>
-        /// Heals the <see cref="Character"/> by the specified amount
-        /// </summary>
-        /// <param name="heal">Amount of health to be healed</param>
-        public void Heal(int heal)
-        {
-            CharacterHealth += heal;
         }
 
         protected override void Update()

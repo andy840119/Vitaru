@@ -35,7 +35,7 @@ namespace osu.Game.Modes.Vitaru
         {
             var enemy = h as Enemy;
             if (enemy != null)
-                return new DrawableVitaruEnemy(enemy);
+                return new DrawableEnemy(enemy);
             return null;
         }
 

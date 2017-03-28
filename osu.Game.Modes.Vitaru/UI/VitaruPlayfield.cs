@@ -3,10 +3,12 @@
 
 using osu.Framework.Graphics;
 using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.UI;
 using OpenTK;
 using osu.Game.Modes.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru.UI
 {

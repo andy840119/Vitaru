@@ -5,6 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Game.Modes.Vitaru.Objects;
 using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
@@ -12,7 +13,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public abstract class DrawableVitaruCharacter : DrawableVitaruHitObject
     {
-        public CharacterType CharacterType;
+        public HitObjectType CharacterType;
 
         protected Sprite CharacterSprite;
 
@@ -24,7 +25,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public int BPM { get; set; } = 180;
 
         protected Hitbox Hitbox;
-        protected Container parent = new Container();
+        public Container MainParent;
 
         public bool Shooting { get; set; } = false;
 
@@ -84,8 +85,28 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
-            if (parent != null)
-            foreach (Drawable draw in parent.Children)
+            base.Update();
+            foreach (Drawable draw in MainParent.Children)
+            {
+                if (draw is Bullet)
+                {
+                    Bullet bullet = draw as Bullet;
+                    if (bullet.Team != Team)
+                    {
+                        Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
+                        float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
+                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
+                        if (distance < minDist)
+                        {
+                            bullet.DeleteBullet();
+                            if (TakeDamage(bullet.BulletDamage))
+                                break;
+                        }
+                    }
+                }
+            }
+            if (MainParent != null)
+            foreach (Drawable draw in MainParent.Children)
             {
                 if (draw is Bullet)
                 {
@@ -107,10 +128,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             if (Shooting)
             {
                 timeSinceLastShoot += Clock.ElapsedFrameTime;
-                if ((timeSinceLastShoot / 1000.0) > 1 / (BPM / 30.0))
+                if (timeSinceLastShoot / 1000.0 > 1 / BPM / 30.0)
                 {
-                    if (OnShoot != null)
-                        OnShoot();
+                    OnShoot?.Invoke();
                     timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
                 }
             }
@@ -132,25 +152,18 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             string characterType = "player";
             switch(CharacterType)
             {
-                case CharacterType.Player:
+                case HitObjectType.Player:
                     characterType = "player";
                     break;
-                case CharacterType.Enemy:
+                case HitObjectType.Enemy:
                     characterType = "enemy";
                     break;
-                case CharacterType.Boss:
+                case HitObjectType.Boss:
                     characterType = "boss";
                     break;
             }
 
             CharacterSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType);
         }
-    }
-
-    public enum CharacterType
-    {
-        Player = 1,
-        Enemy = 2,
-        Boss = 4
     }
 }
