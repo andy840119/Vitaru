@@ -13,7 +13,7 @@ namespace osu.Game.Modes.Vitaru.Objects
 {
     public abstract class VitaruHitObject : HitObject
     {
-        public const double OBJECT_RADIUS = 64;
+        public const double HitboxSize = 12;
 
         private const double hittable_range = 300;
         private const double hit_window_50 = 150;
@@ -32,7 +32,7 @@ namespace osu.Game.Modes.Vitaru.Objects
 
         public Vector2 StackOffset => new Vector2(StackHeight * Scale * -6.4f);
 
-        public double Radius => OBJECT_RADIUS * Scale;
+        public double Radius => HitboxSize * Scale;
 
         public float Scale { get; set; } = 1;
 

@@ -89,8 +89,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             playerAngleRadian = (float)Math.Atan2((VitaruPlayer.PlayerPosition.X - EnemyPosition.X) , -1 * (VitaruPlayer.PlayerPosition.Y - EnemyPosition.Y));
             return playerAngleRadian;
         }
-
-
-        //public override HitObjectType Type => HitObjectType.Enemy;
+        public override HitObjectType Type => HitObjectType.Enemy;
     }
 }
