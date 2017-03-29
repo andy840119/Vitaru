@@ -10,7 +10,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 {
     public class VitaruModNoFail : ModNoFail
     {
-
+        //Health = 666f;
     }
 
     public class VitaruModEasy : ModEasy
@@ -20,7 +20,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModHidden : ModHidden
     {
-        public override string Description => @"Play with bullets dissapearing once they are close to you.";
+        public override string Description => @"Play with bullets dissapearing once they leave enemies immediate area.";
         public override double ScoreMultiplier => 1.18;
     }
 
@@ -32,6 +32,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModSuddenDeath : ModSuddenDeath
     {
+        public override string Description => "Don't get hit.";
         public override bool Ranked => true;
     }
 
@@ -52,7 +53,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModFlashlight : ModFlashlight
     {
-        public override string Description => @"Good Luck.";
+        public override string Description => @"Play with bullets only appearing when they are close.";
         public override double ScoreMultiplier => 1.18;
     }
 
