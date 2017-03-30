@@ -42,5 +42,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
             float xSpeed = BossSpeed.X * (float)Clock.ElapsedFrameTime;
             Position = BossPosition;
         }
+        public override HitObjectType Type => HitObjectType.Boss;
     }
 }

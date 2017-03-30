@@ -163,5 +163,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
                 Hitbox.Alpha = 0;
             return base.OnKeyUp(state, args);
         }
+        public override HitObjectType Type => HitObjectType.Player;
     }
 }

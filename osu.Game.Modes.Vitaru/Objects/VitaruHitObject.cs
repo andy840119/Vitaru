@@ -13,26 +13,15 @@ namespace osu.Game.Modes.Vitaru.Objects
 {
     public abstract class VitaruHitObject : HitObject
     {
-        public const double OBJECT_RADIUS = 64;
+        public const double HitboxSize = 8;
 
-        private const double hittable_range = 300;
-        private const double hit_window_50 = 150;
-        private const double hit_window_100 = 80;
-        private const double hit_window_300 = 30;
+        public float BPM;
 
         public Vector2 Position { get; set; }
 
-        public Vector2 StackedPosition => Position + StackOffset;
-
         public virtual Vector2 EndPosition => Position;
 
-        public Vector2 StackedEndPosition => EndPosition + StackOffset;
-
-        public virtual int StackHeight { get; set; }
-
-        public Vector2 StackOffset => new Vector2(StackHeight * Scale * -6.4f);
-
-        public double Radius => OBJECT_RADIUS * Scale;
+        public double Radius => HitboxSize * Scale;
 
         public float Scale { get; set; } = 1;
 

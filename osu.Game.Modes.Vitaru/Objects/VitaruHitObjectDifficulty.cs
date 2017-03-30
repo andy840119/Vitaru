@@ -38,7 +38,7 @@ namespace osu.Game.Modes.Vitaru.Objects
         private static readonly double[] spacing_weight_scaling = { 1400, 26.25 };
 
         /// <summary>
-        /// Almost the normed diameter of a circle (104 osu pixel). That is -after- position transforming.
+        /// Almost the normed diameter of a hitbox (104 osu pixel). That is -after- position transforming.
         /// </summary>
         private const double almost_diameter = 90;
 
@@ -48,7 +48,6 @@ namespace osu.Game.Modes.Vitaru.Objects
         internal int MaxCombo = 1;
 
         private float scalingFactor;
-        private float lazySliderLength;
 
         private Vector2 startPosition;
         private Vector2 endPosition;
@@ -56,17 +55,16 @@ namespace osu.Game.Modes.Vitaru.Objects
         internal VitaruHitObjectDifficulty(VitaruHitObject baseHitObject)
         {
             BaseHitObject = baseHitObject;
-            float circleRadius = baseHitObject.Scale * 64;
+            float hitboxRadius = baseHitObject.Scale * 64;
 
-            // We will scale everything by this factor, so we can assume a uniform CircleSize among beatmaps.
-            scalingFactor = 52.0f / circleRadius;
-            if (circleRadius < 30)
+            // We will scale everything by this factor, so we can assume a uniform HitboxSize among beatmaps.
+            scalingFactor = 52.0f / hitboxRadius;
+            if (hitboxRadius < 4)
             {
-                float smallCircleBonus = Math.Min(30.0f - circleRadius, 5.0f) / 50.0f;
-                scalingFactor *= 1.0f + smallCircleBonus;
+                float smallHitboxBonus = Math.Min(30.0f - hitboxRadius, 5.0f) / 50.0f;
+                scalingFactor *= 1.0f + smallHitboxBonus;
             }
 
-            // We have a normal HitCircle or a spinner
             else
                 endPosition = startPosition;
         }
@@ -113,7 +111,6 @@ namespace osu.Game.Modes.Vitaru.Objects
                 addition = spacingWeight(DistanceTo(previousHitObject), type) * spacing_weight_scaling[(int)type];
             }
 
-            // Scale addition by the time, that elapsed. Filter out HitObjects that are too close to be played anyway to avoid crazy values by division through close to zero.
             // You will never find maps that require this amongst ranked maps.
             addition /= Math.Max(timeElapsed, 50);
 
@@ -122,7 +119,7 @@ namespace osu.Game.Modes.Vitaru.Objects
 
         internal double DistanceTo(VitaruHitObjectDifficulty other)
         {
-            // Scale the distance by circle size.
+            // Scale the distance by hitbox size.
             return (startPosition - other.endPosition).Length * scalingFactor;
         }
     }
