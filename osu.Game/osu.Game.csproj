@@ -173,6 +173,7 @@
     <Compile Include="Overlays\Toolbar\ToolbarNotificationButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarSettingsButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarOverlayToggleButton.cs" />
+    <Compile Include="Overlays\Toolbar\ToolbarSystemClock.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarUserArea.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarUserButton.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
