@@ -6,13 +6,14 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Modes.Vitaru.Objects.Characters;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableEnemy : DrawableVitaruCharacter
     {
         public bool Shoot = false;
-        
+
         public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
             Position = hitObject.Position;

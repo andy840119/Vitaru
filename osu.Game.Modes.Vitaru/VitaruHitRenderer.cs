@@ -18,6 +18,7 @@ namespace osu.Game.Modes.Vitaru
 {
     internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
     {
+        public static bool playerLoaded = false;
         public List<HitObject> Enemy { get; set; }
         public VitaruHitRenderer(WorkingBeatmap beatmap)
             : base(beatmap)
@@ -33,9 +34,14 @@ namespace osu.Game.Modes.Vitaru
 
         protected override DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> GetVisualRepresentation(VitaruHitObject h)
         {
+            var player = h as VitaruPlayer;
+            if (player != null)
+                return new DrawableVitaruPlayer(player);
+
             var enemy = h as Enemy;
             if (enemy != null)
                 return new DrawableEnemy(enemy);
+
             return null;
         }
 

@@ -1,31 +1,26 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Modes.Vitaru.Objects.Projectiles;
 
 namespace osu.Game.Modes.Vitaru.Objects
 {
-    public abstract class BulletPattern : VitaruHitObject
+    public abstract class BulletPattern : Container
     {
         public int PatternID { get; set; } = 0;
-       /* public float patternAngle;
-        public int Team;
+    }
+    public class ConcaveWave : BulletPattern
+    {
 
-        public void SlowingStream(Container parent)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                Bullet bullet;
-                parent.Add(bullet = new Bullet(Team)
-                {
-                    Depth = 1,
-                    Anchor = Anchor.Centre,
-                    BulletAngle = patternAngle,
-                    BulletSpeed = i/8,
-                    BulletColor = Color4.Green,
-                });
-                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
-            }
-        }*/
+    }
+    public class ConvexWave : BulletPattern
+    {
+
+    }
+    public class DirectStrike : BulletPattern
+    {
+
     }
 }

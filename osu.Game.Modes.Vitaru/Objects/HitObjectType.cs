@@ -7,8 +7,6 @@ namespace osu.Game.Modes.Vitaru.Objects
     {
         Player,
         Enemy,
-        Boss,
-        Bullet,
-        Laser
+        Boss
     }
 }
