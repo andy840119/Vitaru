@@ -18,10 +18,7 @@ namespace osu.Game.Modes.Vitaru
 
         public override string Description => "osu!vitaru";
 
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap) => new VitaruDifficultyCalculator(beatmap);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {

@@ -9,13 +9,15 @@ namespace osu.Game.Modes.Vitaru
 {
     class VitaruDifficultyCalculator : DifficultyCalculator<VitaruHitObject>
     {
-        public VitaruDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
+        public VitaruDifficultyCalculator(Beatmap beatmap) : base(beatmap)
+        {
+        }
         
         protected override IBeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
 
         protected override double CalculateInternal(Dictionary<string, string> categoryDifficulty)
         {
-            return 0;
+            return 69;
         }
         public enum DifficultyType
         {
