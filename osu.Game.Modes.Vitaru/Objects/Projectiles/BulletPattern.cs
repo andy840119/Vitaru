@@ -5,8 +5,9 @@ using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Modes.Vitaru.Objects
 {
-    public abstract class BulletPatterns : Container
+    public abstract class BulletPattern : VitaruHitObject
     {
+        public int PatternID { get; set; } = 0;
        /* public float patternAngle;
         public int Team;
 

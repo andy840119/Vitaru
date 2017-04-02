@@ -5,6 +5,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Osu.Objects;
+using osu.Game.Modes.Vitaru.Objects;
 
 namespace osu.Game.Modes.Vitaru.Mods
 {
@@ -84,9 +85,9 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override bool Ranked => false;
     }
 
-    public class VitaruModAutoplay : ModAutoplay<OsuHitObject>
+    public class VitaruModAutoplay : ModAutoplay<VitaruHitObject>
     {
-        protected override Score CreateReplayScore(Beatmap<OsuHitObject> beatmap) => new Score
+        protected override Score CreateReplayScore(Beatmap<VitaruHitObject> beatmap) => new Score
         {
             Replay = new VitaruAutoReplay(beatmap)
         };

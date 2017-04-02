@@ -3,6 +3,7 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using OpenTK;
@@ -15,8 +16,8 @@ namespace osu.Desktop.VisualTests.Tests
     {
         public override string Description => @"Debug info";
 
-        private VitaruPlayer player;
-        private Enemy enemy;
+        private DrawableVitaruPlayer player;
+        private DrawableEnemy enemy;
 
         //Debug info, Change at will
         private SpriteText debugSpriteTextTopLeft;
@@ -37,16 +38,11 @@ namespace osu.Desktop.VisualTests.Tests
             Enemy.Shoot = true;
 
             //Player
-            player = new VitaruPlayer(this)
-            {
-                Anchor = Anchor.Centre,
-                Shooting = true,
-                OnDeath = NewPlayer
-            };
+            player = new DrawableVitaruPlayer(new VitaruPlayer());
             Add(player);
 
             //Enemy
-            enemy = new Enemy(this)
+            enemy = new DrawableEnemy(this)
             {
                 Anchor = Anchor.Centre,
                 EnemyPosition = new Vector2(0, -200),

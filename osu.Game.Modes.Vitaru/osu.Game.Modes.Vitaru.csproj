@@ -56,6 +56,7 @@
     <Compile Include="Objects\Drawables\DrawableVitaruCharacter.cs" />
     <Compile Include="Objects\Drawables\DrawableEnemy.cs" />
     <Compile Include="Objects\Drawables\DrawableVitaruHitObject.cs" />
+    <Compile Include="Objects\Drawables\DrawableVitaruPlayer.cs" />
     <Compile Include="Objects\Drawables\LaserPiece.cs" />
     <Compile Include="Objects\Drawables\CharacterSprite.cs" />
     <Compile Include="Objects\Drawables\SpellPiece.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Objects\Hitbox.cs" />
     <Compile Include="Objects\HitObjectType.cs" />
     <Compile Include="Objects\VitaruHitObjectDifficulty.cs" />
-    <Compile Include="Objects\Projectiles\BulletPatterns.cs" />
+    <Compile Include="Objects\Projectiles\BulletPattern.cs" />
     <Compile Include="Objects\Projectiles\Laser.cs" />
     <Compile Include="Objects\Projectiles\Projectile.cs" />
     <Compile Include="Objects\VitaruHitObject.cs" />

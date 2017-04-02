@@ -13,14 +13,28 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruPlayer : DrawableVitaruCharacter
     {
+        private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
+
+        public static Vector2 PlayerPosition = new Vector2(0, 160);
+
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
-            Position = new Vector2(200);
-            CharacterType = CharacterType.Boss;
-            characterHealth = 100;
+            keys[Key.Up] = false;
+            keys[Key.Right] = false;
+            keys[Key.Down] = false;
+            keys[Key.Left] = false;
+            keys[Key.Z] = false;
+            keys[Key.X] = false;
+            keys[Key.LShift] = false;
+            keys[Key.RShift] = false;
+            Anchor = Anchor.Centre;
+            Position = PlayerPosition;
+            CharacterType = HitObjectType.Player;
+            CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
+
         }
 
         private const float playerSpeed = 0.5f;
@@ -30,44 +44,80 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
-            if (isHalfSpeed)
+
+            //Handles Player Speed
+            var pos = Position;
+            float ySpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+
+            //All these handle keys and when they are or aren't pressed
+            if (keys[Key.LShift] | keys[Key.RShift])
             {
-                ShowHitbox();
+                xSpeed /= 2;
+                ySpeed /= 2;
             }
-            else
-                HideHitbox();
-            Position = new Vector2
-            (
-                MathHelper.Clamp(Position.X + positionChange.X * (float)Clock.ElapsedFrameTime, -200, 300),
-                MathHelper.Clamp(Position.Y + positionChange.Y * (float)Clock.ElapsedFrameTime, 0, 300)
-            );
+            if (keys[Key.Z])
+            {
+                Shooting = true;
+            }
+            if (keys[Key.Z] == false)
+            {
+                Shooting = false;
+            }
+            if (keys[Key.X])
+            {
+                //Bomb();
+            }
+            if (keys[Key.Up])
+            {
+                pos.Y -= ySpeed;
+            }
+            if (keys[Key.Left])
+            {
+                pos.X -= xSpeed;
+            }
+            if (keys[Key.Down])
+            {
+                pos.Y += ySpeed;
+            }
+            if (keys[Key.Right])
+            {
+                pos.X += xSpeed;
+            }
+
+            //Handles VitaruPlayer Position
+            pos.X = MathHelper.Clamp(pos.X, -200, 200);
+            pos.Y = MathHelper.Clamp(pos.Y, -200, 300);
+            Position = pos;
+            PlayerPosition = pos;
         }
+
+        private void shoot()
+        {
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletAngleDegree = 0f,
+                BulletSpeed = 1f,
+                BulletColor = Color4.Green,
+            });
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+        }
+
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (args.Key == Key.Up)
-                positionChange.Y = -playerSpeed;
-            if (args.Key == Key.Left)
-                positionChange.X = -playerSpeed;
-            if (args.Key == Key.Down)
-                positionChange.Y = playerSpeed;
-            if (args.Key == Key.Right)
-                positionChange.X = playerSpeed;
-            if (args.Key == Key.LShift)
-                isHalfSpeed = true;
+            keys[args.Key] = true;
+            if (args.Key == Key.LShift || args.Key == Key.RShift)
+                Hitbox.Alpha = 1;
             return base.OnKeyDown(state, args);
         }
         protected override bool OnKeyUp(InputState state, KeyUpEventArgs args)
         {
-                if (args.Key == Key.Up)
-                    positionChange.Y -= positionChange.Y;
-                if (args.Key == Key.Left)
-                    positionChange.X -= positionChange.X;
-                if (args.Key == Key.Down)
-                    positionChange.Y -= positionChange.Y;
-                if (args.Key == Key.Right)
-                    positionChange.X -= positionChange.X;
-                if (args.Key == Key.LShift)
-                    isHalfSpeed = false;
+            keys[args.Key] = false;
+            if (args.Key == Key.LShift || args.Key == Key.RShift)
+                Hitbox.Alpha = 0;
             return base.OnKeyUp(state, args);
         }
     }

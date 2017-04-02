@@ -5,7 +5,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osu.Game.Modes.Vitaru.Objects;
 using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 

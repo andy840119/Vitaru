@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
+using osu.Framework.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -7,9 +8,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
         {
+            Anchor = Anchor.TopCentre;
             Speed = new Vector2(0, -160);
             Position = hitObject.Position;
-            CharacterType = CharacterType.Boss;
+            CharacterType = HitObjectType.Boss;
             CharacterHealth = 1000;
             Team = 1;
             HitboxColor = Color4.Green;
