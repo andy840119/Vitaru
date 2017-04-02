@@ -34,13 +34,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         {
             
         }
+
+        public double EndTime { get; set; }
+
         /*
-        //Kiai toggle
-        public void ToggleKiai()
-        {
-            KiaiActivated = !KiaiActivated;
-        }*/
-        
+//Kiai toggle
+public void ToggleKiai()
+{
+KiaiActivated = !KiaiActivated;
+}*/
+
         public override HitObjectType Type => HitObjectType.Player;
     }
 }

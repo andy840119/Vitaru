@@ -17,5 +17,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 
         public Boss() { }
         public override HitObjectType Type => HitObjectType.Boss;
+
+        public double EndTime { get; set; }
     }
 }

@@ -191,6 +191,7 @@
     <Compile Include="Tests\TestCaseGamefield.cs" />
     <Compile Include="Tests\TestCaseMusicController.cs" />
     <Compile Include="Tests\TestCaseNotificationManager.cs" />
+    <Compile Include="Tests\TestCaseVitaru.cs" />
     <Compile Include="Tests\TestCasePlayer.cs" />
     <Compile Include="Tests\TestCaseHitObjects.cs" />
     <Compile Include="Tests\TestCaseKeyCounter.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Tests\TestCaseTextAwesome.cs" />
     <Compile Include="Tests\TestCasePlaySongSelect.cs" />
     <Compile Include="Tests\TestCaseTwoLayerButton.cs" />
+    <Compile Include="Tests\TestCaseVitaruDebug.cs" />
     <Compile Include="VisualTestGame.cs" />
     <Compile Include="Platform\TestStorage.cs" />
     <Compile Include="Tests\TestCaseOptions.cs" />

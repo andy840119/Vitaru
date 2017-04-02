@@ -32,5 +32,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         //Main Enemy Function
         public Enemy() : base() { }
         public override HitObjectType Type => HitObjectType.Enemy;
+
+        public double EndTime { get; set; }
     }
 }
