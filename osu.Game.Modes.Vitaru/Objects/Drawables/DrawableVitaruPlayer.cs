@@ -85,9 +85,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 pos.X += xSpeed;
             }
 
-            //Handles VitaruPlayer Position
-            pos.X = MathHelper.Clamp(pos.X, -200, 200);
-            pos.Y = MathHelper.Clamp(pos.Y, -200, 300);
             Position = pos;
             PlayerPosition = pos;
         }

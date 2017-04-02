@@ -9,14 +9,15 @@ using OpenTK;
 using osu.Game.Modes.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Modes.Osu.Objects.Drawables.Connections;
 
 namespace osu.Game.Modes.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgementInfo>
     {
-        internal Container characters;
+        private Container characters;
         private Container hitboxes;
-        internal Container projectiles;
+        private Container projectiles;
 
         public override Vector2 Size
         {
@@ -60,13 +61,11 @@ namespace osu.Game.Modes.Vitaru.UI
         {
             h.Depth = (float)h.HitObject.StartTime;
 
-            DrawableEnemy e = h as DrawableEnemy;
-            if (e != null)
-            {
-                e.MainParent = characters;
-            }
+            IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
+            if (c != null)
+                characters.Add(c.ProxiedLayer.CreateProxy());
 
-            base.Add(e);
+            base.Add(h);
         }
     }
 }

@@ -35,14 +35,7 @@ namespace osu.Game.Modes.Vitaru
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModMirror(),
-                                new VitaruModHardRock(),
-                            },
-                        },
+                        new VitaruModHardRock(),
                         new VitaruModSuddenDeath(),
                         new MultiMod
                         {
@@ -94,13 +87,13 @@ namespace osu.Game.Modes.Vitaru
 
         public override IEnumerable<KeyCounter> CreateGameplayKeys() => new KeyCounter[]
         {
+            new KeyCounterKeyboard(Key.LShift),
+            new KeyCounterKeyboard(Key.Z),
+            new KeyCounterKeyboard(Key.X),
             new KeyCounterKeyboard(Key.Up),
             new KeyCounterKeyboard(Key.Right),
             new KeyCounterKeyboard(Key.Left),
             new KeyCounterKeyboard(Key.Down),
-            new KeyCounterKeyboard(Key.X),
-            new KeyCounterKeyboard(Key.Z),
-            new KeyCounterKeyboard(Key.LShift),
         };
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;

@@ -34,7 +34,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             IHasPosition positionData = original as IHasPosition;
             IHasCombo comboData = original as IHasCombo;
 
-            /*if (VitaruHitRenderer.playerLoaded == false)
+            if (VitaruHitRenderer.playerLoaded == false)
             {
                 VitaruHitRenderer.playerLoaded = true;
                 return new VitaruPlayer
@@ -46,9 +46,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
 
                     NewCombo = comboData?.NewCombo ?? false,
                 };
-            }*/
-
-
+            }
             return new Enemy
             {
                 StartTime = original.StartTime,

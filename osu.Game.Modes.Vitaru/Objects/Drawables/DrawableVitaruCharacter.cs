@@ -85,6 +85,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
+            if (MainParent?.Children != null)
             foreach (Drawable draw in MainParent.Children)
             {
                 if (draw is Bullet)
