@@ -74,7 +74,6 @@
     <Compile Include="VitaruDifficultyCalculator.cs" />
     <Compile Include="VitaruHitRenderer.cs" />
     <Compile Include="VitaruObjectParser.cs" />
-    <Compile Include="VitaruScoreOverlay.cs" />
     <Compile Include="VitaruScoreProcessor.cs" />
     <Compile Include="UI\VitaruComboCounter.cs" />
     <Compile Include="UI\VitaruHitObjectConverter.cs" />

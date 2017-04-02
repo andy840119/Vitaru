@@ -34,11 +34,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Delay(TIME_PREEMPT, true);
         }
 
-        private void Delay(object p, bool v)
-        {
-            throw new NotImplementedException();
-        }
-
         protected virtual void UpdatePreemptState()
         {
             FadeIn(TIME_FADEIN);
