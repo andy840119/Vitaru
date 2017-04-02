@@ -34,6 +34,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
+            OnShoot = shoot;
 
         }
 

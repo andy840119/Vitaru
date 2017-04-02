@@ -58,7 +58,6 @@
     <Compile Include="Objects\Drawables\DrawableVitaruHitObject.cs" />
     <Compile Include="Objects\Drawables\DrawableVitaruPlayer.cs" />
     <Compile Include="Objects\Drawables\LaserPiece.cs" />
-    <Compile Include="Objects\Drawables\CharacterSprite.cs" />
     <Compile Include="Objects\Drawables\SpellPiece.cs" />
     <Compile Include="Objects\Drawables\TotemPiece.cs" />
     <Compile Include="Objects\Hitbox.cs" />
