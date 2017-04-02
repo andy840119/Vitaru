@@ -30,10 +30,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         }
         private CharacterSprite player;
         */
-        public VitaruPlayer() : base()
-        {
-            
-        }
+        public VitaruPlayer() : base() { }
 
         public double EndTime { get; set; }
 

@@ -16,6 +16,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
+            Origin = Anchor.Centre;
             Position = hitObject.Position;
             CharacterType = HitObjectType.Enemy;
             CharacterHealth = 100;

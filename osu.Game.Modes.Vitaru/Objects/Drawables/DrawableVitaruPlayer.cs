@@ -27,7 +27,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             keys[Key.X] = false;
             keys[Key.LShift] = false;
             keys[Key.RShift] = false;
-            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;

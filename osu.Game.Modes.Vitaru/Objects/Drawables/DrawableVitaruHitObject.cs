@@ -14,7 +14,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public DrawableVitaruHitObject(VitaruHitObject hitObject)
             : base(hitObject)
         {
-
         }
 
         protected override VitaruJudgementInfo CreateJudgementInfo() => new VitaruJudgementInfo { MaxScore = VitaruScoreResult.Kill1500 };

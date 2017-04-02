@@ -18,7 +18,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
     public class Enemy : Character
     {
         public bool Shoot = false;
-        public Vector2 EnemyPosition = new Vector2(0, -160);
+        public Vector2 EnemyPosition = new Vector2(0, 0);
         public Vector2 EnemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
         public BulletPattern Pattern { get; set; }
 

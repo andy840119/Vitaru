@@ -77,7 +77,6 @@
     <Compile Include="VitaruScoreProcessor.cs" />
     <Compile Include="UI\VitaruComboCounter.cs" />
     <Compile Include="UI\VitaruHitObjectConverter.cs" />
-    <Compile Include="UI\VitaruObjectRenderer.cs" />
     <Compile Include="UI\VitaruPlayfield.cs" />
     <Compile Include="VitaruRuleset.cs" />
     <Compile Include="Objects\Characters\Enemy.cs" />
