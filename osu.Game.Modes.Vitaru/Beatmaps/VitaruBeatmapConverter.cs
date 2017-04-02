@@ -39,7 +39,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
                 VitaruHitRenderer.playerLoaded = true;
                 return new VitaruPlayer
                 {
-                    StartTime = original.StartTime,
+                    StartTime = 0f,
                     Sample = original.Sample,
 
                     Position = positionData?.Position ?? Vector2.Zero,
