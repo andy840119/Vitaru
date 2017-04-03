@@ -21,12 +21,6 @@ namespace osu.Desktop.VisualTests.Tests
         private SpriteText score;
         private SpriteText combox;
 
-        //Score will probably be changed to reward points based on enemy difficulty
-        private int perfect = 30;
-        private int good = 20;
-        private int bad = 10;
-        private int graze = 5;
-
         public override void Reset()
         {
             base.Reset();

@@ -9,88 +9,44 @@ using OpenTK;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
-    public abstract class Character : Container
+    public abstract class Character : VitaruHitObject
     {
         public float CharacterHealth { get; set; } = 100;
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
-        public int BPM { get; set; } = 180;
+        public Spawn SpawnPoint { get; set; }
 
-        protected Hitbox Hitbox;
-        protected Container MainParent;
+        public Character() { }
+    }
 
-        public bool Shooting { get; set; } = false;
+    /// <summary>
+    /// Where the <see cref="Character"/> will spawn, based on the area it can be on.
+    /// </summary>
+    [Flags]
+    public enum Spawn
+    {
+        TopLeft = y0 | x0,
+        TopCentre = y0 | x1,
+        TopRight = y0 | x2,
 
-        private double timeSinceLastShoot;
+        CentreLeft = y1 | x0,
+        Centre = y1 | x1,
+        CentreRight = y1 | x2,
 
-        public Action OnDeath { get; set; }
-
-        public Action OnShoot { get; set; }
-
-        public Character(Container parent)
-        {
-            MainParent = parent;
-        }
-
-        /// <summary>
-        /// The <see cref="Character"/> gets damaged, with a multiplier of <see cref="DamageMultiplier"/>
-        /// </summary>
-        /// <param name="damage">Damage without the Resistance applied</param>
-        /// <returns>If the Character died</returns>
-        public bool TakeDamage(int damage)
-        {
-            CharacterHealth -= (int)(damage * Armor);
-            if (CharacterHealth <= 0)
-            {
-                Dispose();
-                OnDeath();
-                return true;
-            }
-            return false;
-        }
-
+        BottomLeft = y2 | x0,
+        BottomCentre = y2 | x1,
+        BottomRight = y2 | x2,
+        y0 = 1 << 0,
+        y1 = 1 << 1,
+        y2 = 1 << 2,
+        x0 = 1 << 3,
+        x1 = 1 << 4,
+        x2 = 1 << 5,
 
         /// <summary>
-        /// Heals the <see cref="Character"/> by the specified amount
+        /// The spawn will be set at the position of the <see cref="Character"/>
         /// </summary>
-        /// <param name="heal">Amount of health to be healed</param>
-        public void Heal(int heal)
-        {
-            CharacterHealth += heal;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            foreach (Drawable draw in MainParent.Children)
-            {
-                if (draw is Bullet)
-                {
-                    Bullet bullet = draw as Bullet;
-                    if (bullet.Team != Team)
-                    {
-                        Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
-                        float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
-                        if (distance < minDist)
-                        {
-                            bullet.DeleteBullet();
-                            if (TakeDamage(bullet.BulletDamage))
-                                break;
-                        }
-                    }
-                }
-            }
-            if (Shooting)
-            {
-                timeSinceLastShoot += Clock.ElapsedFrameTime;
-                if (timeSinceLastShoot / 1000.0 > 1 / BPM / 30.0)
-                {
-                    OnShoot?.Invoke();
-                    timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
-                }
-            }
-        }
+        Self = 1 << 6,
     }
 }

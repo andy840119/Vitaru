@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Screens.Play;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Vitaru.Mods;
+using OpenTK.Input;
 
 namespace osu.Game.Modes.Vitaru
 {
@@ -17,10 +18,7 @@ namespace osu.Game.Modes.Vitaru
 
         public override string Description => "osu!vitaru";
 
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap) => new VitaruDifficultyCalculator(beatmap);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
@@ -37,14 +35,7 @@ namespace osu.Game.Modes.Vitaru
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModMirror(),
-                                new VitaruModHardRock(),
-                            },
-                        },
+                        new VitaruModHardRock(),
                         new VitaruModSuddenDeath(),
                         new MultiMod
                         {
@@ -90,20 +81,20 @@ namespace osu.Game.Modes.Vitaru
             }
         }
 
-        public override HitRenderer CreateHitRendererWith(WorkingBeatmap beatmap)
-        {
-            throw new NotImplementedException();
-        }
+        public override HitRenderer CreateHitRendererWith(WorkingBeatmap beatmap) => new VitaruHitRenderer(beatmap);
 
-        public override ScoreProcessor CreateScoreProcessor()
-        {
-            throw new NotImplementedException();
-        }
+        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor();
 
-        public override IEnumerable<KeyCounter> CreateGameplayKeys()
+        public override IEnumerable<KeyCounter> CreateGameplayKeys() => new KeyCounter[]
         {
-            throw new NotImplementedException();
-        }
+            new KeyCounterKeyboard(Key.LShift),
+            new KeyCounterKeyboard(Key.Z),
+            new KeyCounterKeyboard(Key.X),
+            new KeyCounterKeyboard(Key.Up),
+            new KeyCounterKeyboard(Key.Right),
+            new KeyCounterKeyboard(Key.Left),
+            new KeyCounterKeyboard(Key.Down),
+        };
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;
 

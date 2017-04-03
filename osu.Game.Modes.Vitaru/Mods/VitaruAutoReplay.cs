@@ -2,15 +2,15 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
-using osu.Game.Modes.Osu.Objects;
+using osu.Game.Modes.Vitaru.Objects;
 
 namespace osu.Game.Modes.Vitaru.Mods
 {
     internal class VitaruAutoReplay : Replay
     {
-        private Beatmap<OsuHitObject> beatmap;
+        private Beatmap<VitaruHitObject> beatmap;
 
-        public VitaruAutoReplay(Beatmap<OsuHitObject> beatmap)
+        public VitaruAutoReplay(Beatmap<VitaruHitObject> beatmap)
         {
             this.beatmap = beatmap;
         }

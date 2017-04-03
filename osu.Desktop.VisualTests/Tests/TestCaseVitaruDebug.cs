@@ -3,114 +3,104 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using OpenTK;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Transforms;
+using osu.Framework.Timing;
+using osu.Game.Modes.Vitaru.Objects;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Modes.Vitaru.Judgements;
+using osu.Framework.Configuration;
 
 namespace osu.Desktop.VisualTests.Tests
 {
     class TestCaseVitaruDebug : TestCase
     {
-        public override string Description => @"Debug info";
+        private FramedClock framedClock;
 
-        private VitaruPlayer player;
-        private Enemy enemy;
+        private bool auto;
 
-        //Debug info, Change at will
-        private SpriteText debugSpriteTextTopLeft;
-        private SpriteText debugSpriteTextTopRight;
-        private string debugTextTopLeft = "Player Position (x,y): ";
-        private string debugTextTopRight;
+        public TestCaseVitaruDebug()
+        {
+            var rateAdjustClock = new StopwatchClock(true);
+            framedClock = new FramedClock(rateAdjustClock);
+        }
 
-        //Gross Shit, ignore it
-        public bool RandomMovement = false;
-        private Vector2 randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
-        private float t = RNG.Next(1, 3);
-        private bool enemyMoving;
+        private HitObjectType mode = HitObjectType.Enemy;
 
-        //Reset function (runs when you start this testcase)
+        private Container playfieldContainer;
+
+        private void load(HitObjectType mode)
+        {
+            this.mode = mode;
+
+            switch (mode)
+            {
+                case HitObjectType.Player:
+                    add(new DrawableVitaruPlayer(new VitaruPlayer
+                    {
+                        StartTime = framedClock.CurrentTime + 600,
+                        EndTime = framedClock.CurrentTime + 1600,
+                        Position = new Vector2(0, 0),
+                    }));
+                    break;
+                case HitObjectType.Enemy:
+                    add(new DrawableEnemy(new Enemy
+                    {
+                        StartTime = framedClock.CurrentTime + 600,
+                        EndTime = framedClock.CurrentTime + 1600,
+                        Position = new Vector2(0, 0),
+                    }));
+                    break;
+                case HitObjectType.Boss:
+                    add(new DrawableVitaruBoss(new Boss
+                    {
+                        StartTime = framedClock.CurrentTime + 600,
+                        EndTime = framedClock.CurrentTime + 1600,
+                        Position = new Vector2(0, 0),
+                    }));
+                    break;
+            }
+        }
+
         public override void Reset()
         {
             base.Reset();
-            Enemy.Shoot = true;
 
-            //Player
-            player = new VitaruPlayer(this)
-            {
-                Anchor = Anchor.Centre,
-                Shooting = true,
-                OnDeath = NewPlayer
-            };
-            Add(player);
+            AddButton(@"player", () => load(HitObjectType.Player));
+            AddButton(@"enemy", () => load(HitObjectType.Enemy));
+            AddButton(@"boss", () => load(HitObjectType.Boss));
 
-            //Enemy
-            enemy = new Enemy(this)
-            {
-                Anchor = Anchor.Centre,
-                EnemyPosition = new Vector2(0, -200),
-                OnDeath = NewEnemy,
-            };
-            Add(enemy);
+            framedClock.ProcessFrame();
 
-            //Debug stats, change to whatever you need to debug
-            debugSpriteTextTopLeft = new SpriteText()
+            var clockAdjustContainer = new Container
             {
-                Text = debugTextTopLeft + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y,
-                TextSize = 25,
-                Anchor = Anchor.TopRight,
-                Origin = Anchor.TopRight
+                RelativeSizeAxes = Axes.Both,
+                Clock = framedClock,
+                Children = new[]
+                {
+                    playfieldContainer = new Container { RelativeSizeAxes = Axes.Both },
+                }
             };
-            Add(debugSpriteTextTopLeft);
+
+            Add(clockAdjustContainer);
+
+            load(mode);
         }
 
-        //Update loop
-        protected override void Update()
-        {
-            if (RandomMovement == true)
-            {
-                randomMovements();
-            }
-            base.Update();
-            debugSpriteTextTopLeft.Text = debugTextTopLeft + VitaruPlayer.PlayerPosition.X + " , " + VitaruPlayer.PlayerPosition.Y;
-        }
+        private int depth;
 
-        //New Enemy Function
-        protected void NewEnemy()
+        private void add(DrawableVitaruHitObject h)
         {
-            enemy = new Enemy(this)
-            {
-                Anchor = Anchor.Centre,
-                EnemyPosition = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0)),
-                OnDeath = NewEnemy,
-            };
-            Add(enemy);
-        }
+            h.Anchor = Anchor.Centre;
+            h.Depth = depth++;
 
-        //New Player (VitaruPlayer) Function
-        protected void NewPlayer()
-        {
-            VitaruPlayer.PlayerPosition = new Vector2(0, 200);
-            player = new VitaruPlayer(this)
-            {
-                Anchor = Anchor.Centre,
-                OnDeath = NewPlayer,
-            };
-            Add(player);
-        }
-        private void randomMovements()
-        {
-            if (enemyMoving == false)
-            {
-                t = RNG.Next(100, 500);
-                randomPlace = new Vector2(RNG.Next(-190, 190), RNG.Next(-300, 0));
-                enemy.MoveTo(randomPlace, t, EasingTypes.InOutQuad);
-            }
-            if (Enemy.EnemyPos == randomPlace)
-            {
-                enemyMoving = false;
-            }
+            playfieldContainer.Add(h);
+            var proxyable = h as IDrawableHitObjectWithProxiedApproach;
         }
     }
 }

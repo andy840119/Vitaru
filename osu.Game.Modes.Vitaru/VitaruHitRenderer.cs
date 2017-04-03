@@ -5,24 +5,46 @@ using System;
 using System.Collections.Generic;
 using osu.Game.Modes.Objects;
 using osu.Game.Modes.UI;
+using osu.Game.Modes.Vitaru.Judgements;
+using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Beatmaps;
+using osu.Game.Modes.Vitaru.UI;
+using osu.Game.Beatmaps;
+using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru
 {
-    internal class VitaruHitRenderer : HitRenderer
+    internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
     {
-        public List<HitObject> Enemy { get; set; }
-
-        protected override bool AllObjectsJudged
+        public VitaruHitRenderer(WorkingBeatmap beatmap)
+            : base(beatmap)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
         }
+        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
 
-        public override ScoreProcessor CreateScoreProcessor()
+        protected override IBeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
+
+        protected override IBeatmapProcessor<VitaruHitObject> CreateBeatmapProcessor() => new VitaruBeatmapProcessor();
+
+        protected override Playfield<VitaruHitObject, VitaruJudgementInfo> CreatePlayfield() => new VitaruPlayfield();
+
+        protected override DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> GetVisualRepresentation(VitaruHitObject h)
         {
-            throw new NotImplementedException();
+            var player = h as VitaruPlayer;
+            if (player != null)
+                return new DrawableVitaruPlayer(player);
+
+            var enemy = h as Enemy;
+            if (enemy != null)
+                return new DrawableEnemy(enemy);
+
+            var boss = h as Boss;
+            if (boss != null)
+                return new DrawableEnemy(boss);
+
+            return null;
         }
     }
 }

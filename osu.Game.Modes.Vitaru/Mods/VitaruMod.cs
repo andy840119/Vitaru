@@ -5,12 +5,13 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Osu.Objects;
+using osu.Game.Modes.Vitaru.Objects;
 
 namespace osu.Game.Modes.Vitaru.Mods
 {
     public class VitaruModNoFail : ModNoFail
     {
-
+        //Health = 666f;
     }
 
     public class VitaruModEasy : ModEasy
@@ -20,7 +21,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModHidden : ModHidden
     {
-        public override string Description => @"Play with bullets dissapearing once they are close to you.";
+        public override string Description => @"Play with bullets dissapearing once they leave enemies immediate area.";
         public override double ScoreMultiplier => 1.18;
     }
 
@@ -32,6 +33,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModSuddenDeath : ModSuddenDeath
     {
+        public override string Description => "Don't get hit.";
         public override bool Ranked => true;
     }
 
@@ -52,7 +54,7 @@ namespace osu.Game.Modes.Vitaru.Mods
 
     public class VitaruModFlashlight : ModFlashlight
     {
-        public override string Description => @"Good Luck.";
+        public override string Description => @"Play with bullets only appearing when they are close.";
         public override double ScoreMultiplier => 1.18;
     }
 
@@ -83,9 +85,9 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override bool Ranked => false;
     }
 
-    public class VitaruModAutoplay : ModAutoplay<OsuHitObject>
+    public class VitaruModAutoplay : ModAutoplay<VitaruHitObject>
     {
-        protected override Score CreateReplayScore(Beatmap<OsuHitObject> beatmap) => new Score
+        protected override Score CreateReplayScore(Beatmap<VitaruHitObject> beatmap) => new Score
         {
             Replay = new VitaruAutoReplay(beatmap)
         };

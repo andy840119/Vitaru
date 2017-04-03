@@ -3,6 +3,7 @@
 
 using osu.Framework.Screens.Testing;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Modes.Vitaru.Objects.Drawables;
 using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -18,8 +19,8 @@ namespace osu.Desktop.VisualTests.Tests
 
         public override string Description => @"Showing Boss stuff";
 
-        internal VitaruPlayer Player;
-        private Boss boss;
+        internal DrawableVitaruPlayer Player;
+        private DrawableVitaruBoss boss;
         public int Kills;
         private SpriteText score;
 
@@ -28,19 +29,16 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
             Kills = 0;
 
-            Player = new VitaruPlayer(this)
-            {
-                Anchor = Anchor.Centre,
-                Shooting = true,
-            };
+            Player = new DrawableVitaruPlayer(new VitaruPlayer());
             Add(Player);
 
             AddButton(@"New Boss", NewBoss);
 
-            boss = new Boss(this)
+            boss = new DrawableVitaruBoss(new Boss
             {
-                Anchor = Anchor.TopCentre,
-                BossPosition = new Vector2(0, 100),
+                Position = new Vector2(0, 100)
+            })  
+            {
                 OnDeath = NewBoss,
             };
             Add(boss);
@@ -62,10 +60,13 @@ namespace osu.Desktop.VisualTests.Tests
         protected void NewBoss()
         {
             Kills++;
-            boss = new Boss(this)
+            Random RNG = new Random();
+            boss = new DrawableVitaruBoss(new Boss
+            {
+                Position = new Vector2(RNG.Next(-200, 200), RNG.Next(50, 200))
+            })
             {
                 Anchor = Anchor.TopCentre,
-                BossPosition = new Vector2(new Random().Next(-200, 200), new Random() .Next (50 , 200)),
                 OnDeath = NewBoss,
             };
             Add(boss);

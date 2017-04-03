@@ -7,8 +7,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 {
     public class Projectile : Container
     {
-
         public int Team { get; set; }
-
     }
 }
