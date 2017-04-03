@@ -18,7 +18,6 @@ namespace osu.Game.Modes.Vitaru
 {
     internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
     {
-        public static bool playerLoaded = false;
         public List<HitObject> Enemy { get; set; }
         public VitaruHitRenderer(WorkingBeatmap beatmap)
             : base(beatmap)

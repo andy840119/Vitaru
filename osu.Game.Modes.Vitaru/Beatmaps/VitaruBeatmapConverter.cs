@@ -12,6 +12,8 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
 {
     internal class VitaruBeatmapConverter : IBeatmapConverter<VitaruHitObject>
     {
+        public bool playerLoaded = false;
+
         public Beatmap<VitaruHitObject> Convert(Beatmap original)
         {
             return new Beatmap<VitaruHitObject>(original)
@@ -33,9 +35,9 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             IHasPosition positionData = original as IHasPosition;
             IHasCombo comboData = original as IHasCombo;
 
-            if (VitaruHitRenderer.playerLoaded == false)
+            if (playerLoaded == false)
             {
-                VitaruHitRenderer.playerLoaded = true;
+                playerLoaded = true;
                 return new VitaruPlayer
                 {
                     StartTime = 0f,
