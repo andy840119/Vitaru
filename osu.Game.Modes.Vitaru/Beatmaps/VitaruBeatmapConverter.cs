@@ -29,7 +29,6 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
 
         private VitaruHitObject convertHitObject(HitObject original)
         {
-            IHasCurve curveData = original as IHasCurve;
             IHasEndTime endTimeData = original as IHasEndTime;
             IHasPosition positionData = original as IHasPosition;
             IHasCombo comboData = original as IHasCombo;

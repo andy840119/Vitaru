@@ -36,12 +36,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             HitboxWidth = 8;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
-            MainParent = ;
         }
 
         private const float playerSpeed = 0.5f;
         private Vector2 positionChange = Vector2.Zero;
-        private bool isHalfSpeed = false;
 
         protected override void Update()
         {
