@@ -38,6 +38,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             if (playerLoaded == false)
             {
                 playerLoaded = true;
+                DrawableVitaruPlayer.PlayerPosition = new Vector2(256, 256);
                 return new VitaruPlayer
                 {
                     StartTime = 0f,

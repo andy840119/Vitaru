@@ -14,8 +14,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     public class DrawableVitaruPlayer : DrawableVitaruCharacter
     {
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
-
-        public static Vector2 PlayerPosition = new Vector2(0, 0);
+        
+        public static Vector2 PlayerPosition;
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {

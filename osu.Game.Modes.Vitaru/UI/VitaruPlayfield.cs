@@ -33,9 +33,9 @@ namespace osu.Game.Modes.Vitaru.UI
         public VitaruPlayfield() : base(512)
         {
             Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
+            Origin = Anchor.BottomRight;
             RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(0.75f);
+            Size = new Vector2(1f);
 
             Add(new Drawable[]
             {
