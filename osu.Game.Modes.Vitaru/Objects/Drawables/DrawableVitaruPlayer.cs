@@ -17,6 +17,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         
         public static Vector2 PlayerPosition;
 
+        //(MinX,MaxX,MinY,MaxY)
+        public Vector4 PlayerBounds = new Vector4(0, 512, -20, 720);
+
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
             keys[Key.Up] = false;
@@ -85,8 +88,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 pos.X += xSpeed;
             }
 
+            pos = Vector2.ComponentMin(pos, PlayerBounds.Yw);
+            pos = Vector2.ComponentMax(pos, PlayerBounds.Xz);
             Position = pos;
-            PlayerPosition = pos;
         }
 
         private void shoot()

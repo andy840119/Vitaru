@@ -10,14 +10,14 @@ using osu.Game.Modes.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Osu.Objects.Drawables.Connections;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Modes.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgementInfo>
     {
         private Container characters;
-        private Container hitboxes;
-        private Container projectiles;
+        private Box playfield;
 
         public override Vector2 Size
         {
@@ -32,27 +32,26 @@ namespace osu.Game.Modes.Vitaru.UI
 
         public VitaruPlayfield() : base(512)
         {
+            Position = new Vector2(-182, -200);
             Anchor = Anchor.Centre;
-            Origin = Anchor.BottomRight;
+            Origin = Anchor.Centre;
             RelativeSizeAxes = Axes.Both;
             Size = new Vector2(1f);
 
             Add(new Drawable[]
             {
-                hitboxes = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Depth = 1,
-                },
-                projectiles = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Depth = 0,
-                },
                 characters = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Depth = -1,
+                },
+                playfield = new Box
+                {
+                    Depth = -2,
+                    Size = new Vector2 (1.2f , 1f),
+                    Position = new Vector2(212 , 338),
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0.25f
                 }
             });
         }

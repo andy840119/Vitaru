@@ -18,7 +18,6 @@ namespace osu.Game.Modes.Vitaru
 {
     internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
     {
-        public List<HitObject> Enemy { get; set; }
         public VitaruHitRenderer(WorkingBeatmap beatmap)
             : base(beatmap)
         {
@@ -47,15 +46,5 @@ namespace osu.Game.Modes.Vitaru
 
             return null;
         }
-
-        protected override bool AllObjectsJudged
-        {
-            get
-            {
-                //Placeholder
-                return true;
-            }
-        }
-
     }
 }

@@ -19,7 +19,15 @@ namespace osu.Game.Modes.Vitaru.Objects
 
         public Vector2 Position { get; set; }
 
+        public Vector2 StackedPosition => Position + StackOffset;
+
         public virtual Vector2 EndPosition => Position;
+
+        public Vector2 StackedEndPosition => EndPosition + StackOffset;
+
+        public virtual int StackHeight { get; set; }
+
+        public Vector2 StackOffset => new Vector2(StackHeight * Scale * -6.4f);
 
         public double Radius => HitboxSize * Scale;
 

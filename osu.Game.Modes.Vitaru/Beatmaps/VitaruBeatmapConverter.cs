@@ -38,7 +38,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             if (playerLoaded == false)
             {
                 playerLoaded = true;
-                DrawableVitaruPlayer.PlayerPosition = new Vector2(256, 256);
+                DrawableVitaruPlayer.PlayerPosition = new Vector2(256, 612);
                 return new VitaruPlayer
                 {
                     StartTime = 0f,
@@ -65,8 +65,40 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             if (endIndex == -1)
                 endIndex = hitObjects.Count - 1;
 
-            int extendedEndIndex = endIndex;
+            int stackDistance = 3;
+            float stackThreshold = DrawableVitaruHitObject.TIME_PREEMPT * stackLeniency;
 
+            // Reset stacking inside the update range
+            for (int i = startIndex; i <= endIndex; i++)
+                hitObjects[i].StackHeight = 0;
+
+            // Extend the end index to include objects they are stacked on
+            int extendedEndIndex = endIndex;
+            for (int i = endIndex; i >= startIndex; i--)
+            {
+                int stackBaseIndex = i;
+                for (int n = stackBaseIndex + 1; n < hitObjects.Count; n++)
+                {
+                    VitaruHitObject stackBaseObject = hitObjects[stackBaseIndex];
+
+                    VitaruHitObject objectN = hitObjects[n];
+
+                    double endTime = (stackBaseObject as IHasEndTime)?.EndTime ?? stackBaseObject.StartTime;
+
+                    if (objectN.StartTime - endTime > stackThreshold)
+                        //We are no longer within stacking range of the next object.
+                        break;
+                }
+
+                if (stackBaseIndex > extendedEndIndex)
+                {
+                    extendedEndIndex = stackBaseIndex;
+                    if (extendedEndIndex == hitObjects.Count - 1)
+                        break;
+                }
+            }
+
+            //Reverse pass for stack calculation.
             int extendedStartIndex = startIndex;
             for (int i = extendedEndIndex; i > startIndex; i--)
             {
@@ -82,10 +114,21 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
 
                         double endTime = (objectN as IHasEndTime)?.EndTime ?? objectN.StartTime;
 
+                        if (objectI.StartTime - endTime > stackThreshold)
+                            //We are no longer within stacking range of the previous object.
+                            break;
+
                         // HitObjects before the specified update range haven't been reset yet
                         if (n < extendedStartIndex)
                         {
+                            objectN.StackHeight = 0;
                             extendedStartIndex = n;
+                        }
+
+                        if (Vector2.Distance(objectN.Position, objectI.Position) < stackDistance)
+                        {
+                            objectN.StackHeight = objectI.StackHeight + 1;
+                            objectI = objectN;
                         }
                     }
                 }
