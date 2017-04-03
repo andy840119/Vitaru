@@ -5,7 +5,7 @@ using osu.Game.Modes.Vitaru.Judgements;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject, VitaruJudgementInfo>
+    public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject, VitaruJudgement>
     {
         public const float TIME_PREEMPT = 300;
         public const float TIME_FADEIN = 200;
@@ -16,7 +16,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
         }
 
-        protected override VitaruJudgementInfo CreateJudgementInfo() => new VitaruJudgementInfo { MaxScore = VitaruScoreResult.Kill1500 };
+        protected override VitaruJudgement CreateJudgement() => new VitaruJudgement { MaxScore = VitaruScoreResult.Kill1500 };
 
         protected override void UpdateState(ArmedState state)
         {

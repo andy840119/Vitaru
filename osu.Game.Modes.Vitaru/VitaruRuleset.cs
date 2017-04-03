@@ -10,6 +10,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Vitaru.Mods;
 using OpenTK.Input;
+using osu.Game.Modes.Scoring;
 
 namespace osu.Game.Modes.Vitaru
 {

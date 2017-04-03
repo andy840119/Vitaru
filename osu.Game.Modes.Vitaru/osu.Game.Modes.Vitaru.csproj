@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="Beatmaps\VitaruBeatmapConverter.cs" />
     <Compile Include="Beatmaps\VitaruBeatmapProcessor.cs" />
-    <Compile Include="Judgements\VitaruJudgementInfo.cs" />
-    <Compile Include="Mods\VitaruAutoReplay.cs" />
+    <Compile Include="Judgements\VitaruJudgement.cs" />
+    <Compile Include="Scoring\VitaruScore.cs" />
+    <Compile Include="VitaruAutoReplay.cs" />
     <Compile Include="Mods\VitaruMod.cs" />
     <Compile Include="Objects\Characters\Boss.cs" />
     <Compile Include="Objects\Characters\Character.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="VitaruDifficultyCalculator.cs" />
     <Compile Include="VitaruHitRenderer.cs" />
     <Compile Include="VitaruObjectParser.cs" />
-    <Compile Include="VitaruScoreProcessor.cs" />
+    <Compile Include="Scoring\VitaruScoreProcessor.cs" />
     <Compile Include="UI\VitaruComboCounter.cs" />
     <Compile Include="UI\VitaruPlayfield.cs" />
     <Compile Include="VitaruRuleset.cs" />
