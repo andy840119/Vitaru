@@ -15,7 +15,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
 
-        public static Vector2 PlayerPosition = new Vector2(0, 160);
+        public static Vector2 PlayerPosition = new Vector2(0, 0);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -35,7 +35,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
             OnShoot = shoot;
-
+            Anchor = Anchor.Centre;
+            MainParent = ;
         }
 
         private const float playerSpeed = 0.5f;
@@ -92,16 +93,23 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private void shoot()
         {
-            Bullet bullet;
-            MainParent.Add(bullet = new Bullet(Team)
+            if (MainParent == null)
             {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletAngleDegree = 0f,
-                BulletSpeed = 1f,
-                BulletColor = Color4.Green,
-            });
-            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+
+            }
+            if (MainParent != null)
+            {
+                Bullet bullet;
+                MainParent.Add(bullet = new Bullet(Team)
+                {
+                    Depth = 1,
+                    Anchor = Anchor.Centre,
+                    BulletAngleDegree = 0f,
+                    BulletSpeed = 1f,
+                    BulletColor = Color4.Green,
+                });
+                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+            }
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)

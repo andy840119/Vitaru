@@ -41,7 +41,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private void enemyShoot()
         {
             Bullet b;
-            MainParent.Add(b = new Bullet(1)
+            MainParent.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,

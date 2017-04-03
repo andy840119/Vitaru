@@ -25,16 +25,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
 
-        //Debug info
-        public static int BulletsLoaded = 0;
-        public static int BulletCapHit = 0;
-
         private BulletPiece bulletSprite;
         
 
         public Bullet(int team)
         {
-            BulletsLoaded++;
             Team = team;
             Children = new[]
             {
@@ -51,14 +46,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             GetBulletVelocity();
             base.Update();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-            if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
+            /*if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
             {
                 DeleteBullet();
-            }
+            }*/
 
             if (Clock.ElapsedFrameTime > 40)
             {
-                BulletCapHit++;
                 DeleteBullet();
             }
         }
@@ -80,7 +74,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         internal void DeleteBullet()
         {
-            BulletsLoaded--;
             Dispose();
         }
     }
