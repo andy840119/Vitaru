@@ -35,11 +35,15 @@ namespace osu.Game.Modes.Vitaru
             {
                 switch (judgement.Result)
                 {
-                    case HitResult.Miss:
+                    //In this case, "Hit" does not mean you were hit, it means you hit or killed an enemy / boss
+                    case HitResult.Hit:
                         Combo.Value++;
                         Health.Value += 0.1f;
                         break;
-                    case HitResult.Hit:
+
+                        //In this case, "Miss" does not mean you missed a shot or avoided one coming from an enemy,
+                        //it means you took damage or an enemy got away
+                    case HitResult.Miss:
                         Combo.Value = 0;
                         Health.Value -= 0.2f;
                         break;
