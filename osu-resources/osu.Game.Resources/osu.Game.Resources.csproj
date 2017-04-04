@@ -616,8 +616,12 @@
     <EmbeddedResource Include="Textures\Grades\SSPlus.png" />
     <EmbeddedResource Include="Textures\Grades\S.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Textures\Play\Vitaru\" />
+    <EmbeddedResource Include="Textures\Play\Vitaru\boss.png" />
+    <EmbeddedResource Include="Textures\Play\Vitaru\enemy.png" />
+    <EmbeddedResource Include="Textures\Play\Vitaru\player.png" />
+    <EmbeddedResource Include="Textures\Play\Vitaru\sign.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
