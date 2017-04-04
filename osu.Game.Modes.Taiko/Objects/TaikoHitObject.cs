@@ -7,27 +7,22 @@ using osu.Game.Modes.Objects;
 
 namespace osu.Game.Modes.Taiko.Objects
 {
-    public class TaikoHitObject : HitObject
+    public abstract class TaikoHitObject : HitObject
     {
         /// <summary>
         /// HitCircle radius.
         /// </summary>
-        public const float CIRCLE_RADIUS = 64;
+        public const float CIRCLE_RADIUS = 42f;
 
         /// <summary>
-        /// The hit window that results in a "GREAT" hit.
+        /// Time (in milliseconds) to scroll in the hit object with a speed-adjusted beat length of 1 second.
         /// </summary>
-        public double HitWindowGreat = 35;
+        private const double base_scroll_time = 6000;
 
         /// <summary>
-        /// The hit window that results in a "GOOD" hit.
+        /// The velocity multiplier applied to this hit object.
         /// </summary>
-        public double HitWindowGood = 80;
-
-        /// <summary>
-        /// The hit window that results in a "MISS".
-        /// </summary>
-        public double HitWindowMiss = 95;
+        public float VelocityMultiplier = 1;
 
         /// <summary>
         /// The time to scroll in the HitObject.
@@ -35,25 +30,27 @@ namespace osu.Game.Modes.Taiko.Objects
         public double PreEmpt;
 
         /// <summary>
+        /// Whether this HitObject is a "strong" type.
+        /// Strong hit objects give more points for hitting the hit object with both keys.
+        /// </summary>
+        public bool IsStrong;
+
+        /// <summary>
         /// Whether this HitObject is in Kiai time.
         /// </summary>
-        public bool Kiai;
+        public bool Kiai { get; protected set; }
 
         public override void ApplyDefaults(TimingInfo timing, BeatmapDifficulty difficulty)
         {
             base.ApplyDefaults(timing, difficulty);
 
-            PreEmpt = 600 / (timing.SliderVelocityAt(StartTime) * difficulty.SliderMultiplier) * 1000;
+            PreEmpt = base_scroll_time / difficulty.SliderMultiplier * timing.BeatLengthAt(StartTime) * timing.SpeedMultiplierAt(StartTime) / VelocityMultiplier / 1000;
 
             ControlPoint overridePoint;
             Kiai = timing.TimingPointAt(StartTime, out overridePoint).KiaiMode;
 
             if (overridePoint != null)
                 Kiai |= overridePoint.KiaiMode;
-
-            HitWindowGreat = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 50, 35, 20);
-            HitWindowGood = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 120, 80, 50);
-            HitWindowMiss = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 135, 95, 70);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System;
-using System.Collections.Generic;
-using osu.Game.Modes.Objects;
 using osu.Game.Modes.UI;
 using osu.Game.Modes.Vitaru.Judgements;
 using osu.Game.Modes.Vitaru.Objects;
@@ -13,10 +10,11 @@ using osu.Game.Modes.Vitaru.Beatmaps;
 using osu.Game.Modes.Vitaru.UI;
 using osu.Game.Beatmaps;
 using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Modes.Scoring;
 
 namespace osu.Game.Modes.Vitaru
 {
-    internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgementInfo>
+    internal class VitaruHitRenderer : HitRenderer<VitaruHitObject, VitaruJudgement>
     {
         public VitaruHitRenderer(WorkingBeatmap beatmap)
             : base(beatmap)
@@ -28,9 +26,9 @@ namespace osu.Game.Modes.Vitaru
 
         protected override IBeatmapProcessor<VitaruHitObject> CreateBeatmapProcessor() => new VitaruBeatmapProcessor();
 
-        protected override Playfield<VitaruHitObject, VitaruJudgementInfo> CreatePlayfield() => new VitaruPlayfield();
+        protected override Playfield<VitaruHitObject, VitaruJudgement> CreatePlayfield() => new VitaruPlayfield();
 
-        protected override DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> GetVisualRepresentation(VitaruHitObject h)
+        protected override DrawableHitObject<VitaruHitObject, VitaruJudgement> GetVisualRepresentation(VitaruHitObject h)
         {
             var player = h as VitaruPlayer;
             if (player != null)

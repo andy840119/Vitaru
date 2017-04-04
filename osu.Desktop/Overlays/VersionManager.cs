@@ -76,7 +76,7 @@ namespace osu.Desktop.Overlays
                             TextSize = 12,
                             Colour = colours.Yellow,
                             Font = @"Venera",
-                            Text = @"Vitaru Development Build"
+                            Text = @"Development Build"
                         },
                         new Sprite
                         {
@@ -215,6 +215,7 @@ namespace osu.Desktop.Overlays
                         Origin = Anchor.Centre,
                         Icon = FontAwesome.fa_upload,
                         Colour = Color4.White,
+                        TextSize = 20
                     }
                 });
             }

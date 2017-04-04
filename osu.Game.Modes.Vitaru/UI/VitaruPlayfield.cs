@@ -14,7 +14,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Modes.Vitaru.UI
 {
-    public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgementInfo>
+    public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
         private Container characters;
         private Box playfield;
@@ -56,7 +56,7 @@ namespace osu.Game.Modes.Vitaru.UI
             });
         }
 
-        public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgementInfo> h)
+        public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgement> h)
         {
             h.Depth = (float)h.HitObject.StartTime;
 

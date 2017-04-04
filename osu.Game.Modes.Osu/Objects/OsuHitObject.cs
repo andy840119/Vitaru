@@ -36,9 +36,7 @@ namespace osu.Game.Modes.Osu.Objects
 
         public float Scale { get; set; } = 1;
 
-        public abstract HitObjectType Type { get; }
-
-        public Color4 ComboColour { get; set; }
+        public Color4 ComboColour { get; set; } = Color4.Gray;
         public virtual bool NewCombo { get; set; }
         public int ComboIndex { get; set; }
 

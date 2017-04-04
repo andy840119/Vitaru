@@ -6,6 +6,7 @@ using osu.Game.Graphics;
 using osu.Game.Modes.Objects;
 using osu.Game.Modes.UI;
 using System;
+using osu.Game.Modes.Scoring;
 
 namespace osu.Game.Modes.Mods
 {
@@ -148,14 +149,6 @@ namespace osu.Game.Modes.Mods
         public override bool Ranked => true;
     }
 
-    public abstract class ModMirror : Mod
-    {
-        public override string Name => "Mirror";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_hidden;
-        public override string Description => "Play backwards";
-        public override bool Ranked => true;
-    }
-
     public abstract class ModCoop : Mod
     {
         public override string Name => "Coop";
@@ -188,7 +181,7 @@ namespace osu.Game.Modes.Mods
 
         public void Apply(HitRenderer<T> hitRenderer)
         {
-            hitRenderer.InputManager.ReplayInputHandler = CreateReplayScore(hitRenderer.Beatmap)?.Replay?.GetInputHandler();
+            hitRenderer.SetReplay(CreateReplayScore(hitRenderer.Beatmap)?.Replay);
         }
     }
 

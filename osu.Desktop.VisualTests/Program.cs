@@ -9,7 +9,6 @@ using osu.Game.Modes.Catch;
 using osu.Game.Modes.Mania;
 using osu.Game.Modes.Osu;
 using osu.Game.Modes.Taiko;
-using osu.Game.Modes.Vitaru;
 
 namespace osu.Desktop.VisualTests
 {
@@ -26,10 +25,9 @@ namespace osu.Desktop.VisualTests
                 Ruleset.Register(new TaikoRuleset());
                 Ruleset.Register(new ManiaRuleset());
                 Ruleset.Register(new CatchRuleset());
-                Ruleset.Register(new VitaruRuleset());
 
                 if (benchmark)
-                    host.Run(new Benchmark());
+                    host.Run(new AutomatedVisualTestGame());
                 else
                     host.Run(new VisualTestGame());
             }

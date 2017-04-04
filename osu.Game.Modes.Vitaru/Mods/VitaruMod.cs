@@ -6,6 +6,7 @@ using osu.Game.Graphics;
 using osu.Game.Modes.Mods;
 using osu.Game.Modes.Osu.Objects;
 using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Modes.Scoring;
 
 namespace osu.Game.Modes.Vitaru.Mods
 {
@@ -59,11 +60,6 @@ namespace osu.Game.Modes.Vitaru.Mods
     }
 
     public class VitaruModDoubleTrouble : ModDoubleTrouble
-    {
-        public override double ScoreMultiplier => 1.18;
-    }
-
-    public class VitaruModMirror : ModMirror
     {
         public override double ScoreMultiplier => 1.18;
     }

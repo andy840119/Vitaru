@@ -17,7 +17,7 @@ namespace osu.Desktop
 {
     internal class OsuGameDesktop : OsuGame
     {
-        private VersionManager versionManager;
+        private readonly VersionManager versionManager;
 
         public OsuGameDesktop(string[] args = null)
             : base(args)
@@ -29,7 +29,7 @@ namespace osu.Desktop
         {
             base.LoadComplete();
 
-            versionManager.LoadAsync(this);
+            LoadComponentAsync(versionManager);
             ScreenChanged += s =>
             {
                 if (!versionManager.IsAlive && s is Intro)

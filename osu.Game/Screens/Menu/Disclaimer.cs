@@ -16,7 +16,7 @@ namespace osu.Game.Screens.Menu
     internal class Disclaimer : OsuScreen
     {
         private Intro intro;
-        private TextAwesome icon;
+        private readonly TextAwesome icon;
         private Color4 iconColour;
 
         internal override bool ShowOverlays => false;
@@ -88,9 +88,9 @@ namespace osu.Game.Screens.Menu
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuGame game, OsuColour colours)
+        private void load(OsuColour colours)
         {
-            (intro = new Intro()).LoadAsync(game);
+            LoadComponentAsync(intro = new Intro());
 
             iconColour = colours.Yellow;
         }

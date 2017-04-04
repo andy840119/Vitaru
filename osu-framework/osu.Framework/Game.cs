@@ -45,7 +45,7 @@ namespace osu.Framework
 
         public FontStore Fonts;
 
-        private Container content;
+        private readonly Container content;
         private PerformanceOverlay performanceContainer;
         internal DrawVisualiser DrawVisualiser;
 
@@ -73,15 +73,15 @@ namespace osu.Framework
 
         private void addDebugTools()
         {
-            (DrawVisualiser = new DrawVisualiser
+            LoadComponentAsync(DrawVisualiser = new DrawVisualiser
             {
                 Depth = float.MinValue / 2,
-            }).LoadAsync(this, AddInternal);
+            }, AddInternal);
 
-            (logOverlay = new LogOverlay
+            LoadComponentAsync(logOverlay = new LogOverlay
             {
                 Depth = float.MinValue / 2,
-            }).LoadAsync(this, AddInternal);
+            }, AddInternal);
         }
 
         public override bool Invalidate(Invalidation invalidation = Invalidation.All, Drawable source = null, bool shallPropagate = true)
@@ -141,7 +141,7 @@ namespace osu.Framework
         {
             base.LoadComplete();
 
-            (performanceContainer = new PerformanceOverlay
+            LoadComponentAsync(performanceContainer = new PerformanceOverlay
             {
                 Margin = new MarginPadding(5),
                 Direction = FillDirection.Vertical,
@@ -151,7 +151,7 @@ namespace osu.Framework
                 Anchor = Anchor.BottomRight,
                 Origin = Anchor.BottomRight,
                 Depth = float.MinValue
-            }).LoadAsync(this, delegate(Drawable overlay)
+            }, delegate(Drawable overlay)
             {
                 performanceContainer.Threads.AddRange(Host.Threads.Reverse());
 
@@ -223,7 +223,6 @@ namespace osu.Framework
             }
 
             return base.OnKeyDown(state, args);
-
         }
 
         public void Exit()
