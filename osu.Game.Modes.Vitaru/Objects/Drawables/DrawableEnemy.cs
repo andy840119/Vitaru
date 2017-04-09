@@ -7,6 +7,7 @@ using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.Vitaru.Objects;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
