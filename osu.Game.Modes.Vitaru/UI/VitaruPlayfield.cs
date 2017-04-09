@@ -16,8 +16,8 @@ namespace osu.Game.Modes.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
-        private Container characters;
-        private Box playfield;
+        public Container MainPlayfield;
+        private Box playfieldBackground;
 
         public override Vector2 Size
         {
@@ -40,12 +40,12 @@ namespace osu.Game.Modes.Vitaru.UI
 
             Add(new Drawable[]
             {
-                characters = new Container
+                MainPlayfield = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Depth = -1,
                 },
-                playfield = new Box
+                playfieldBackground = new Box
                 {
                     Depth = -2,
                     Size = new Vector2 (1.2f , 1f),
@@ -54,6 +54,7 @@ namespace osu.Game.Modes.Vitaru.UI
                     Alpha = 0.25f
                 }
             });
+            DrawableVitaruCharacter.playfield = MainPlayfield;
         }
 
         public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgement> h)
@@ -62,7 +63,7 @@ namespace osu.Game.Modes.Vitaru.UI
 
             IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
             if (c != null)
-                characters.Add(c.ProxiedLayer.CreateProxy());
+                MainPlayfield.Add(c.ProxiedLayer.CreateProxy());
 
             base.Add(h);
         }

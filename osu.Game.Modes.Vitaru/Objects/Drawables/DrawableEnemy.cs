@@ -19,7 +19,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = hitObject.Position;
             CharacterType = HitObjectType.Enemy;
-            CharacterHealth = 100;
+            CharacterHealth = 60;
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;

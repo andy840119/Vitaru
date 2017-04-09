@@ -97,7 +97,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             if (MainParent == null)
             {
-
+                //MainParent = MainPlayfield;
             }
             if (MainParent != null)
             {

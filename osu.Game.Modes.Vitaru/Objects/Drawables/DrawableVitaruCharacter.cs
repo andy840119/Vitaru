@@ -23,8 +23,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public int ProjectileDamage { get; set; }
         public int BPM { get; set; } = 180;
 
+        public static Container playfield;
         protected Hitbox Hitbox;
-        public Container MainParent;
+        public Container MainParent = playfield;
 
         public bool Shooting { get; set; } = false;
 
@@ -67,7 +68,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             if (CharacterHealth <= 0)
             {
                 Dispose();
-                OnDeath();
+                //OnDeath();
                 return true;
             }
             return false;
@@ -84,6 +85,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
+            MainParent = playfield;
             base.Update();
             if (MainParent?.Children != null)
             foreach (Drawable draw in MainParent.Children)
