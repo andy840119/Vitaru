@@ -7,6 +7,8 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -21,10 +23,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
-        public int BPM { get; set; } = 180;
+        public int BPM { get; set; } = 190;
+        private SampleChannel sampleShoot;
+        private SampleChannel sampleDeath;
 
+        public static Container playfield;
         protected Hitbox Hitbox;
-        public Container MainParent;
+        public Container MainParent = playfield;
 
         public bool Shooting { get; set; } = false;
 
@@ -67,7 +72,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             if (CharacterHealth <= 0)
             {
                 Dispose();
-                OnDeath();
+                sampleDeath.Play();
+                //OnDeath();
                 return true;
             }
             return false;
@@ -84,6 +90,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
+            MainParent = playfield;
             base.Update();
             if (MainParent?.Children != null)
             foreach (Drawable draw in MainParent.Children)
@@ -130,6 +137,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 timeSinceLastShoot += Clock.ElapsedFrameTime;
                 if (timeSinceLastShoot / 1000.0 > 1 / BPM / 30.0)
                 {
+                    sampleShoot.Play();
                     OnShoot?.Invoke();
                     timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
                 }
@@ -147,7 +155,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         }
 
         [BackgroundDependencyLoader]
-        private void load(TextureStore textures)
+        private void load(AudioManager audio, TextureStore textures)
         {
             string characterType = "player";
             switch(CharacterType)
@@ -163,6 +171,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     break;
             }
 
+            sampleDeath = audio.Sample.Get(@"Vitaru/deathSound");
+            sampleShoot = audio.Sample.Get(@"Vitaru/shootSound");
             CharacterSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType);
         }
     }

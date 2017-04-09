@@ -7,19 +7,20 @@ using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.Vitaru.Objects;
 using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableEnemy : DrawableVitaruCharacter
     {
-        public bool Shoot = false;
+        public bool Shoot = true;
 
         public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
             Origin = Anchor.Centre;
             Position = hitObject.Position;
             CharacterType = HitObjectType.Enemy;
-            CharacterHealth = 100;
+            CharacterHealth = 60;
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
@@ -37,19 +38,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
 
-
         private void enemyShoot()
         {
-            Bullet b;
-            MainParent.Add(b = new Bullet(Team)
+            ConcaveWave Wave;
+            MainParent.Add(Wave = new ConcaveWave()
             {
+                Origin = Anchor.Centre,
                 Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletSpeed = 0.2f,
-                BulletAngleRadian = playerRelativePositionAngle(),
-                BulletColor = Color4.Red,
             });
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+            Wave.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), Wave));
         }
         public float playerRelativePositionAngle()
         {
