@@ -7,7 +7,6 @@ using System;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Extensions.Color4Extensions;
 
 namespace osu.Game.Modes.Vitaru.Objects.Projectiles
@@ -16,11 +15,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
     {
         //Different stats for Bullet that should always be changed
         public int BulletDamage { get; set; } = 20;
-        public Color4 BulletColor { get; set; } = Color4.Red;
+        public Color4 BulletColor { get; set; } = Color4.White;
         public float BulletSpeed { get; set; } = 20;
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -1;
+
+        private Vector4 bulletBounds = new Vector4(-30, -50, 532, 740);
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
@@ -43,13 +44,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         protected override void Update()
         {
+
+            //This is a bad way of doing this and halfs the performance of bullets, needs revision at some point
             GetBulletVelocity();
+
             base.Update();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-            /*if (Position.Y < -375 | Position.X < -225 | Position.Y > 375 | Position.X > 225)
+            if (Position.Y < bulletBounds.Y | Position.X < bulletBounds.X | Position.Y > bulletBounds.W | Position.X > bulletBounds.Z)
             {
                 DeleteBullet();
-            }*/
+            }
 
             if (Clock.ElapsedFrameTime > 40)
             {
@@ -78,7 +82,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         }
     }
 
-    class BulletPiece : Container
+    public class BulletPiece : Container
     {
         private CircularContainer bulletContainer;
         private object bullet;

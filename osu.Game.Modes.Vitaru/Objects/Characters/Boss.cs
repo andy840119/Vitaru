@@ -13,7 +13,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
     public class Boss : Character
     {
         public Vector2 BossPosition = new Vector2(0, -160);
-        public List<BulletPattern> Patterns { get; set; }
 
         public Boss() { }
         public override HitObjectType Type => HitObjectType.Boss;
