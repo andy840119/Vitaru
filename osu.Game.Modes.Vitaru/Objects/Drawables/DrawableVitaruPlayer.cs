@@ -101,16 +101,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             if (MainParent != null)
             {
-                Bullet bullet;
-                MainParent.Add(bullet = new Bullet(Team)
+                SingleShot p;
+                MainParent.Add(p = new SingleShot(Team)
                 {
-                    Depth = 1,
-                    Anchor = Anchor.Centre,
-                    BulletAngleDegree = 0,
-                    BulletSpeed = 1f,
-                    BulletColor = Color4.Green,
+                    PatternAngleDegree = 0,
+                    PatternSpeed = 1f,
+                    PatternColor = Color4.Green,
                 });
-                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+                p.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), p));
             }
         }
 

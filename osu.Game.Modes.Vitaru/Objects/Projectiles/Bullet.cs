@@ -20,12 +20,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -1;
-
-        private Vector4 bulletBounds = new Vector4(-30, -50, 532, 740);
+        public Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
-
         private BulletPiece bulletSprite;
         
 
@@ -42,24 +40,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
             };
         }
 
-        protected override void Update()
-        {
-
-            //This is a bad way of doing this and halfs the performance of bullets, needs revision at some point
-            GetBulletVelocity();
-
-            base.Update();
-            MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-            if (Position.Y < bulletBounds.Y | Position.X < bulletBounds.X | Position.Y > bulletBounds.W | Position.X > bulletBounds.Z)
-            {
-                DeleteBullet();
-            }
-
-            if (Clock.ElapsedFrameTime > 40)
-            {
-                DeleteBullet();
-            }
-        }
         public Vector2 GetBulletVelocity()
         {
             if (BulletAngleRadian != -1)
@@ -73,6 +53,22 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
                 bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
                 bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
                 return bulletVelocity;
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
+
+            if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
+            {
+                DeleteBullet();
+            }
+
+            if (Clock.ElapsedFrameTime > 40)
+            {
+                DeleteBullet();
             }
         }
 
