@@ -18,7 +18,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        public Vector4 PlayerBounds = new Vector4(0, 512, -20, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, -20, 720);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -88,8 +88,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 pos.X += xSpeed;
             }
 
-            pos = Vector2.ComponentMin(pos, PlayerBounds.Yw);
-            pos = Vector2.ComponentMax(pos, PlayerBounds.Xz);
+            pos = Vector2.ComponentMin(pos, playerBounds.Yw);
+            pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
         }
 
@@ -97,20 +97,18 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             if (MainParent == null)
             {
-                //MainParent = MainPlayfield;
+                throw new Exception();
             }
             if (MainParent != null)
             {
-                Bullet bullet;
-                MainParent.Add(bullet = new Bullet(Team)
+                SingleShot p;
+                MainParent.Add(p = new SingleShot(Team)
                 {
-                    Depth = 1,
-                    Anchor = Anchor.Centre,
-                    BulletAngleDegree = 0f,
-                    BulletSpeed = 1f,
-                    BulletColor = Color4.Green,
+                    PatternAngleDegree = 0,
+                    PatternSpeed = 1f,
+                    PatternColor = Color4.Green,
                 });
-                bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+                p.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), p));
             }
         }
 

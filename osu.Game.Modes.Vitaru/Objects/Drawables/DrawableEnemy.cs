@@ -13,7 +13,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableEnemy : DrawableVitaruCharacter
     {
-        public bool Shoot = false;
+        public bool Shoot = true;
 
         public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -38,19 +38,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
 
-
         private void enemyShoot()
         {
-            Bullet b;
-            MainParent.Add(b = new Bullet(Team)
+            ConcaveWave Wave;
+            MainParent.Add(Wave = new ConcaveWave()
             {
+                Origin = Anchor.Centre,
                 Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletSpeed = 0.2f,
-                BulletAngleRadian = playerRelativePositionAngle(),
-                BulletColor = Color4.Red,
             });
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+            Wave.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), Wave));
         }
         public float playerRelativePositionAngle()
         {
