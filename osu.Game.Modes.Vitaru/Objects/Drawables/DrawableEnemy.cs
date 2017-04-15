@@ -13,7 +13,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableEnemy : DrawableVitaruCharacter
     {
-        public bool Shoot = true;
+        public bool Shoot = false;
 
         public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
         {

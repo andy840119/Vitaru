@@ -59,6 +59,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
+            GetBulletVelocity();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
 
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
