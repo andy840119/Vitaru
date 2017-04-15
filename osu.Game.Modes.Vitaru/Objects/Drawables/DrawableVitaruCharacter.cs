@@ -47,11 +47,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Children = new Drawable[]
             {
-                CharacterSprite = new Sprite()
+                /*CharacterSprite = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
-                },
+                },*/
                 Hitbox = new Hitbox()
                 {
                     Alpha = 0,
@@ -157,7 +157,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
-            string characterType = "player";
+            string characterType = "null";
             switch(CharacterType)
             {
                 case HitObjectType.Player:
@@ -173,7 +173,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
             sampleDeath = audio.Sample.Get(@"Vitaru/deathSound");
             sampleShoot = audio.Sample.Get(@"Vitaru/shootSound");
-            CharacterSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType);
         }
     }
 }

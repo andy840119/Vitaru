@@ -51,7 +51,7 @@ namespace osu.Game.Modes.Vitaru.UI
                     Size = new Vector2 (1.2f , 1f),
                     Position = new Vector2(212 , 338),
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.25f
+                    Alpha = 0.25f,
                 }
             });
             DrawableVitaruCharacter.playfield = MainPlayfield;
