@@ -10,7 +10,7 @@ using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Menu
 {
-    public class MenuVisualisation : BufferedContainer
+    public class MenuVisualisation : Container
     {
         public Bindable<int> BarCount = new Bindable<int>();
         public float[] AudioData;
@@ -79,9 +79,7 @@ namespace osu.Game.Screens.Menu
                 }
             }
         }
-
-        private float[] lastAudioData = new float[512];
-
+        
         protected override void Update()
         {
             base.Update();
@@ -106,7 +104,6 @@ namespace osu.Game.Screens.Menu
                 }
 
             }
-            lastAudioData = AudioData;
 
         }
 
@@ -125,7 +122,7 @@ namespace osu.Game.Screens.Menu
                     {
                         Colour = Color4.White,
                         RelativeSizeAxes = Axes.Both,
-                        Alpha = 0.4f
+                        Alpha = 0.2f
                     },
                     new Box
                     {
@@ -134,7 +131,7 @@ namespace osu.Game.Screens.Menu
                         Anchor = Anchor.BottomLeft,
                         Origin = Anchor.BottomLeft,
                         Size = new Vector2(1, 0.5f),
-                        Alpha = 0.4f
+                        Alpha = 0.5f
                     },
                     new Box
                     {

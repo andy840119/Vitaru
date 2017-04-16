@@ -148,7 +148,7 @@ namespace osu.Game.Screens.Menu
                                         }
                                     }
                                 },
-                                /*new MenuVisualisation
+                                /*new MenuCircularVisualisation
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,

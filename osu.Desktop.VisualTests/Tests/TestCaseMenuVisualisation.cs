@@ -18,7 +18,7 @@ namespace osu.Desktop.VisualTests.Tests
 
         private void ascendingValues()
         {
-            float[] data = new float[128];
+            float[] data = new float[512];
             for (int i = 0; i < 128; i++)
                 data[i] = 0.25f / 128f * i;
             vis.AudioData = data;
@@ -26,7 +26,7 @@ namespace osu.Desktop.VisualTests.Tests
 
         private void descendingValues()
         {
-            float[] data = new float[128];
+            float[] data = new float[512];
             for (int i = 0; i < 128; i++)
                 data[i] = 0.25f / 128f * (128 - i);
             vis.AudioData = data;
@@ -34,7 +34,7 @@ namespace osu.Desktop.VisualTests.Tests
 
         private void fixedRandomValues()
         {
-            float[] data = new float[128];
+            float[] data = new float[512];
             for (int i = 0; i < 128; i++)
             {
                 Random r = new Random(i * i * i / (4 + i) * (i + 5 * (54 + 5 * i) / (i + 1)));
@@ -78,7 +78,7 @@ namespace osu.Desktop.VisualTests.Tests
                 ColourInfo = ColourInfo.GradientVertical(Color4.Gray, Color4.WhiteSmoke),
                 RelativeSizeAxes = Axes.Both,
             });
-            Add(vis = new MenuVisualisation(128));
+            Add(vis = new MenuVisualisation());
 
             AddStep(@"Ascending values", ascendingValues);
             AddStep(@"Descending values", descendingValues);
@@ -97,7 +97,7 @@ namespace osu.Desktop.VisualTests.Tests
 
             if (random)
             {
-                float[] data = new float[128];
+                float[] data = new float[512];
                 for (int j = 0; j < 128; j++)
                     data[j] = (RNG.NextSingle(0.002f, 0.25f));
                 vis.AudioData = data;
