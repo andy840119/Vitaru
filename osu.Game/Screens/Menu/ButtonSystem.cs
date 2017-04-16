@@ -65,13 +65,15 @@ namespace osu.Game.Screens.Menu
                 vis1 = new MenuVisualisation
                 {
                     Scale = Vector2.Zero,
-                    Position = new Vector2(15, -(BUTTON_AREA_HEIGHT / 2))
+                    Position = new Vector2(15, -(BUTTON_AREA_HEIGHT / 2)),
+                    Colour = Color4.DeepSkyBlue,
                 },
                 vis2 = new MenuVisualisation
                 {
                     Scale = Vector2.Zero,
                     Position = new Vector2(-5, (BUTTON_AREA_HEIGHT / 2)),
                     Rotation = 180,
+                    Colour = Color4.Red,
                 },
                 buttonArea = new Container
                 {
@@ -87,6 +89,7 @@ namespace osu.Game.Screens.Menu
                             RelativeSizeAxes = Axes.Both,
                             Size = new Vector2(2, 1),
                             Colour = OsuColour.Gray(50),
+                            Alpha = 0,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                         },
