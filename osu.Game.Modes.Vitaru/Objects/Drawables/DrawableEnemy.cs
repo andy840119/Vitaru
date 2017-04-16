@@ -8,6 +8,7 @@ using osu.Game.Modes.Vitaru.Objects.Drawables;
 using osu.Game.Modes.Vitaru.Objects;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Audio.Sample;
+using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -36,6 +37,27 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
+        }
+
+        protected override void UpdateState(ArmedState state)
+        {
+            Delay(HitObject.StartTime - Time.Current + Judgement.TimeOffset, true);
+
+            switch (State)
+            {
+                case ArmedState.Idle:
+                    Delay(hit.HitWindowMiss);
+                    break;
+                case ArmedState.Miss:
+                    FadeOut(100);
+                    break;
+                case ArmedState.Hit:
+                    
+                    FadeOut(600);
+                    break;
+            }
+
+            Expire();
         }
 
         private void enemyShoot()

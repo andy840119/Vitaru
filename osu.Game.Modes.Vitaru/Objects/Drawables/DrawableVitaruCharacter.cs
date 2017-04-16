@@ -51,7 +51,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 CharacterSprite = new Sprite()
                 {
                     Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
+                    Origin = Anchor.Centre,
+                    Alpha = 1,
                 },
                 CharacterKiaiSprite = new Sprite()
                 {
@@ -80,7 +81,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             {
                 Dispose();
                 sampleDeath.Play();
-                //OnDeath();
                 return true;
             }
             return false;
