@@ -89,5 +89,10 @@ namespace osu.Framework.Audio.Track
                 Start();
             }
         }
+
+        public virtual float[] GetChannelData()
+        {
+            return new float[512];
+        }
     }
 }

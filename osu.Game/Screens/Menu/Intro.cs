@@ -1,12 +1,18 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Audio.Track;
+using osu.Framework.Configuration;
+using osu.Framework.MathUtils;
 using osu.Framework.Screens;
 using osu.Framework.Graphics;
+using osu.Game.Beatmaps;
+using osu.Game.Configuration;
+using osu.Game.Database;
 using osu.Game.Graphics.Containers;
 using osu.Game.Screens.Backgrounds;
 using OpenTK.Graphics;
@@ -56,30 +62,66 @@ namespace osu.Game.Screens.Menu
             };
         }
 
+        private Bindable<bool> menuVoice;
+        private Bindable<bool> menuMusic;
+        private TrackManager trackManager;
+        private BeatmapInfo beatmap;
+        private WorkingBeatmap song;
+        private int choosableBeatmapsetAmmout;
+
         [BackgroundDependencyLoader]
-        private void load(AudioManager audio)
+        private void load(OsuGameBase game, AudioManager audio, OsuConfigManager config, BeatmapDatabase beatmaps)
         {
-            welcome = audio.Sample.Get(@"welcome");
-            seeya = audio.Sample.Get(@"seeya");
+            menuVoice = config.GetBindable<bool>(OsuConfig.MenuVoice);
+            menuMusic = config.GetBindable<bool>(OsuConfig.MenuMusic);
+            if (!menuMusic)
+            {
+                trackManager = game.Audio.Track;
+                choosableBeatmapsetAmmout = beatmaps.Query<BeatmapSetInfo>().Count();
+                if (choosableBeatmapsetAmmout > 0)
+                {
+                    beatmap = beatmaps.GetWithChildren<BeatmapSetInfo>(RNG.Next(1, choosableBeatmapsetAmmout)).Beatmaps[0];
+                    song = beatmaps.GetWorkingBeatmap(beatmap);
+                    Beatmap = song;
+                }
+            }
 
             bgm = audio.Track.Get(@"circles");
             bgm.Looping = true;
+
+            welcome = audio.Sample.Get(@"welcome");
+            seeya = audio.Sample.Get(@"seeya");
+
         }
 
         protected override void OnEntering(Screen last)
         {
             base.OnEntering(last);
 
-            welcome.Play();
+            if (menuVoice)
+                welcome.Play();
 
             Scheduler.AddDelayed(delegate
             {
-                bgm.Start();
+                if (menuMusic)
+                    bgm.Start();
+                else if (song != null)
+                {
+                    Task.Run(() =>
+                    {
+                        trackManager.SetExclusive(song.Track);
+                        song.Track.Seek(beatmap.Metadata.PreviewTime);
+                        if (beatmap.Metadata.PreviewTime == -1)
+                            song.Track.Seek(song.Track.Length * .4f);
+                    });
+                }
 
                 LoadComponentAsync(mainMenu = new MainMenu());
 
                 Scheduler.AddDelayed(delegate
                 {
+                    if (!menuMusic && song != null)
+                        Task.Run(() => song.Track.Start());
                     DidLoadMenu = true;
                     Push(mainMenu);
                 }, 2300);
@@ -109,17 +151,28 @@ namespace osu.Game.Screens.Menu
             if (!(last is MainMenu))
                 Content.FadeIn(300);
 
+            double fadeOutTime = 2000;
             //we also handle the exit transition.
-            seeya.Play();
+            if (menuVoice)
+                seeya.Play();
+            else
+                fadeOutTime = 500;
 
-            const double fade_out_time = 2000;
-
-            Scheduler.AddDelayed(Exit, fade_out_time);
+            Scheduler.AddDelayed(Exit, fadeOutTime);
 
             //don't want to fade out completely else we will stop running updates and shit will hit the fan.
-            Game.FadeTo(0.01f, fade_out_time);
+            Game.FadeTo(0.01f, fadeOutTime);
 
             base.OnResuming(last);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            if (bgm.IsRunning)
+            {
+                mainMenu.buttons.VisualisationData = bgm.GetChannelData();
+            }
         }
     }
 }
