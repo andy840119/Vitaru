@@ -48,8 +48,6 @@
     <Compile Include="Beatmaps\VitaruBeatmapConverter.cs" />
     <Compile Include="Beatmaps\VitaruBeatmapProcessor.cs" />
     <Compile Include="Judgements\VitaruJudgement.cs" />
-    <Compile Include="Objects\Drawables\Pieces\Enemy.cs" />
-    <Compile Include="Objects\Drawables\Pieces\PlayerPiece.cs" />
     <Compile Include="Scoring\VitaruScore.cs" />
     <Compile Include="VitaruAutoReplay.cs" />
     <Compile Include="Mods\VitaruMod.cs" />

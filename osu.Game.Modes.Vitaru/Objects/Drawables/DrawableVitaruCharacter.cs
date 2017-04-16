@@ -17,6 +17,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public HitObjectType CharacterType;
 
         protected Sprite CharacterSprite;
+        protected Sprite CharacterKiaiSprite;
 
         public Vector2 Speed { get; set; } = Vector2.Zero;
         public float CharacterHealth { get; set; } = 100;
@@ -47,11 +48,17 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Children = new Drawable[]
             {
-                /*CharacterSprite = new Sprite()
+                CharacterSprite = new Sprite()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
-                },*/
+                },
+                CharacterKiaiSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 0,
+                },
                 Hitbox = new Hitbox()
                 {
                     Alpha = 0,
@@ -173,6 +180,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
             sampleDeath = audio.Sample.Get(@"Vitaru/deathSound");
             sampleShoot = audio.Sample.Get(@"Vitaru/shootSound");
+            CharacterSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType);
+            CharacterKiaiSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType + "Kiai");
         }
     }
 }

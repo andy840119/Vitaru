@@ -17,6 +17,8 @@ namespace osu.Game.Modes.Vitaru.Objects
 
         public float BPM;
 
+        public bool Kiai { get; protected set; }
+
         public Vector2 Position { get; set; }
 
         public Vector2 StackedPosition => Position + StackOffset;

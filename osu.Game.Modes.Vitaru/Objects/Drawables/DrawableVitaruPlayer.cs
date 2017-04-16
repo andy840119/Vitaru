@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System;
 using osu.Game.Modes.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
-using osu.Game.Modes.Vitaru.Objects.Drawables.Pieces;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -17,8 +16,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
         
         public static Vector2 PlayerPosition;
-        PlayerPiece PlayerPiece;
-        private int r = 0;
 
         //(MinX,MaxX,MinY,MaxY)
         private Vector4 playerBounds = new Vector4(0, 512, -20, 720);
@@ -42,15 +39,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             HitboxWidth = 8;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
-            Children = new Drawable[]
-            {
-                PlayerPiece = new PlayerPiece()
-                {
-                    Rotation = r,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                }
-            };
         }
 
         private const float playerSpeed = 0.5f;
@@ -59,7 +47,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
-            r++;
 
             //Handles Player Speed
             var pos = Position;
@@ -74,7 +61,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             if (keys[Key.Z])
             {
-                //Shooting = true;
+                Shooting = true;
             }
             if (keys[Key.Z] == false)
             {
