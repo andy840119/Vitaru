@@ -84,7 +84,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -100,7 +101,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -116,7 +118,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -132,7 +135,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -211,6 +215,7 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(463),
+                            Masking = true,
                             Children = new Drawable[]
                             {
                                 horizontalBorderBox = new Box
@@ -236,7 +241,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -252,7 +258,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -268,7 +275,8 @@ namespace osu.Game.Screens.Menu
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Masking = true,
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -283,9 +291,9 @@ namespace osu.Game.Screens.Menu
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-
+                            Masking = true,
                             Size = new Vector2(0),
-                            Children = new[]
+                            Children = new Drawable[]
                             {
                                 new Box
                                 {
@@ -449,6 +457,11 @@ namespace osu.Game.Screens.Menu
             pinkCircle.Delay(350);
             pinkCircle.FadeOut();
 
+            /*logo.ScaleTo(0.4f);
+            logo.FadeOut();
+
+            logo.ScaleTo(1, 4400, EasingTypes.OutQuint);
+            logo.FadeIn(20000, EasingTypes.OutQuint);*/
             if (menuVoice)
                 welcome.Play();
 
@@ -477,12 +490,6 @@ namespace osu.Game.Screens.Menu
                     Push(mainMenu);
                 }, 2300);
             }, 600);
-
-            logo.ScaleTo(0.4f);
-            logo.FadeOut();
-
-            logo.ScaleTo(1, 4400, EasingTypes.OutQuint);
-            logo.FadeIn(20000, EasingTypes.OutQuint);
         }
 
         protected override void OnSuspending(Screen next)
