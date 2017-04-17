@@ -93,7 +93,7 @@ namespace osu.Game.Screens.Menu
                     d.MoveToX(((d.Width / 2) + (i * 2) + (i * d.Width)) - (Size.X / 2), 30);
                     if (AudioData != null)
                     {
-                        if (AudioData[i] * 3 > d.Scale.Y + 0.005)
+                        if (AudioData[i] * 3 >= d.Scale.Y)
                             d.ScaleTo(new Vector2(1, AudioData[i] * 3), 30);
                         else if (d.Scale.Y > 0f)
                             d.ScaleTo(new Vector2(1, d.Scale.Y - (d.Scale.Y * 0.2f)), 50);
