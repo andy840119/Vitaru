@@ -66,14 +66,14 @@ namespace osu.Game.Screens.Menu
                 {
                     Scale = Vector2.Zero,
                     Position = new Vector2(15, -(BUTTON_AREA_HEIGHT / 2)),
-                    Colour = Color4.DeepSkyBlue,
+                    Colour = Color4.Cyan,
                 },
                 vis2 = new MenuVisualisation
                 {
                     Scale = Vector2.Zero,
                     Position = new Vector2(-5, (BUTTON_AREA_HEIGHT / 2)),
                     Rotation = 180,
-                    Colour = Color4.Red,
+                    Colour = Color4.DarkViolet,
                 },
                 buttonArea = new Container
                 {
