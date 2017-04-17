@@ -12,11 +12,12 @@ using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public abstract class DrawableVitaruCharacter : DrawableVitaruHitObject
+    public abstract class DrawableCharacter : DrawableVitaruHitObject
     {
         public HitObjectType CharacterType;
 
         protected Sprite CharacterSprite;
+        protected Sprite CharacterKiaiSprite;
 
         public Vector2 Speed { get; set; } = Vector2.Zero;
         public float CharacterHealth { get; set; } = 100;
@@ -41,7 +42,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public Action OnDeath { get; set; }
         public Action OnShoot { get; set; }
 
-        public DrawableVitaruCharacter(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -50,7 +51,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 CharacterSprite = new Sprite()
                 {
                     Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
+                    Origin = Anchor.Centre,
+                    Alpha = 1,
+                },
+                CharacterKiaiSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 0,
                 },
                 Hitbox = new Hitbox()
                 {
@@ -73,7 +81,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             {
                 Dispose();
                 sampleDeath.Play();
-                //OnDeath();
                 return true;
             }
             return false;
@@ -157,7 +164,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
-            string characterType = "player";
+            string characterType = "null";
             switch(CharacterType)
             {
                 case HitObjectType.Player:
@@ -174,6 +181,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             sampleDeath = audio.Sample.Get(@"Vitaru/deathSound");
             sampleShoot = audio.Sample.Get(@"Vitaru/shootSound");
             CharacterSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType);
+            CharacterKiaiSprite.Texture = textures.Get(@"Play/Vitaru/" + characterType + "Kiai");
         }
     }
 }

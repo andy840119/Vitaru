@@ -4,13 +4,13 @@ using osu.Framework.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruBoss : DrawableVitaruCharacter
+    public class DrawableVitaruBoss : DrawableCharacter
     {
-        public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableVitaruBoss(DrawableCharacter drawableCharacter) : base(drawableCharacter)
         {
             Anchor = Anchor.TopCentre;
             Speed = new Vector2(0, -160);
-            Position = hitObject.Position;
+            Position = drawableCharacter.Position;
             CharacterType = HitObjectType.Boss;
             CharacterHealth = 1000;
             Team = 1;

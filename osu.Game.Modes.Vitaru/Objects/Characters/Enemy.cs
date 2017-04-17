@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Transforms;
 using osu.Game.Beatmaps.Samples;
+using osu.Game.Beatmaps.Timing;
+using osu.Game.Database;
 
 namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
@@ -30,8 +32,21 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         
 
         //Main Enemy Function
-        public Enemy() : base() { }
+        public Enemy() : base () { }
         public override HitObjectType Type => HitObjectType.Enemy;
+
+        public double HitWindowKill10 = 35;
+        public double HitWindowKill30 = 80;
+        public double HitWindowMiss = 95;
+
+        public override void ApplyDefaults(TimingInfo timing, BeatmapDifficulty difficulty)
+        {
+            base.ApplyDefaults(timing, difficulty);
+
+            HitWindowKill10 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 50, 35, 20);
+            HitWindowKill30 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 120, 80, 50);
+            HitWindowMiss = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 135, 95, 70);
+        }
 
         public double EndTime { get; set; }
     }

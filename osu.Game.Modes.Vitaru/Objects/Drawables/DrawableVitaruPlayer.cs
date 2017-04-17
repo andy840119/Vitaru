@@ -11,7 +11,7 @@ using OpenTK.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruPlayer : DrawableVitaruCharacter
+    public class DrawableVitaruPlayer : DrawableCharacter
     {
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
         
@@ -101,15 +101,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             if (MainParent != null)
             {
-                SingleShot p;
-                MainParent.Add(p = new SingleShot(Team)
-                {
-                    PatternAngleDegree = 0,
-                    PatternSpeed = 1f,
-                    PatternColor = Color4.Green,
-                });
-                p.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), p));
-            }
+                Bullet b;
+            MainParent.Add(b = new Bullet(Team)
+            {
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletSpeed = 1,
+                BulletAngleRadian = 0,
+            });
+            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+        }
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)

@@ -18,9 +18,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         public int PatternAngleRadian { get; set; }
         public int PatternAngleDegree { get; set; }
         public int Team { get; set; }
-        private Vector2 patternVelocity;
-
-        public Container ParentPattern;
 
         public int BulletTeam { get; set; } = 1;
         public Color4 PatternColor { get; set; } = Color4.White;
@@ -28,38 +25,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
         public BulletPattern()
         {
-            Children = new[]
-            {
-                ParentPattern = new Container()
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                },
-            };
-        }
 
-        public Vector2 GetPatternVelocity()
-        {
-            if (PatternAngleRadian != -1)
-            {
-                patternVelocity.Y = PatternSpeed * (-1 * ((float)Math.Cos(PatternAngleRadian)));
-                patternVelocity.X = PatternSpeed * ((float)Math.Sin(PatternAngleRadian));
-                return patternVelocity;
-            }
-            else
-            {
-                patternVelocity.Y = PatternSpeed * (-1 * ((float)Math.Cos(PatternAngleDegree * (Math.PI / 180))));
-                patternVelocity.X = PatternSpeed * ((float)Math.Sin(PatternAngleDegree * (Math.PI / 180)));
-                return patternVelocity;
-            }
         }
 
         protected override void Update()
         {
             base.Update();
-            GetPatternVelocity();
-
-            MoveToOffset(new Vector2(patternVelocity.X * (float)Clock.ElapsedFrameTime, patternVelocity.Y * (float)Clock.ElapsedFrameTime));
 
             if (BulletCount < 1)
                 Dispose();
@@ -72,17 +43,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         Bullet b;
         public SingleShot(int team)
         {
-            Team = team;
-            BulletCount = 1;
-            ParentPattern.Add(b = new Bullet(BulletTeam)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletSpeed = 0,
-                BulletAngleRadian = 0,
-                BulletColor = PatternColor,
-            });
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+
         }
     }
     public class ConcaveWave : BulletPattern

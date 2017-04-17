@@ -54,8 +54,8 @@
     <Compile Include="Objects\Characters\Boss.cs" />
     <Compile Include="Objects\Characters\Character.cs" />
     <Compile Include="Objects\Drawables\DrawableVitaruBoss.cs" />
-    <Compile Include="Objects\Drawables\DrawableVitaruCharacter.cs" />
-    <Compile Include="Objects\Drawables\DrawableEnemy.cs" />
+    <Compile Include="Objects\Drawables\DrawableCharacter.cs" />
+    <Compile Include="Objects\Drawables\DrawableVitaruEnemy.cs" />
     <Compile Include="Objects\Drawables\DrawableVitaruHitObject.cs" />
     <Compile Include="Objects\Drawables\DrawableVitaruPlayer.cs" />
     <Compile Include="Objects\Drawables\LaserPiece.cs" />

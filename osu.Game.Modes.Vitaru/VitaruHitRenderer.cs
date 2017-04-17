@@ -36,11 +36,11 @@ namespace osu.Game.Modes.Vitaru
 
             var enemy = h as Enemy;
             if (enemy != null)
-                return new DrawableEnemy(enemy);
+                return new DrawableVitaruEnemy(enemy);
 
             var boss = h as Boss;
             if (boss != null)
-                return new DrawableEnemy(boss);
+                return new DrawableVitaruBoss(boss);
 
             return null;
         }

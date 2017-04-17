@@ -15,7 +15,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
     {
         //Different stats for Bullet that should always be changed
         public int BulletDamage { get; set; } = 20;
-        public Color4 BulletColor { get; set; } = Color4.White;
+        public Color4 BulletColor { get; set; } = Color4.Red;
         public float BulletSpeed { get; set; } = 20;
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
@@ -59,6 +59,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
+            GetBulletVelocity();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
 
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
