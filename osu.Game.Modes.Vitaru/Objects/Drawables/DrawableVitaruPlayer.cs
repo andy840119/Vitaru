@@ -11,7 +11,7 @@ using OpenTK.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruPlayer : DrawableVitaruCharacter
+    public class DrawableVitaruPlayer : DrawableCharacter
     {
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
         

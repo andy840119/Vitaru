@@ -4,7 +4,7 @@ using osu.Framework.Graphics;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruBoss : DrawableVitaruCharacter
+    public class DrawableVitaruBoss : DrawableCharacter
     {
         public DrawableVitaruBoss(DrawableCharacter drawableCharacter) : base(drawableCharacter)
         {

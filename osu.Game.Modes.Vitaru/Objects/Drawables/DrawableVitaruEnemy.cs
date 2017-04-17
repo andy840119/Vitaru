@@ -12,7 +12,7 @@ using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruEnemy : DrawableVitaruCharacter
+    public class DrawableVitaruEnemy : DrawableCharacter
     {
         private readonly Enemy enemy;
         public bool Shoot = false;

@@ -12,7 +12,7 @@ using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public abstract class DrawableVitaruCharacter : DrawableVitaruHitObject
+    public abstract class DrawableCharacter : DrawableVitaruHitObject
     {
         public HitObjectType CharacterType;
 
@@ -42,7 +42,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         public Action OnDeath { get; set; }
         public Action OnShoot { get; set; }
 
-        public DrawableVitaruCharacter(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;

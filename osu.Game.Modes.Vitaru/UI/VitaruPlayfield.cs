@@ -54,7 +54,7 @@ namespace osu.Game.Modes.Vitaru.UI
                     Alpha = 0.25f,
                 }
             });
-            DrawableVitaruCharacter.playfield = MainPlayfield;
+            DrawableCharacter.playfield = MainPlayfield;
         }
 
         public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgement> h)

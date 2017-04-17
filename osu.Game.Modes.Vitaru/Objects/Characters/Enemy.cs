@@ -32,8 +32,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         
 
         //Main Enemy Function
-        public Enemy(VitaruHitObject hitObject)
-            : base(hitObject) { }
+        public Enemy() : base () { }
         public override HitObjectType Type => HitObjectType.Enemy;
 
         public double HitWindowKill10 = 35;
