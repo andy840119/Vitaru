@@ -190,9 +190,9 @@ namespace osu.Framework.Audio.Track
 
         public override bool IsRunning => isRunning;
 
-        internal override void OnStateChanged(object sender, EventArgs e)
+        internal override void OnStateChanged()
         {
-            base.OnStateChanged(sender, e);
+            base.OnStateChanged();
 
             setDirection(FrequencyCalculated.Value < 0);
 
@@ -289,13 +289,6 @@ namespace osu.Framework.Audio.Track
                 }
                 return false;
             }
-        }
-
-        public override float[] GetChannelData()
-        {
-            var fft = new float[512];
-            Bass.ChannelGetData(activeStream, fft, (int)DataFlags.FFT1024);
-            return fft;
         }
     }
 }

@@ -5,8 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Testing;
 using osu.Game.Database;
-using osu.Game.Screens.Select.Details;
-using System;
+using osu.Game.Screens.Select;
 using System.Linq;
 
 namespace osu.Desktop.VisualTests.Tests
@@ -41,25 +40,26 @@ namespace osu.Desktop.VisualTests.Tests
                         DrainRate = 1,
                     },
                     StarDifficulty = 5.3f,
+                    Metrics = new BeatmapMetrics
+                    {
+                        Ratings = Enumerable.Range(0,10),
+                        Fails = Enumerable.Range(lastRange, 100).Select(i => i % 12 - 6),
+                        Retries = Enumerable.Range(lastRange - 3, 100).Select(i => i % 12 - 6),
+                    },
                 },
             });
 
-            AddStep("new retry/fail values", newRetryAndFailValues);
-            AddStep("new ratings", newRatings);
+            AddRepeatStep("fail values", newRetryAndFailValues, 10);
         }
 
         private int lastRange = 1;
 
         private void newRetryAndFailValues()
         {
-            details.Fails = Enumerable.Range(lastRange, 100).Select(i => (int)(Math.Cos(i) * 100));
-            details.Retries = Enumerable.Range(lastRange, 100).Select(i => (int)(Math.Sin(i) * 100));
+            details.Beatmap.Metrics.Fails = Enumerable.Range(lastRange, 100).Select(i => i % 12 - 6);
+            details.Beatmap.Metrics.Retries = Enumerable.Range(lastRange - 3, 100).Select(i => i % 12 - 6);
+            details.Beatmap = details.Beatmap;
             lastRange += 100;
-        }
-
-        private void newRatings()
-        {
-            details.Ratings = Enumerable.Range(1, 10);
         }
     }
 }

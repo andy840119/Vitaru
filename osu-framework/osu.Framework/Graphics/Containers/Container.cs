@@ -72,15 +72,21 @@ namespace osu.Framework.Graphics.Containers
             // From now on, since we ourself are loaded now,
             // we actually permit children to be loaded if our
             // lifetimelist (internalChildren) requests a load.
-            internalChildren.LoadRequested += i =>
-            {
-                i.Load(game, Clock);
-                i.Parent = this;
-            };
+            internalChildren.LoadRequested += loadChild;
 
-            // This updates the alive status of our children according to our new
-            // clock, and recursively loads each alive child.
+            // We are in a potentially async context, so let's aggressively load all our children
+            // regardless of their alive state. this also gives children a clock so they can be checked
+            // for their correct alive state in the case LifetimeStart is set to a definite value.
+            internalChildren.ForEach(loadChild);
+
+            // Let's also perform an update on our LifetimeList to add any alive children.
             internalChildren.Update(Clock.TimeInfo);
+        }
+
+        private void loadChild(T child)
+        {
+            child.Load(game, Clock);
+            child.Parent = this;
         }
 
         protected override void Dispose(bool isDisposing)
@@ -596,7 +602,7 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         public void FadeEdgeEffectTo(float newAlpha, double duration = 0, EasingTypes easing = EasingTypes.None)
         {
-            TransformTo(EdgeEffect.Colour.Linear.A, newAlpha, duration, easing, new TransformEdgeEffectAlpha());
+            TransformTo(() => EdgeEffect.Colour.Linear.A, newAlpha, duration, easing, new TransformEdgeEffectAlpha());
         }
 
         #endregion
@@ -880,6 +886,10 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         public EasingTypes AutoSizeEasing;
 
+        /// <summary>
+        /// THIS EVENT PURELY EXISTS FOR THE SCENE GRAPH VISUALIZER. DO NOT USE.
+        /// This event will fire after our <see cref="Size"/> is updated from autosizing.
+        /// </summary>
         internal event Action OnAutoSize;
 
         private Cached childrenSizeDependencies = new Cached();
@@ -1020,7 +1030,7 @@ namespace osu.Framework.Graphics.Containers
 
         private void autoSizeResizeTo(Vector2 newSize, double duration = 0, EasingTypes easing = EasingTypes.None)
         {
-            TransformTo(Size, newSize, duration, easing, new TransformAutoSize());
+            TransformTo(() => Size, newSize, duration, easing, new TransformAutoSize());
         }
 
         /// <summary>

@@ -8,7 +8,6 @@ namespace osu.Game.Modes
         Osu = 0,
         Taiko = 1,
         Catch = 2,
-        Mania = 3,
-        Vitaru = 4
+        Mania = 3
     }
 }

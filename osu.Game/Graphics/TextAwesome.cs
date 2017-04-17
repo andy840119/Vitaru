@@ -822,7 +822,6 @@ namespace osu.Game.Graphics
         fa_osu_mania_o = 0xe001,
         fa_osu_fruits_o = 0xe002,
         fa_osu_taiko_o = 0xe003,
-        fa_osu_vitaru_o = 0xe04b,
 
         // gamemode icons without circles
         fa_osu_filled_circle = 0xe004,
@@ -880,15 +879,6 @@ namespace osu.Game.Graphics
         fa_osu_hard_mania = 0xe026,
         fa_osu_insane_mania = 0xe027,
         fa_osu_expert_mania = 0xe028,
-
-        // vitaru difficulties
-        /*
-        fa_osu_easy_vitaru = 0xe04s,
-        fa_osu_normal_vitaru = 0xe04n,
-        fa_osu_hard_vitaru = 0xe04h,
-        fa_osu_insane_vitaru = 0xe04i,
-        fa_osu_expert_vitaru = 0xe04x,
-        */
 
         // mod icons
         fa_osu_mod_perfect = 0xe02d,

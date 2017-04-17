@@ -141,30 +141,6 @@ namespace osu.Game.Modes.Mods
         public override bool Ranked => true;
     }
 
-    public abstract class ModDoubleTrouble : Mod
-    {
-        public override string Name => "Double Trouble";
-        public override FontAwesome Icon => FontAwesome.fa_osu_gear;
-        public override string Description => "Twice as many Bosses!";
-        public override bool Ranked => true;
-    }
-
-    public abstract class ModCoop : Mod
-    {
-        public override string Name => "Coop";
-        public override FontAwesome Icon => FontAwesome.fa_osu_multi;
-        public override string Description => "Play with a Friend";
-        public override bool Ranked => true;
-    }
-
-    public abstract class Mod1V1 : Mod
-    {
-        public override string Name => "1 v 1";
-        public override FontAwesome Icon => FontAwesome.fa_osu_multi;
-        public override string Description => "Play against a Friend, or an Enemy";
-        public override bool Ranked => false;
-    }
-
     public class ModAutoplay : Mod
     {
         public override string Name => "Autoplay";

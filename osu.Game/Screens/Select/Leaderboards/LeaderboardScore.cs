@@ -142,7 +142,7 @@ namespace osu.Game.Screens.Select.Leaderboards
                             Children = new Drawable[]
                             {
                                 avatar = new DelayedLoadWrapper(
-                                    new Avatar(Score.User ?? new User { Id = Score.UserID })
+                                    new Avatar(Score.User)
                                     {
                                         RelativeSizeAxes = Axes.Both,
                                         CornerRadius = corner_radius,
@@ -157,6 +157,7 @@ namespace osu.Game.Screens.Select.Leaderboards
                                     })
                                 {
                                     TimeBeforeLoad = 500,
+                                    RelativeSizeAxes = Axes.None,
                                     Size = new Vector2(HEIGHT - edge_margin * 2, HEIGHT - edge_margin * 2),
                                 },
                                 new Container
@@ -168,7 +169,7 @@ namespace osu.Game.Screens.Select.Leaderboards
                                     {
                                         nameLabel = new OsuSpriteText
                                         {
-                                            Text = Score.User?.Username ?? Score.Username,
+                                            Text = Score.User.Username,
                                             Font = @"Exo2.0-BoldItalic",
                                             TextSize = 23,
                                         },

@@ -76,7 +76,7 @@ namespace osu.Desktop.Overlays
                             TextSize = 12,
                             Colour = colours.Yellow,
                             Font = @"Venera",
-                            Text = @"Vitaru Development Build"
+                            Text = @"Development Build"
                         },
                         new Sprite
                         {
@@ -189,19 +189,24 @@ namespace osu.Desktop.Overlays
 
         private class UpdateProgressNotification : ProgressNotification
         {
+            private OsuGame game;
+
             protected override Notification CreateCompletionNotification() => new ProgressCompletionNotification()
             {
                 Text = @"Update ready to install. Click to restart!",
                 Activated = () =>
                 {
-                    UpdateManager.RestartApp();
+                    UpdateManager.RestartAppWhenExited();
+                    game.GracefullyExit();
                     return true;
                 }
             };
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
+            private void load(OsuColour colours, OsuGame game)
             {
+                this.game = game;
+
                 IconContent.Add(new Drawable[]
                 {
                     new Box
