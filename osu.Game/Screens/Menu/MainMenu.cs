@@ -28,22 +28,12 @@ namespace osu.Game.Screens.Menu
 
         private readonly BackgroundScreen background;
         private Screen songSelect;
-        private Triangles triangles;
 
         protected override BackgroundScreen CreateBackground() => background;
 
         public MainMenu()
         {
             background = new BackgroundScreenDefault();
-
-            triangles = new Triangles
-            {
-                Size = new Vector2 (512),
-                TriangleScale = 4,
-                ColourDark = Color4.DarkViolet,
-                ColourLight = Color4.Cyan,
-                RelativeSizeAxes = Axes.Both,
-            };
 
             Children = new Drawable[]
             {
