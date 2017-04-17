@@ -15,12 +15,14 @@ using osu.Game.Screens.Select;
 using osu.Game.Screens.Tournament;
 using osu.Framework.Input;
 using OpenTK.Input;
+using osu.Game.Graphics.Backgrounds;
+using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Menu
 {
     public class MainMenu : OsuScreen
     {
-        private readonly ButtonSystem buttons;
+        public readonly ButtonSystem buttons;
 
         internal override bool ShowOverlays => buttons.State != MenuState.Initial;
 
@@ -126,6 +128,20 @@ namespace osu.Game.Screens.Menu
             }
 
             return base.OnKeyDown(state, args);
+        }
+        protected override void Update()
+        {
+            if (Beatmap?.Track != null)
+            {
+                float[] wew;
+                if ((bool)Beatmap?.Track?.IsRunning)
+                    wew = Beatmap?.Track.GetChannelData();
+                else
+                    wew = new float[512];
+                buttons.VisualisationData = wew;
+            }
+
+            base.Update();
         }
     }
 }

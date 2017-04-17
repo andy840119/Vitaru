@@ -290,5 +290,12 @@ namespace osu.Framework.Audio.Track
                 return false;
             }
         }
+
+        public override float[] GetChannelData()
+        {
+            var fft = new float[512];
+            Bass.ChannelGetData(activeStream, fft, (int)DataFlags.FFT1024);
+            return fft;
+        }
     }
 }
