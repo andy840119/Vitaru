@@ -42,7 +42,6 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
                 return new VitaruPlayer
                 {
                     StartTime = 0f,
-                    Sample = original.Sample,
 
                     Position = positionData?.Position ?? Vector2.Zero,
 
@@ -52,7 +51,6 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             return new Enemy
             {
                 StartTime = original.StartTime,
-                Sample = original.Sample,
 
                 Position = positionData?.Position ?? Vector2.Zero,
 

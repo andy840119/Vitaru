@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Transforms;
-using osu.Game.Beatmaps.Samples;
+using osu.Framework.Audio.Sample; 
 using osu.Game.Beatmaps.Timing;
 using osu.Game.Database;
 
