@@ -12,14 +12,15 @@ using osu.Game.Modes.Objects.Drawables;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
-    public class DrawableEnemy : DrawableVitaruCharacter
+    public class DrawableVitaruEnemy : DrawableVitaruCharacter
     {
+        private readonly Enemy enemy;
         public bool Shoot = false;
 
-        public DrawableEnemy(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
             Origin = Anchor.Centre;
-            Position = hitObject.Position;
+            Position = enemy.Position;
             CharacterType = HitObjectType.Enemy;
             CharacterHealth = 60;
             Team = 1;
@@ -38,6 +39,29 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
+        
+        protected override void CheckJudgement(bool userTriggered)
+        {
+            if (!userTriggered)
+            {
+                if (Judgement.TimeOffset > enemy.HitWindowKill10)
+                    Judgement.Result = HitResult.Miss;
+                return;
+            }
+
+            double hitOffset = Math.Abs(Judgement.TimeOffset);
+
+            if (hitOffset > enemy.HitWindowMiss)
+                return;
+
+            else if (hitOffset < enemy.HitWindowKill10)
+            {
+                Judgement.Result = HitResult.Hit;
+                Judgement.Score = hitOffset < enemy.HitWindowKill30 ? VitaruScoreResult.Kill30 : VitaruScoreResult.Kill10;
+            }
+            else
+                Judgement.Result = HitResult.Miss;
+        }
 
         protected override void UpdateState(ArmedState state)
         {
@@ -46,7 +70,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             switch (State)
             {
                 case ArmedState.Idle:
-                    Delay(hit.HitWindowMiss);
+                    Delay(enemy.HitWindowMiss);
                     break;
                 case ArmedState.Miss:
                     FadeOut(100);

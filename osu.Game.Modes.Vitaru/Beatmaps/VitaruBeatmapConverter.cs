@@ -39,7 +39,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
             {
                 playerLoaded = true;
                 DrawableVitaruPlayer.PlayerPosition = new Vector2(256, 612);
-                return new VitaruPlayer
+                return new VitaruPlayer()
                 {
                     StartTime = 0f,
                     Sample = original.Sample,
@@ -49,7 +49,7 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
                     NewCombo = comboData?.NewCombo ?? false,
                 };
             }
-            return new Enemy
+            return new Enemy()
             {
                 StartTime = original.StartTime,
                 Sample = original.Sample,
