@@ -6,11 +6,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruBoss : DrawableCharacter
     {
-        public DrawableVitaruBoss(DrawableCharacter drawableCharacter) : base(drawableCharacter)
+        public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
         {
             Anchor = Anchor.TopCentre;
             Speed = new Vector2(0, -160);
-            Position = drawableCharacter.Position;
+            Position = hitObject.Position;
             CharacterType = HitObjectType.Boss;
             CharacterHealth = 1000;
             Team = 1;

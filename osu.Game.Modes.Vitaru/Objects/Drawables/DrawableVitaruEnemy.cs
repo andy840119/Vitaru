@@ -39,7 +39,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
-        
+        /*
         protected override void CheckJudgement(bool userTriggered)
         {
             if (!userTriggered)
@@ -82,7 +82,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
 
             Expire();
-        }
+        }*/
 
         private void enemyShoot()
         {
