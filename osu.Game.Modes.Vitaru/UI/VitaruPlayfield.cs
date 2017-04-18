@@ -32,10 +32,10 @@ namespace osu.Game.Modes.Vitaru.UI
 
         public VitaruPlayfield() : base(512)
         {
-            //Position = new Vector2(-182, -200);
+            Position = new Vector2(-166, -200);
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
-            //Size = new Vector2(1f);
+            Scale = new Vector2(1.6f);
 
             Add(new Drawable[]
             {
@@ -44,14 +44,6 @@ namespace osu.Game.Modes.Vitaru.UI
                     RelativeSizeAxes = Axes.Both,
                     Depth = -1,
                 },
-                playfieldBackground = new Box
-                {
-                    Depth = -2,
-                    //Size = new Vector2 (1.2f , 1f),
-                    //Position = new Vector2(212 , 338),
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.25f,
-                }
             });
             DrawableCharacter.playfield = MainPlayfield;
         }
