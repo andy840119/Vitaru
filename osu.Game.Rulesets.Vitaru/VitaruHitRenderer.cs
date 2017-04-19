@@ -12,6 +12,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Beatmaps;
+using OpenTK;
 
 namespace osu.Game.Rulesets.Vitaru
 {
@@ -45,5 +46,7 @@ namespace osu.Game.Rulesets.Vitaru
 
             return null;
         }
+
+        protected override Vector2 GetPlayfieldAspectAdjust() => new Vector2(0.75f);
     }
 }
