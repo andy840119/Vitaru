@@ -6,11 +6,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using System;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public abstract class DrawableCharacter : DrawableVitaruHitObject
     {

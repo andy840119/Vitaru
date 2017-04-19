@@ -1,15 +1,15 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Game.Modes.Objects;
+using osu.Game.Rulesets.Objects;
 using OpenTK;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects;
 using OpenTK.Graphics;
 using osu.Game.Database;
 using osu.Game.Beatmaps.Timing;
 
-namespace osu.Game.Modes.Vitaru.Objects
+namespace osu.Game.Rulesets.Vitaru.Objects
 {
     public abstract class VitaruHitObject : HitObject
     {

@@ -3,14 +3,14 @@ using OpenTK;
 using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
 using osu.Framework.Audio.Sample;
-using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Rulesets.Objects.Drawables;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruEnemy : DrawableCharacter
     {

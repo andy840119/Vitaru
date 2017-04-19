@@ -2,17 +2,17 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Game.Modes.UI;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.UI;
 using OpenTK;
-using osu.Game.Modes.Vitaru.Judgements;
+using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Objects.Drawables;
-using osu.Game.Modes.Osu.Objects.Drawables.Connections;
+using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.Osu.Objects.Drawables.Connections;
 using osu.Framework.Graphics.Sprites;
 
-namespace osu.Game.Modes.Vitaru.UI
+namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {

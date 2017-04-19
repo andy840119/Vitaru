@@ -3,11 +3,11 @@
 
 using System;
 using OpenTK;
-using osu.Game.Modes.Judgements;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Framework.Extensions;
 
-namespace osu.Game.Modes.Vitaru.Judgements
+namespace osu.Game.Rulesets.Vitaru.Judgements
 {
     public class VitaruJudgement : Judgement
     {

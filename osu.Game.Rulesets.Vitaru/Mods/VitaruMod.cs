@@ -3,12 +3,12 @@
 
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
-using osu.Game.Modes.Mods;
-using osu.Game.Modes.Osu.Objects;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Scoring;
+using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Osu.Objects;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Modes.Vitaru.Mods
+namespace osu.Game.Rulesets.Vitaru.Mods
 {
     public class VitaruModNoFail : ModNoFail
     {
@@ -58,7 +58,7 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override string Description => @"Play with bullets only appearing when they are close.";
         public override double ScoreMultiplier => 1.18;
     }
-
+    /*
     public class VitaruModDoubleTrouble : ModDoubleTrouble
     {
         public override double ScoreMultiplier => 1.18;
@@ -75,7 +75,7 @@ namespace osu.Game.Modes.Vitaru.Mods
         public override double ScoreMultiplier => 0.5;
         public override bool Ranked => false;
     }
-
+    */
     public class VitaruRelax : ModRelax
     {
         public override bool Ranked => false;

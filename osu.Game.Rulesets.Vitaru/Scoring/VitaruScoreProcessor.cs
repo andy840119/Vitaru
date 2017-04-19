@@ -1,14 +1,14 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Game.Modes.Vitaru.Judgements;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.UI;
+using osu.Game.Rulesets.Vitaru.Judgements;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.UI;
 using System;
-using osu.Game.Modes.Scoring;
-using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.Objects.Drawables;
 
-namespace osu.Game.Modes.Vitaru
+namespace osu.Game.Rulesets.Vitaru
 {
     internal class VitaruScoreProcessor : ScoreProcessor<VitaruHitObject, VitaruJudgement>
     {

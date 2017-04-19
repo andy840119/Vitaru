@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics.Containers;
 
-namespace osu.Game.Modes.Vitaru.Objects.Projectiles
+namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 {
     public class Projectile : Container
     {

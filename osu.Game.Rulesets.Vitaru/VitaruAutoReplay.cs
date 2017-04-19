@@ -2,10 +2,10 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
-using osu.Game.Modes.Replays;
-using osu.Game.Modes.Vitaru.Objects;
+using osu.Game.Rulesets.Replays;
+using osu.Game.Rulesets.Vitaru.Objects;
 
-namespace osu.Game.Modes.Vitaru.Mods
+namespace osu.Game.Rulesets.Vitaru.Mods
 {
     internal class VitaruAutoReplay : Replay
     {

@@ -3,10 +3,10 @@
 
 using osu.Framework.Graphics.Containers;
 using OpenTK;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using OpenTK.Graphics;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using System;
 using System.Collections.Generic;
 using osu.Framework.MathUtils;
@@ -15,7 +15,7 @@ using osu.Framework.Audio.Sample;
 using osu.Game.Beatmaps.Timing;
 using osu.Game.Database;
 
-namespace osu.Game.Modes.Vitaru.Objects.Characters
+namespace osu.Game.Rulesets.Vitaru.Objects.Characters
 {
     public class Enemy : Character
     {

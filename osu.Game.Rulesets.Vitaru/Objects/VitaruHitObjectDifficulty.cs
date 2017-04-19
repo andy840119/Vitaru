@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace osu.Game.Modes.Vitaru.Objects
+namespace osu.Game.Rulesets.Vitaru.Objects
 {
     internal class VitaruHitObjectDifficulty
     {

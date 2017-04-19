@@ -1,15 +1,15 @@
 ﻿using osu.Framework.Graphics.Containers;
 using OpenTK;
 using OpenTK.Input;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using System.Collections.Generic;
 using System;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruPlayer : DrawableCharacter
     {

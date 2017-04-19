@@ -1,18 +1,28 @@
 ﻿using OpenTK;
 using osu.Game.Beatmaps;
-using osu.Game.Modes.Objects;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using System.Collections.Generic;
-using osu.Game.Modes.Objects.Types;
 using System.Linq;
-using osu.Game.Modes.Vitaru.Objects.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
+using osu.Game.Rulesets.Beatmaps;
+using osu.Game.Rulesets.Objects;
+using System;
+using osu.Game.Rulesets.Objects.Types;
 
-namespace osu.Game.Modes.Vitaru.Beatmaps
+namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
-    internal class VitaruBeatmapConverter : IBeatmapConverter<VitaruHitObject>
+    internal class VitaruBeatmapConverter : BeatmapConverter<VitaruHitObject>
     {
         public bool playerLoaded = false;
+
+        protected override IEnumerable<Type> ValidConversionTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public Beatmap<VitaruHitObject> Convert(Beatmap original)
         {
@@ -131,6 +141,11 @@ namespace osu.Game.Modes.Vitaru.Beatmaps
                     }
                 }
             }
+        }
+
+        protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
+        {
+            throw new NotImplementedException();
         }
     }
 }

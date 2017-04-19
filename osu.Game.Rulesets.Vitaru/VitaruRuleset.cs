@@ -2,17 +2,17 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
-using osu.Game.Modes.UI;
+using osu.Game.Rulesets.UI;
 using System;
 using osu.Game.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Screens.Play;
-using osu.Game.Modes.Mods;
-using osu.Game.Modes.Vitaru.Mods;
+using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Vitaru.Mods;
 using OpenTK.Input;
-using osu.Game.Modes.Scoring;
+using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Modes.Vitaru
+namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruRuleset : Ruleset
     {
@@ -54,7 +54,7 @@ namespace osu.Game.Modes.Vitaru
                                 new VitaruModFlashlight(),
                             },
                         },
-                        new VitaruModDoubleTrouble(),
+                        //new VitaruModDoubleTrouble(),
                     };
 
                 case ModType.Special:
@@ -64,8 +64,8 @@ namespace osu.Game.Modes.Vitaru
                         {
                             Mods = new Mod[]
                             {
-                                new VitaruModCoop(),
-                                new VitaruMod1V1(),
+                                //new VitaruModCoop(),
+                                //new VitaruMod1V1(),
                             }
                         },
                         new VitaruRelax(),
@@ -99,6 +99,6 @@ namespace osu.Game.Modes.Vitaru
 
         public override FontAwesome Icon => FontAwesome.fa_osu_vitaru_o;
 
-        protected override PlayMode PlayMode => PlayMode.Vitaru;
+        public override int LegacyID => 4;
     }
 }

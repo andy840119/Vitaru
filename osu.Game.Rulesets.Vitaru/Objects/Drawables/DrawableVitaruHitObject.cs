@@ -1,9 +1,9 @@
-﻿using osu.Game.Modes.Objects.Drawables;
+﻿using osu.Game.Rulesets.Objects.Drawables;
 using System;
 using System.ComponentModel;
-using osu.Game.Modes.Vitaru.Judgements;
+using osu.Game.Rulesets.Vitaru.Judgements;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject, VitaruJudgement>
     {

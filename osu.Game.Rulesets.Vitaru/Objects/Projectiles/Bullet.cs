@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 
-namespace osu.Game.Modes.Vitaru.Objects.Projectiles
+namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 {
     public class Bullet : Projectile
     {

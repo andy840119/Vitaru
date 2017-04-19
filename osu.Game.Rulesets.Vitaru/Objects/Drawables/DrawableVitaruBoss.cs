@@ -2,7 +2,7 @@
 using OpenTK.Graphics;
 using osu.Framework.Graphics;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruBoss : DrawableCharacter
     {

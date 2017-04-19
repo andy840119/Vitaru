@@ -2,9 +2,9 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osu.Game.Modes.Objects;
+using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Modes.Vitaru
+namespace osu.Game.Rulesets.Vitaru
 {
     internal class VitaruObjectParser : HitObjectParser
     {
