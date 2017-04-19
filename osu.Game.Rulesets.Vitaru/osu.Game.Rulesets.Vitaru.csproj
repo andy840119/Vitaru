@@ -7,8 +7,8 @@
     <ProjectGuid>{9A615027-B2AB-435E-B865-0C7209933457}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>osu.Game.Modes.Vitaru</RootNamespace>
-    <AssemblyName>osu.Game.Modes.Vitaru</AssemblyName>
+    <RootNamespace>osu.Game.Rulesets.Vitaru</RootNamespace>
+    <AssemblyName>osu.Game.Rulesets.Vitaru</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -73,7 +73,6 @@
     <Compile Include="Objects\Projectiles\Bullet.cs" />
     <Compile Include="VitaruDifficultyCalculator.cs" />
     <Compile Include="VitaruHitRenderer.cs" />
-    <Compile Include="VitaruObjectParser.cs" />
     <Compile Include="Scoring\VitaruScoreProcessor.cs" />
     <Compile Include="UI\VitaruComboCounter.cs" />
     <Compile Include="UI\VitaruPlayfield.cs" />
