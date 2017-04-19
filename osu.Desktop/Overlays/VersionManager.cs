@@ -76,7 +76,7 @@ namespace osu.Desktop.Overlays
                             TextSize = 12,
                             Colour = colours.Yellow,
                             Font = @"Venera",
-                            Text = @"Vitaru Development Build"
+                            Text = @"Development Build"
                         },
                         new Sprite
                         {

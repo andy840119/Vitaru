@@ -4,12 +4,6 @@
 using System;
 using osu.Framework.Desktop;
 using osu.Framework.Platform;
-using osu.Game.Modes;
-using osu.Game.Modes.Catch;
-using osu.Game.Modes.Mania;
-using osu.Game.Modes.Osu;
-using osu.Game.Modes.Taiko;
-using osu.Game.Modes.Vitaru;
 
 namespace osu.Desktop.VisualTests
 {
@@ -22,12 +16,6 @@ namespace osu.Desktop.VisualTests
 
             using (GameHost host = Host.GetSuitableHost(@"osu"))
             {
-                Ruleset.Register(new OsuRuleset());
-                Ruleset.Register(new TaikoRuleset());
-                Ruleset.Register(new ManiaRuleset());
-                Ruleset.Register(new CatchRuleset());
-                Ruleset.Register(new VitaruRuleset());
-
                 if (benchmark)
                     host.Run(new AutomatedVisualTestGame());
                 else
