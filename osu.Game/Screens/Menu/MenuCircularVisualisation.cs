@@ -45,9 +45,9 @@ namespace osu.Game.Screens.Menu
                 {
                     RelativePositionAxes = Axes.Both,
                     Width = barWidth,
-                    Rotation = (360f / BarCount.Value * -i) - 180f,
+                    Rotation = (360f / BarCount.Value * i) - 180f,
                     Position = new Vector2(
-                        (float)Math.Sin((float)i / BarCount * 2 * MathHelper.Pi) / 2,
+                        -(float)Math.Sin((float)i / BarCount * 2 * MathHelper.Pi) / 2,
                         -0.5f + (float)Math.Cos((float)i / BarCount * 2 * MathHelper.Pi) / 2
                     ),
                     Scale = (new Vector2(1, 0)),
