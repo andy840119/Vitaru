@@ -34,14 +34,13 @@ namespace osu.Game.Screens.Menu
             BlendingMode = BlendingMode.Additive;
 
             this.barCount = BarCount.Value;
-
         }
 
         private float barWidth;
 
         protected override void LoadComplete()
         {
-            barWidth = Size.X * (float)Math.Sqrt(2f * (1f - Math.Cos(MathHelper.DegreesToRadians(360f / BarCount.Value)))) / 2f;
+            barWidth = Size.X * (float)Math.Sqrt(2f * (1f - Math.Cos(MathHelper.DegreesToRadians(360f / BarCount.Value)))) / 2.2f;
             for (int i = 0; i < barCount; i++)
             {
                 visBars.Add(new VisualisationBar
@@ -70,7 +69,6 @@ namespace osu.Game.Screens.Menu
                     usableAudioData[k + j > BarCount.Value - 1 ? k + j - BarCount.Value : k + j] += (float)Math.Pow(AudioData[k], 1.3);
             }
 
-
             int i = 0;
             foreach (Drawable d in visBars.Children)
             {
@@ -87,7 +85,6 @@ namespace osu.Game.Screens.Menu
                     d.Alpha = MathHelper.Clamp(d.Scale.Y * 10f, 0f, 1f);
                     i++;
                 }
-
             }
 
         }
