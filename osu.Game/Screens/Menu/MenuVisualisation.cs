@@ -15,7 +15,7 @@ namespace osu.Game.Screens.Menu
         private Container visBars = new Container { RelativeSizeAxes = Axes.Both };
         private int barCount;
 
-        public MenuVisualisation(int barCount = 128)
+        public MenuVisualisation(int barCount = 130)
         {
             AudioData = new float[512];
             BarCount.Value = barCount;

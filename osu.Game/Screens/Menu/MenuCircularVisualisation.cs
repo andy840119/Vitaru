@@ -13,6 +13,7 @@ namespace osu.Game.Screens.Menu
     {
         public Bindable<int> BarCount = new Bindable<int>();
         public float[] AudioData;
+        private float[] usableAudioData;
         private Container visBars = new Container
         {
             Anchor = Anchor.Centre,
@@ -21,8 +22,10 @@ namespace osu.Game.Screens.Menu
         };
         private int barCount;
 
-        public MenuCircularVisualisation(int barCount = 128)
+        public MenuCircularVisualisation(int barCount = 130)
         {
+            usableAudioData = new float[512];
+            AudioData = new float[512];
             BarCount.Value = barCount;
             Size = new Vector2(300);
             Scale = Vector2.One;
@@ -60,15 +63,23 @@ namespace osu.Game.Screens.Menu
         {
             base.Update();
 
+            usableAudioData = new float[512];
+            for(int j = 0; j < BarCount.Value; j+= 26)
+            {
+                for(int k = 0; k < BarCount.Value; k++)
+                    usableAudioData[k + j > BarCount.Value - 1 ? k + j - BarCount.Value : k + j] += (float)Math.Pow(AudioData[k], 1.3);
+            }
+
+
             int i = 0;
             foreach (Drawable d in visBars.Children)
             {
                 if (d is VisualisationBar)
                 {
-                    if (AudioData != null)
+                    if (usableAudioData != null)
                     {
-                        if (AudioData[i] * 3 >= d.Scale.Y)
-                            d.ScaleTo(new Vector2(1, AudioData[i] * 3), 30);
+                        if (usableAudioData[i] * 3 >= d.Scale.Y)
+                            d.ScaleTo(new Vector2(1, usableAudioData[i] * 3), 30);
                         else if (d.Scale.Y > 0f)
                             d.ScaleTo(new Vector2(1, d.Scale.Y - (d.Scale.Y * 0.2f)), 50);
                         else d.Scale = new Vector2(1, 0);

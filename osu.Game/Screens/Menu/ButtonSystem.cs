@@ -232,8 +232,8 @@ namespace osu.Game.Screens.Menu
                 {
                     case MenuState.Exit:
                     case MenuState.Initial:
-                        vis1.AudioData = new float[128];
-                        vis2.AudioData = new float[128];
+                        vis1.AudioData = new float[130];
+                        vis2.AudioData = new float[130];
                         toolbar?.Hide();
 
                         buttonAreaBackground.ScaleTo(Vector2.One, 500, EasingTypes.Out);
