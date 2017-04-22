@@ -45,7 +45,7 @@ namespace osu.Game.Screens.Menu
 
         public const int EXIT_DELAY = 3000;
 
-        private readonly OsuLogo osuLogo;
+        public readonly OsuLogo osuLogo;
         private readonly Drawable iconFacade;
         private readonly Container buttonArea;
         private readonly Box buttonAreaBackground;

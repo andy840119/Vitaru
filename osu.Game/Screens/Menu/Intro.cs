@@ -530,6 +530,8 @@ namespace osu.Game.Screens.Menu
             if (bgm.IsRunning)
             {
                 mainMenu.buttons.VisualisationData = bgm.GetChannelData();
+                mainMenu.buttons.osuLogo.visualiser.AudioData = bgm.GetChannelData();
+                logo.visualiser.AudioData = bgm.GetChannelData();
             }
         }
     }

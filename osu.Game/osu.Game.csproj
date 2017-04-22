@@ -197,6 +197,7 @@
     <Compile Include="Screens\Menu\MenuCircularVisualisation.cs" />
     <Compile Include="Screens\Menu\MenuVisualisation.cs" />
     <Compile Include="Screens\Menu\OsuLogo.cs" />
+    <Compile Include="Screens\Menu\VisualisationBar.cs" />
     <Compile Include="Screens\Multiplayer\Lobby.cs" />
     <Compile Include="Screens\Multiplayer\Match.cs" />
     <Compile Include="Screens\Multiplayer\MatchCreate.cs" />

@@ -3,10 +3,8 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Configuration;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Containers;
 using OpenTK;
-using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Menu
 {
@@ -26,19 +24,9 @@ namespace osu.Game.Screens.Menu
             Anchor = Anchor.Centre;
             Origin = Anchor.BottomCentre;
             BlendingMode = BlendingMode.Additive;
-            float barWidth = (Size.X - ((barCount - 1) * 2)) / barCount;
-            for (int i = 0; i < barCount; i++)
-            {
-                visBars.Add(new VisualisationBar
-                {
-                    Width = barWidth,
-                    Position = new Vector2(((barWidth / 2) + (i * 2) + (i * barWidth)) - (Size.X / 2), 0),
-                });
-            }
-            Add(visBars);
 
-            BarCount.ValueChanged += recalcBars;
             this.barCount = BarCount.Value;
+            BarCount.ValueChanged += recalcBars;
         }
 
         private void recalcBars(object sender, System.EventArgs e)
@@ -69,15 +57,17 @@ namespace osu.Game.Screens.Menu
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            int i = 0;
-            foreach (Drawable d in visBars.Children)
+            float barWidth = (Size.X - ((barCount - 1) * 2)) / barCount;
+            for (int i = 0; i < barCount; i++)
             {
-                if (d is VisualisationBar)
+                visBars.Add(new VisualisationBar
                 {
-                    d.ScaleTo(new Vector2(1, 0));
-                    i++;
-                }
+                    Width = barWidth,
+                    Position = new Vector2(((barWidth / 2) + (i * 2) + (i * barWidth)) - (Size.X / 2), 0),
+                    Scale = (new Vector2(1, 0)),
+                });
             }
+            Add(visBars);
         }
         
         protected override void Update()
@@ -105,45 +95,6 @@ namespace osu.Game.Screens.Menu
 
             }
 
-        }
-
-
-
-        private class VisualisationBar : Container
-        {
-            public VisualisationBar()
-            {
-                Anchor = Anchor.BottomCentre;
-                Origin = Anchor.BottomCentre;
-                Height = 300;
-                Children = new[]
-                {
-                    new Box
-                    {
-                        Colour = Color4.White,
-                        RelativeSizeAxes = Axes.Both,
-                        Alpha = 0.2f
-                    },
-                    new Box
-                    {
-                        Colour = Color4.White,
-                        RelativeSizeAxes = Axes.Both,
-                        Anchor = Anchor.BottomLeft,
-                        Origin = Anchor.BottomLeft,
-                        Size = new Vector2(1, 0.5f),
-                        Alpha = 0.5f
-                    },
-                    new Box
-                    {
-                        Colour = Color4.White,
-                        RelativeSizeAxes = Axes.Both,
-                        Anchor = Anchor.BottomLeft,
-                        Origin = Anchor.BottomLeft,
-                        Size = new Vector2(1, 0.15f),
-                        Alpha = 1f
-                    }
-                };
-            }
         }
     }
 }

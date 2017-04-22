@@ -133,11 +133,9 @@ namespace osu.Game.Screens.Menu
         {
             if (Beatmap?.Track != null)
             {
-                float[] wew;
+                float[] wew = new float[512];
                 if ((bool)Beatmap?.Track?.IsRunning)
                     wew = Beatmap?.Track.GetChannelData();
-                else
-                    wew = new float[512];
                 buttons.VisualisationData = wew;
             }
 

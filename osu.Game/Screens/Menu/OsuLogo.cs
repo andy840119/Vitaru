@@ -5,11 +5,13 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
 using OpenTK;
@@ -28,8 +30,11 @@ namespace osu.Game.Screens.Menu
         private readonly CircularContainer logoContainer;
         private readonly Container logoBounceContainer;
         private readonly Container logoHoverContainer;
+        public MenuCircularVisualisation visualiser;
 
         private SampleChannel sampleClick;
+
+        private Bindable<WorkingBeatmap> beatmap;
 
         private readonly Container colourAndTriangles;
 
@@ -148,14 +153,16 @@ namespace osu.Game.Screens.Menu
                                         }
                                     }
                                 },
-                                /*new MenuCircularVisualisation
+                                visualiser = new MenuCircularVisualisation
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
-                                    Size = logo.Size,
+                                    Size = new Vector2(460),
                                     BlendingMode = BlendingMode.Additive,
-                                    Alpha = 0.2f,
-                                }*/
+                                    Alpha = 1f,
+                                    Scale = Vector2.One,
+                                    AudioData = new float[512],
+                                }
                             }
                         }
                     }
@@ -164,8 +171,9 @@ namespace osu.Game.Screens.Menu
         }
 
         [BackgroundDependencyLoader]
-        private void load(TextureStore textures, AudioManager audio)
+        private void load(TextureStore textures, AudioManager audio, OsuGameBase game)
         {
+            beatmap = game.Beatmap;
             sampleClick = audio.Sample.Get(@"Menu/menuhit");
             logo.Texture = textures.Get(@"Menu/logo");
             ripple.Texture = textures.Get(@"Menu/logo");
@@ -220,6 +228,19 @@ namespace osu.Game.Screens.Menu
         protected override void OnHoverLost(InputState state)
         {
             logoHoverContainer.ScaleTo(1, 500, EasingTypes.OutElastic);
+        }
+
+        protected override void Update()
+        {
+            if(beatmap.Value != null)
+            {
+                float[] wew = new float[512];
+                if((bool)beatmap?.Value?.Track?.IsRunning)
+                    wew = beatmap.Value.Track.GetChannelData();
+                visualiser.AudioData = wew;
+            }
+
+            base.Update();
         }
     }
 }

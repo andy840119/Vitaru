@@ -78,7 +78,7 @@ namespace osu.Desktop.VisualTests.Tests
                 ColourInfo = ColourInfo.GradientVertical(Color4.Gray, Color4.WhiteSmoke),
                 RelativeSizeAxes = Axes.Both,
             });
-            Add(vis = new MenuVisualisation());
+            Add(vis = new MenuVisualisation { Scale = Vector2.One });
 
             AddStep(@"Ascending values", ascendingValues);
             AddStep(@"Descending values", descendingValues);
