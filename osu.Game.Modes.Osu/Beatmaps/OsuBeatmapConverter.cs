@@ -56,7 +56,7 @@ namespace osu.Game.Modes.Osu.Beatmaps
                 {
                     StartTime = original.StartTime,
                     Sample = original.Sample,
-                    Position = new Vector2(512, 384) / 2,
+                    Position = positionData?.Position ?? Vector2.Zero,
                     EndTime = endTimeData.EndTime
                 };
             }
