@@ -19,6 +19,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
+            this.enemy = enemy;
             Origin = Anchor.Centre;
             Position = enemy.Position;
             CharacterType = HitObjectType.Enemy;
@@ -42,13 +43,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         
         protected override void CheckJudgement(bool userTriggered)
         {
-            if (!userTriggered)
-            {
-                if (Judgement.TimeOffset > enemy.HitWindowMiss)
-                    Judgement.Result = HitResult.Miss;
-                return;
-            }
-
             double hitOffset = Math.Abs(Judgement.TimeOffset);
 
             if (hitOffset > enemy.HitWindowMiss)
