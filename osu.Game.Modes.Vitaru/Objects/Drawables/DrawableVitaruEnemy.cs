@@ -39,12 +39,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
-        /*
+        
         protected override void CheckJudgement(bool userTriggered)
         {
             if (!userTriggered)
             {
-                if (Judgement.TimeOffset > enemy.HitWindowKill10)
+                if (Judgement.TimeOffset > enemy.HitWindowMiss)
                     Judgement.Result = HitResult.Miss;
                 return;
             }
@@ -54,10 +54,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             if (hitOffset > enemy.HitWindowMiss)
                 return;
 
-            else if (hitOffset < enemy.HitWindowKill10)
+            else if (1 > enemy.CharacterHealth)
             {
                 Judgement.Result = HitResult.Hit;
-                Judgement.Score = hitOffset < enemy.HitWindowKill30 ? VitaruScoreResult.Kill30 : VitaruScoreResult.Kill10;
+                Judgement.Score = VitaruScoreResult.Kill30;
             }
             else
                 Judgement.Result = HitResult.Miss;
@@ -76,13 +76,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     FadeOut(100);
                     break;
                 case ArmedState.Hit:
-                    
                     FadeOut(600);
                     break;
             }
 
             Expire();
-        }*/
+        }
 
         private void enemyShoot()
         {

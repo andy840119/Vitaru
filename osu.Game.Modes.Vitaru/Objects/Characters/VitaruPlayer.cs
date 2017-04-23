@@ -15,30 +15,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
 {
     public class VitaruPlayer : Character
     {
-        /*private bool _kiaiActivated = false;
-        public bool KiaiActivated
-        {
-            get
-            {
-                return _kiaiActivated;
-            }
-            set
-            {
-                _kiaiActivated = value;
-                //player.setKiai(value);
-            }
-        }
-        private CharacterSprite player;
-        */
         public VitaruPlayer() : base() { }
         public double EndTime { get; set; }
-        /*
-//Kiai toggle
-public void ToggleKiai()
-{
-KiaiActivated = !KiaiActivated;
-}*/
-
         public override HitObjectType Type => HitObjectType.Player;
     }
 }
