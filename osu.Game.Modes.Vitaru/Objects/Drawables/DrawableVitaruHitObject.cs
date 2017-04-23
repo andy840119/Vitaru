@@ -7,8 +7,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject, VitaruJudgement>
     {
-        public const float TIME_PREEMPT = 300;
-        public const float TIME_FADEIN = 200;
+        public const float TIME_PREEMPT = 500;
+        public const float TIME_FADEIN = 250;
         public const float TIME_FADEOUT = 250;
 
         public DrawableVitaruHitObject(VitaruHitObject hitObject)
@@ -20,8 +20,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void UpdateState(ArmedState state)
         {
-            if (!IsLoaded) return;
-
             Flush();
 
             UpdateInitialState();

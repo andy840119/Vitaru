@@ -31,7 +31,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Action OnShoot;
 
         public static Vector2 EnemyPos;
-        
 
         //Main Enemy Function
         public Enemy() : base () { }

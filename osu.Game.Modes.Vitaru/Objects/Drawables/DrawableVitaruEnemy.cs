@@ -14,6 +14,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruEnemy : DrawableCharacter
     {
+        //private CharacterSprite EnemySprite;
         private readonly Enemy enemy;
         public bool Shoot = false;
 
@@ -27,6 +28,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
+            Alpha = 0;
         }
 
         protected override void Update()
@@ -40,7 +42,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
             float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
         }
-        
+
+        protected override void UpdateInitialState()
+        {
+            base.UpdateInitialState();
+
+            CharacterSprite.Alpha = 0;
+            CharacterSprite.Scale = new Vector2(0.25f);
+        }
+
         protected override void CheckJudgement(bool userTriggered)
         {
             double hitOffset = Math.Abs(Judgement.TimeOffset);
@@ -55,6 +65,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             else
                 Judgement.Result = HitResult.Miss;
+        }
+
+        protected override void UpdatePreemptState()
+        {
+            base.UpdatePreemptState();
+
+            CharacterSprite.FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT));
+            CharacterSprite.ScaleTo(1f, TIME_PREEMPT);
         }
 
         protected override void UpdateState(ArmedState state)
