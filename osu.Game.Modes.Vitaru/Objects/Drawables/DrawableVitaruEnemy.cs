@@ -9,6 +9,7 @@ using osu.Game.Modes.Vitaru.Objects;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Audio.Sample;
 using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Modes.Objects.Types;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -31,16 +32,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Alpha = 0;
         }
 
-        protected override void Update()
+        protected override void CheckJudgement(bool userTriggered)
         {
-            base.Update();
-            if (Shoot == true)
+            double hitOffset = Math.Abs(Judgement.TimeOffset);
+
+            if (hitOffset < HitObject.HitWindowFor(VitaruScoreResult.Kill20))
             {
-                Shooting = true;
-                OnShoot = enemyShoot;
+                Judgement.Result = HitResult.Hit;
             }
-            float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
-            float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
+            else
+                Judgement.Result = HitResult.Miss;
         }
 
         protected override void UpdateInitialState()
@@ -49,22 +50,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
             CharacterSprite.Alpha = 0;
             CharacterSprite.Scale = new Vector2(0.25f);
-        }
-
-        protected override void CheckJudgement(bool userTriggered)
-        {
-            double hitOffset = Math.Abs(Judgement.TimeOffset);
-
-            if (hitOffset > enemy.HitWindowMiss)
-                return;
-
-            else if (1 > enemy.CharacterHealth)
-            {
-                Judgement.Result = HitResult.Hit;
-                Judgement.Score = VitaruScoreResult.Kill30;
-            }
-            else
-                Judgement.Result = HitResult.Miss;
         }
 
         protected override void UpdatePreemptState()
@@ -77,18 +62,26 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         protected override void UpdateState(ArmedState state)
         {
+            base.UpdateState(state);
+
+            double endTime = (HitObject as IHasEndTime)?.EndTime ?? HitObject.StartTime;
+            double duration = endTime - HitObject.StartTime;
+
             Delay(HitObject.StartTime - Time.Current + Judgement.TimeOffset, true);
 
             switch (State)
             {
                 case ArmedState.Idle:
-                    Delay(enemy.HitWindowMiss);
+                    Delay(duration + TIME_PREEMPT);
+                    FadeOut(TIME_FADEOUT);
+                    Expire(true);
                     break;
                 case ArmedState.Miss:
-                    FadeOut(100);
+                    FadeOut(TIME_FADEOUT / 5);
+                    Expire();
                     break;
                 case ArmedState.Hit:
-                    FadeOut(600);
+                    FadeOut(20);
                     break;
             }
 
