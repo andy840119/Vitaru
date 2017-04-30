@@ -48,16 +48,16 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.UpdateInitialState();
 
-            CharacterSprite.Alpha = 0;
-            CharacterSprite.Scale = new Vector2(0.25f);
+            Alpha = 1;
+            Scale = new Vector2(0.25f);
         }
 
         protected override void UpdatePreemptState()
         {
             base.UpdatePreemptState();
 
-            CharacterSprite.FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT));
-            CharacterSprite.ScaleTo(1f, TIME_PREEMPT);
+            FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT));
+            ScaleTo(1f, TIME_PREEMPT);
         }
 
         protected override void UpdateState(ArmedState state)
