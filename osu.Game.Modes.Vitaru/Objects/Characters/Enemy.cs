@@ -25,7 +25,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public BulletPattern Pattern { get; set; }
         public double kill30 = 30;
         public double HitWindowMiss = 1000;
-
+        
         public Vector2 EnemyVelocity;
         public float EnemyAngle;
         public Action OnShoot;

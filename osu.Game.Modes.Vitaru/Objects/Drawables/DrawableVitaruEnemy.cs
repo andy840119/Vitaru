@@ -10,18 +10,20 @@ using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Audio.Sample;
 using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Objects.Types;
+using osu.Game.Modes.Vitaru.Judgements;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruEnemy : DrawableCharacter
     {
-        //private CharacterSprite EnemySprite;
         private readonly Enemy enemy;
         public bool Shoot = false;
+        float playerPos;
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
             this.enemy = enemy;
+            AlwaysPresent = true;
             Origin = Anchor.Centre;
             Position = enemy.Position;
             CharacterType = HitObjectType.Enemy;
@@ -29,14 +31,24 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
-            Alpha = 0;
+            Alpha = 1;
+            Judgement = new VitaruJudgement { Result = HitResult.Hit };
+        }
+
+        protected override void Update()
+        {
+            if (HitObject.StartTime == Time.Current)
+            {
+                enemyShoot();
+            }
+            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
         }
 
         protected override void CheckJudgement(bool userTriggered)
         {
             double hitOffset = Math.Abs(Judgement.TimeOffset);
 
-            if (hitOffset < HitObject.HitWindowFor(VitaruScoreResult.Kill20))
+            if (CharacterHealth < 1)
             {
                 Judgement.Result = HitResult.Hit;
             }
@@ -48,7 +60,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.UpdateInitialState();
 
-            Alpha = 1;
+            Alpha = 0.001f;
             Scale = new Vector2(0.25f);
         }
 
@@ -67,6 +79,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             double endTime = (HitObject as IHasEndTime)?.EndTime ?? HitObject.StartTime;
             double duration = endTime - HitObject.StartTime;
 
+
+
             Delay(HitObject.StartTime - Time.Current + Judgement.TimeOffset, true);
 
             switch (State)
@@ -77,11 +91,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     Expire(true);
                     break;
                 case ArmedState.Miss:
-                    FadeOut(TIME_FADEOUT / 5);
+                    FadeOut(TIME_FADEOUT / 2);
                     Expire();
                     break;
                 case ArmedState.Hit:
-                    FadeOut(20);
+                    FadeOut(TIME_FADEOUT / 4);
+                    Expire();
                     break;
             }
 
@@ -90,13 +105,18 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private void enemyShoot()
         {
-            ConcaveWave Wave;
-            MainParent.Add(Wave = new ConcaveWave()
+            
+            Bullet B1;
+            //Bullet B2;
+            //Bullet B3;
+            MainParent.Add(B1 = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
+                BulletAngleDegree = playerPos,
+                BulletSpeed = 0.2f,
             });
-            Wave.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), Wave));
+            B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
         }
         public float playerRelativePositionAngle()
         {

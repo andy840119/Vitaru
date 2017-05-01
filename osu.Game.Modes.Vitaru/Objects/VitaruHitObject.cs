@@ -56,20 +56,7 @@ namespace osu.Game.Modes.Vitaru.Objects
                     return 30;
                 case VitaruScoreResult.Kill1500:
                     return 1500;
-                case VitaruScoreResult.Hit:
-                    return 0;
             }
-        }
-
-        public VitaruScoreResult ScoreResultForOffset(double offset)
-        {
-            if (offset < HitWindowFor(VitaruScoreResult.Kill30))
-                return VitaruScoreResult.Kill30;
-            if (offset < HitWindowFor(VitaruScoreResult.Kill20))
-                return VitaruScoreResult.Kill20;
-            if (offset < HitWindowFor(VitaruScoreResult.Kill10))
-                return VitaruScoreResult.Kill10;
-            return VitaruScoreResult.Miss;
         }
 
         public override void ApplyDefaults(TimingInfo timing, BeatmapDifficulty difficulty)
