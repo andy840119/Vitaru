@@ -40,7 +40,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private bool hasShot = false;
         protected override void Update()
         {
-            if (HitObject.StartTime < (Time.Current + shootLeniancy) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
+            if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
