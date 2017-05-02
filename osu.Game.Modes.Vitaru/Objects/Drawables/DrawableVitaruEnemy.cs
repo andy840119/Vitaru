@@ -36,7 +36,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         }
 
 
-        private float shootLeniancy = 8f;
+        private float shootLeniancy = 10f;
         private bool hasShot = false;
         protected override void Update()
         {
