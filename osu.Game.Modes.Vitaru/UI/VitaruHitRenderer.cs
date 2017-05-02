@@ -33,7 +33,7 @@ namespace osu.Game.Modes.Vitaru
             var player = h as VitaruPlayer;
             if (player != null)
                 return new DrawableVitaruPlayer(player);
-
+            
             var enemy = h as Enemy;
             if (enemy != null)
                 return new DrawableVitaruEnemy(enemy);
@@ -41,7 +41,6 @@ namespace osu.Game.Modes.Vitaru
             var boss = h as Boss;
             if (boss != null)
                 return new DrawableVitaruBoss(boss);
-
             return null;
         }
     }

@@ -9,6 +9,8 @@ using osu.Game.Modes.Vitaru.Objects;
 using osu.Game.Modes.Vitaru.Objects.Characters;
 using osu.Framework.Audio.Sample;
 using osu.Game.Modes.Objects.Drawables;
+using osu.Game.Modes.Objects.Types;
+using osu.Game.Modes.Vitaru.Judgements;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -16,9 +18,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         private readonly Enemy enemy;
         public bool Shoot = false;
+        float playerPos;
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
+            this.enemy = enemy;
+            AlwaysPresent = true;
             Origin = Anchor.Centre;
             Position = enemy.Position;
             CharacterType = HitObjectType.Enemy;
@@ -26,73 +31,92 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Team = 1;
             HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
+            Alpha = 1;
+            Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
         protected override void Update()
         {
-            base.Update();
-            if (Shoot == true)
+            if (HitObject.StartTime == Time.Current)
             {
-                Shooting = true;
-                OnShoot = enemyShoot;
+                enemyShoot();
             }
-            float ySpeed = 0.5f * (float)Clock.ElapsedFrameTime;
-            float xSpeed = 0.5f * (float)Clock.ElapsedFrameTime;
+            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
         }
-        /*
+
         protected override void CheckJudgement(bool userTriggered)
         {
-            if (!userTriggered)
-            {
-                if (Judgement.TimeOffset > enemy.HitWindowKill10)
-                    Judgement.Result = HitResult.Miss;
-                return;
-            }
-
             double hitOffset = Math.Abs(Judgement.TimeOffset);
 
-            if (hitOffset > enemy.HitWindowMiss)
-                return;
-
-            else if (hitOffset < enemy.HitWindowKill10)
+            if (CharacterHealth < 1)
             {
                 Judgement.Result = HitResult.Hit;
-                Judgement.Score = hitOffset < enemy.HitWindowKill30 ? VitaruScoreResult.Kill30 : VitaruScoreResult.Kill10;
             }
             else
                 Judgement.Result = HitResult.Miss;
         }
 
+        protected override void UpdateInitialState()
+        {
+            base.UpdateInitialState();
+
+            Alpha = 0.001f;
+            Scale = new Vector2(0.25f);
+        }
+
+        protected override void UpdatePreemptState()
+        {
+            base.UpdatePreemptState();
+
+            FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT));
+            ScaleTo(1f, TIME_PREEMPT);
+        }
+
         protected override void UpdateState(ArmedState state)
         {
+            base.UpdateState(state);
+
+            double endTime = (HitObject as IHasEndTime)?.EndTime ?? HitObject.StartTime;
+            double duration = endTime - HitObject.StartTime;
+
+
+
             Delay(HitObject.StartTime - Time.Current + Judgement.TimeOffset, true);
 
             switch (State)
             {
                 case ArmedState.Idle:
-                    Delay(enemy.HitWindowMiss);
+                    Delay(duration + TIME_PREEMPT);
+                    FadeOut(TIME_FADEOUT);
+                    Expire(true);
                     break;
                 case ArmedState.Miss:
-                    FadeOut(100);
+                    FadeOut(TIME_FADEOUT / 2);
+                    Expire();
                     break;
                 case ArmedState.Hit:
-                    
-                    FadeOut(600);
+                    FadeOut(TIME_FADEOUT / 4);
+                    Expire();
                     break;
             }
 
             Expire();
-        }*/
+        }
 
         private void enemyShoot()
         {
-            ConcaveWave Wave;
-            MainParent.Add(Wave = new ConcaveWave()
+            
+            Bullet B1;
+            //Bullet B2;
+            //Bullet B3;
+            MainParent.Add(B1 = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
+                BulletAngleDegree = playerPos,
+                BulletSpeed = 0.2f,
             });
-            Wave.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), Wave));
+            B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
         }
         public float playerRelativePositionAngle()
         {

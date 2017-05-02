@@ -23,30 +23,18 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public Vector2 EnemyPosition = new Vector2(0, 0);
         public Vector2 EnemySpeed { get; set; } = new Vector2(0.5f, 0.5f);
         public BulletPattern Pattern { get; set; }
-
+        public double kill30 = 30;
+        public double HitWindowMiss = 1000;
+        
         public Vector2 EnemyVelocity;
         public float EnemyAngle;
         public Action OnShoot;
 
         public static Vector2 EnemyPos;
-        
 
         //Main Enemy Function
         public Enemy() : base () { }
         public override HitObjectType Type => HitObjectType.Enemy;
-
-        public double HitWindowKill10 = 35;
-        public double HitWindowKill30 = 80;
-        public double HitWindowMiss = 95;
-
-        public override void ApplyDefaults(TimingInfo timing, BeatmapDifficulty difficulty)
-        {
-            base.ApplyDefaults(timing, difficulty);
-
-            HitWindowKill10 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 50, 35, 20);
-            HitWindowKill30 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 120, 80, 50);
-            HitWindowMiss = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 135, 95, 70);
-        }
 
         public double EndTime { get; set; }
     }
