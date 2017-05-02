@@ -36,13 +36,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         }
 
 
-        private float shootLeniancy = 4f;
+        private float shootLeniancy = 8f;
         private bool hasShot = false;
         protected override void Update()
         {
             if (HitObject.StartTime < (Time.Current + shootLeniancy) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
+                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
             playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - enemy.Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - enemy.Position.Y));
@@ -91,15 +92,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             {
                 case ArmedState.Idle:
                     Delay(duration + TIME_PREEMPT);
-                    FadeOut(TIME_FADEOUT);
+                    //FadeOut(TIME_FADEOUT);
                     Expire(true);
                     break;
                 case ArmedState.Miss:
-                    FadeOut(TIME_FADEOUT / 2);
+                    //FadeOut(TIME_FADEOUT / 2);
                     Expire();
                     break;
                 case ArmedState.Hit:
-                    FadeOut(TIME_FADEOUT / 4);
+                    //FadeOut(TIME_FADEOUT / 4);
                     Expire();
                     break;
             }
