@@ -64,7 +64,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
 
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
             {
-                DeleteBullet();
+                //DeleteBullet();
             }
 
             if (Clock.ElapsedFrameTime > 40)
