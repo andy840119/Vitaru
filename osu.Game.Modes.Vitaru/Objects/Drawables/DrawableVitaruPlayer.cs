@@ -41,7 +41,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Anchor = Anchor.Centre;
         }
 
-        private const float playerSpeed = 0.5f;
+        private const float playerSpeed = 0.25f;
         private Vector2 positionChange = Vector2.Zero;
 
         protected override void Update()
@@ -69,7 +69,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
             if (keys[Key.X])
             {
-                //Bomb();
+                //Bass();
             }
             if (keys[Key.Up])
             {
@@ -102,15 +102,15 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             if (MainParent != null)
             {
                 Bullet b;
-            MainParent.Add(b = new Bullet(Team)
-            {
-                Depth = 1,
-                Anchor = Anchor.Centre,
-                BulletSpeed = 1,
-                BulletAngleRadian = 0,
-            });
-            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-        }
+                MainParent.Add(b = new Bullet(Team)
+                {
+                    Depth = 1,
+                    Anchor = Anchor.Centre,
+                    BulletSpeed = 1,
+                    BulletAngleRadian = 0,
+                });
+                b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+            }
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)

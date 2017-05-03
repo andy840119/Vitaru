@@ -19,7 +19,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         private readonly Enemy enemy;
         public bool Shoot = false;
-        float playerPos;
+        private float playerPos;
+        private Color4 enemyColor = Color4.Green;
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
@@ -48,7 +49,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
-            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - enemy.Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - enemy.Position.Y));
+            playerRelativePositionAngle();
         }
 
         protected override void CheckJudgement(bool userTriggered)
@@ -67,8 +68,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.UpdateInitialState();
 
-            Alpha = 0.001f;
-            Scale = new Vector2(0.25f);
+            Alpha = 0f;
+            Scale = new Vector2(0.5f);
         }
 
         protected override void UpdatePreemptState()
@@ -121,7 +122,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.2f,
                 });
@@ -129,7 +130,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos - 0.1f,
                     BulletSpeed = 0.2f,
                 });
@@ -137,7 +138,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos + 0.1f,
                     BulletSpeed = 0.2f,
                 });
@@ -157,7 +158,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.05f,
                 });
@@ -165,7 +166,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.1f,
                 });
@@ -173,7 +174,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.15f,
                 });
@@ -189,7 +190,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.25f,
                 });
@@ -212,7 +213,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos,
                     BulletSpeed = 0.15f,
                 });
@@ -220,7 +221,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos + 0.05f,
                     BulletSpeed = 0.16f,
                 });
@@ -228,7 +229,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos - 0.05f,
                     BulletSpeed = 0.16f,
                 });
@@ -236,7 +237,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos + 0.125f,
                     BulletSpeed = 0.17f,
                 });
@@ -244,7 +245,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos - 0.125f,
                     BulletSpeed = 0.17f,
                 });
@@ -252,7 +253,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos + 0.2f,
                     BulletSpeed = 0.18f,
                 });
@@ -260,7 +261,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
-                    BulletColor = Color4.Cyan,
+                    BulletColor = enemyColor,
                     BulletAngleRadian = playerPos - 0.2f,
                     BulletSpeed = 0.18f,
                 });
@@ -276,7 +277,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         }
         public float playerRelativePositionAngle()
         {
-            return (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
+            //Returns Something?
+            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
+            return playerPos;
         }
     }
 }
