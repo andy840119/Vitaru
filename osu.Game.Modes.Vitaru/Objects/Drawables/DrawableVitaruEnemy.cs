@@ -42,34 +42,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
-
-        private void bulletAddDeg(float speed, float degree)
-        {
-            Bullet bullet;
-            MainParent.Add(bullet = new Bullet(1)
-            {
-                Origin = Anchor.Centre,
-                Depth = 1,
-                BulletColor = Color4.Cyan,
-                BulletAngleDegree = playerPos + degree,
-                BulletSpeed = speed,
-            });
-            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
-        }
-        private void bulletAddRad(float speed, float degree)
-        {
-            Bullet bullet;
-            MainParent.Add(bullet = new Bullet(1)
-            {
-                Origin = Anchor.Centre,
-                Depth = 1,
-                BulletColor = Color4.Cyan,
-                BulletAngleRadian = playerPos + degree,
-                BulletSpeed = speed,
-            });
-            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
-        }
-
+        
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 5);
@@ -139,6 +112,33 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             }
 
             Expire();
+        }
+
+        private void bulletAddDeg(float speed, float degree)
+        {
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
+            {
+                Origin = Anchor.Centre,
+                Depth = 1,
+                BulletColor = Color4.Cyan,
+                BulletAngleDegree = playerPos + degree,
+                BulletSpeed = speed,
+            });
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+        }
+        private void bulletAddRad(float speed, float degree)
+        {
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
+            {
+                Origin = Anchor.Centre,
+                Depth = 1,
+                BulletColor = Color4.Cyan,
+                BulletAngleRadian = playerPos + degree,
+                BulletSpeed = speed,
+            });
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
 
         private void enemyShoot()
