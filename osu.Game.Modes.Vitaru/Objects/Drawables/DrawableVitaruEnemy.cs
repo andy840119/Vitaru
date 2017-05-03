@@ -75,8 +75,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.UpdatePreemptState();
 
-            FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT));
-            ScaleTo(1f, TIME_PREEMPT);
+            FadeIn(Math.Min(TIME_FADEIN * 2, TIME_PREEMPT), EasingTypes.OutQuart);
+            ScaleTo(1f, TIME_PREEMPT, EasingTypes.OutQuart);
         }
 
         protected override void UpdateState(ArmedState state)
@@ -206,6 +206,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 Bullet B3;
                 Bullet B4;
                 Bullet B5;
+                Bullet B6;
+                Bullet B7;
                 MainParent.Add(B1 = new Bullet(1)
                 {
                     Origin = Anchor.Centre,
@@ -219,23 +221,23 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     Origin = Anchor.Centre,
                     Depth = 1,
                     BulletColor = Color4.Cyan,
-                    BulletAngleRadian = playerPos + 0.1f,
-                    BulletSpeed = 0.175f,
+                    BulletAngleRadian = playerPos + 0.05f,
+                    BulletSpeed = 0.16f,
                 });
                 MainParent.Add(B3 = new Bullet(1)
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
                     BulletColor = Color4.Cyan,
-                    BulletAngleRadian = playerPos - 0.1f,
-                    BulletSpeed = 0.175f,
+                    BulletAngleRadian = playerPos - 0.05f,
+                    BulletSpeed = 0.16f,
                 });
                 MainParent.Add(B4 = new Bullet(1)
                 {
                     Origin = Anchor.Centre,
                     Depth = 1,
                     BulletColor = Color4.Cyan,
-                    BulletAngleRadian = playerPos + 0.2f,
+                    BulletAngleRadian = playerPos + 0.125f,
                     BulletSpeed = 0.17f,
                 });
                 MainParent.Add(B5 = new Bullet(1)
@@ -243,14 +245,32 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     Origin = Anchor.Centre,
                     Depth = 1,
                     BulletColor = Color4.Cyan,
-                    BulletAngleRadian = playerPos - 0.2f,
+                    BulletAngleRadian = playerPos - 0.125f,
                     BulletSpeed = 0.17f,
+                });
+                MainParent.Add(B6 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos + 0.2f,
+                    BulletSpeed = 0.18f,
+                });
+                MainParent.Add(B7 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos - 0.2f,
+                    BulletSpeed = 0.18f,
                 });
                 B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
                 B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
                 B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
                 B4.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B4));
                 B5.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B5));
+                B6.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B6));
+                B7.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B7));
             }
 
         }

@@ -7,9 +7,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject, VitaruJudgement>
     {
-        public const float TIME_PREEMPT = 400;
-        public const float TIME_FADEIN = 100;
-        public const float TIME_FADEOUT = 400;
+        public const float TIME_PREEMPT = 600;
+        public const float TIME_FADEIN = 400;
+        public const float TIME_FADEOUT = 800;
 
         public DrawableVitaruHitObject(VitaruHitObject hitObject)
             : base(hitObject)
