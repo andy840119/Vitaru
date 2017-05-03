@@ -40,10 +40,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private float anglecircle = 1f; // Angle of circles currently
         private float direction = 0; // For more bullet hell ! could be remplaced by map seed
         private int bulletPattern = 1;
-        private float shootLeniancy = 10f; 
+        private float shootLeniancy = 10f;
         private bool hasShot = false;
 
-        private void bulletAddDeg(float speed , float degree)
+        private void bulletAddDeg(float speed, float degree)
         {
             Bullet bullet;
             MainParent.Add(bullet = new Bullet(1)
@@ -145,77 +145,54 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             direction = RNG.Next(-50, 51);
             direction = direction / 100;
-            if (bulletPattern == 1)
+            switch (bulletPattern)
             {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                bulletAddRad(0.2f, direction);
-                bulletAddRad(0.2f, 0.1f + direction);
-                bulletAddRad(0.2f, - 0.1f + direction);
-            }
+                case 1:
+                    bulletAddRad(0.2f, direction);
+                    bulletAddRad(0.2f, 0.1f + direction);
+                    bulletAddRad(0.2f, -0.1f + direction);
+                    break;
 
-            if (bulletPattern == 2)
-            {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                Bullet B4;
-                Bullet B5;
-                bulletAddRad(0.15f, direction);
-                bulletAddRad(0.175f, direction);
-                bulletAddRad(0.2f, direction);
-                bulletAddRad(0.225f, direction);
-                bulletAddRad(0.25f, direction);
-            }
-            if(bulletPattern == 3)
-            {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                Bullet B4;
-                Bullet B5;
-                Bullet B6;
-                Bullet B7;
-                bulletAddRad(0.15f, 0f + direction);
-                bulletAddRad(0.16f, 0.075f + direction);
-                bulletAddRad(0.16f, -0.075f + direction);
-                bulletAddRad(0.17f, 0.15f + direction);
-                bulletAddRad(0.17f, -0.15f + direction);
-                bulletAddRad(0.18f, 0.225f + direction);
-                bulletAddRad(0.18f, -0.225f + direction);
-            }
-            if (bulletPattern == 4)
-            {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                Bullet B4;
-                Bullet B5;
-                Bullet B6;
-                Bullet B7;
-                Bullet B8;
-                difficultypattern = RNG.Next(0, 2);
-                switch (difficultypattern)
-                {
-                    case 0:
-                        anglecircle = 0;
-                        break;
-                    case 1:
-                        anglecircle = 45;
-                        break;
-                }
-                
-                bulletAddDeg(0.2f, 0);
-                bulletAddDeg(0.2f, 90);
-                bulletAddDeg(0.2f, 180);
-                bulletAddDeg(0.2f, 270);
-                bulletAddDeg(0.2f, anglecircle);
-                bulletAddDeg(0.2f, 90 + anglecircle);
-                bulletAddDeg(0.2f, 180 + anglecircle);
-                bulletAddDeg(0.2f, 270 + anglecircle);
-            }
+                case 2:
+                    bulletAddRad(0.15f, direction);
+                    bulletAddRad(0.175f, direction);
+                    bulletAddRad(0.2f, direction);
+                    bulletAddRad(0.225f, direction);
+                    bulletAddRad(0.25f, direction);
+                    break;
 
+                case 3:
+                    bulletAddRad(0.15f, 0f + direction);
+                    bulletAddRad(0.16f, 0.075f + direction);
+                    bulletAddRad(0.16f, -0.075f + direction);
+                    bulletAddRad(0.17f, 0.15f + direction);
+                    bulletAddRad(0.17f, -0.15f + direction);
+                    bulletAddRad(0.18f, 0.225f + direction);
+                    bulletAddRad(0.18f, -0.225f + direction);
+                    break;
+
+                case 4:
+                    difficultypattern = RNG.Next(0, 2);
+                    switch (difficultypattern)
+                    {
+                        case 0:
+                            anglecircle = 0;
+                            break;
+                        case 1:
+                            anglecircle = 45;
+                            break;
+                    }
+
+                    bulletAddDeg(0.2f, 0);
+                    bulletAddDeg(0.2f, 90);
+                    bulletAddDeg(0.2f, 180);
+                    bulletAddDeg(0.2f, 270);
+                    bulletAddDeg(0.2f, anglecircle);
+                    bulletAddDeg(0.2f, 90 + anglecircle);
+                    bulletAddDeg(0.2f, 180 + anglecircle);
+                    bulletAddDeg(0.2f, 270 + anglecircle);
+                    break;
+            }
         }
         public float playerRelativePositionAngle()
         {
