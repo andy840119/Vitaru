@@ -75,7 +75,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
                     DeleteBullet();
             }
 
-            if (Clock.ElapsedFrameTime > 40)
+            if (Clock.ElapsedFrameTime > 100)
             {
                 DeleteBullet();
             }

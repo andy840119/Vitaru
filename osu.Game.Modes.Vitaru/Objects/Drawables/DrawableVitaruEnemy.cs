@@ -19,7 +19,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
     {
         private readonly Enemy enemy;
         public bool Shoot = false;
-        float playerPos;
+        private float playerPos;
+        private Color4 enemyColor = Color4.Green;
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
@@ -52,7 +53,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
-            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - enemy.Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - enemy.Position.Y));
+            playerRelativePositionAngle();
         }
 
         protected override void CheckJudgement(bool userTriggered)
@@ -71,8 +72,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         {
             base.UpdateInitialState();
 
-            Alpha = 0.001f;
-            Scale = new Vector2(0.25f);
+            Alpha = 0f;
+            Scale = new Vector2(0.5f);
         }
 
         protected override void UpdatePreemptState()
@@ -196,7 +197,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         }
         public float playerRelativePositionAngle()
         {
-            return (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
+            //Returns Something?
+            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
+            return playerPos;
         }
     }
 }
