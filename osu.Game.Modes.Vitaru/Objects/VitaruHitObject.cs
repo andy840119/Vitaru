@@ -56,8 +56,6 @@ namespace osu.Game.Modes.Vitaru.Objects
                     return 30;
                 case VitaruScoreResult.Kill1500:
                     return 1500;
-                case VitaruScoreResult.Hit:
-                    return 0;
             }
         }
 

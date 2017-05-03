@@ -72,10 +72,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\Projectiles\Bullet.cs" />
     <Compile Include="VitaruDifficultyCalculator.cs" />
-    <Compile Include="VitaruHitRenderer.cs" />
-    <Compile Include="VitaruObjectParser.cs" />
+    <Compile Include="UI\VitaruHitRenderer.cs" />
     <Compile Include="Scoring\VitaruScoreProcessor.cs" />
-    <Compile Include="UI\VitaruComboCounter.cs" />
     <Compile Include="UI\VitaruPlayfield.cs" />
     <Compile Include="VitaruRuleset.cs" />
     <Compile Include="Objects\Characters\Enemy.cs" />
