@@ -11,6 +11,7 @@ using osu.Framework.Audio.Sample;
 using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Objects.Types;
 using osu.Game.Modes.Vitaru.Judgements;
+using osu.Framework.MathUtils;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -35,11 +36,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
-
+        private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
         protected override void Update()
         {
+            bulletPattern = RNG.Next(1, 4);
             if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
@@ -110,37 +112,147 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private void enemyShoot()
         {
-            
-            Bullet B1;
-            Bullet B2;
-            Bullet B3;
-            MainParent.Add(B1 = new Bullet(1)
+            if (bulletPattern == 1)
             {
-                Origin = Anchor.Centre,
-                Depth = 1,
-                BulletColor = Color4.Cyan,
-                BulletAngleRadian = playerPos,
-                BulletSpeed = 0.2f,
-            });
-            MainParent.Add(B2 = new Bullet(1)
+                Bullet B1;
+                Bullet B2;
+                Bullet B3;
+                MainParent.Add(B1 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.2f,
+                });
+                MainParent.Add(B2 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos - 0.1f,
+                    BulletSpeed = 0.2f,
+                });
+                MainParent.Add(B3 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos + 0.1f,
+                    BulletSpeed = 0.2f,
+                });
+                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
+                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
+                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
+            }
+
+            if (bulletPattern == 2)
             {
-                Origin = Anchor.Centre,
-                Depth = 1,
-                BulletColor = Color4.Cyan,
-                BulletAngleRadian = playerPos - 0.1f,
-                BulletSpeed = 0.2f,
-            });
-            MainParent.Add(B3 = new Bullet(1)
+                Bullet B1;
+                Bullet B2;
+                Bullet B3;
+                Bullet B4;
+                Bullet B5;
+                MainParent.Add(B1 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.05f,
+                });
+                MainParent.Add(B2 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.1f,
+                });
+                MainParent.Add(B3 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.15f,
+                });
+                MainParent.Add(B4 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.2f,
+                });
+                MainParent.Add(B5 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.25f,
+                });
+                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
+                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
+                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
+                B4.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B4));
+                B5.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B5));
+            }
+            if(bulletPattern == 3)
             {
-                Origin = Anchor.Centre,
-                Depth = 1,
-                BulletColor = Color4.Cyan,
-                BulletAngleRadian = playerPos + 0.1f,
-                BulletSpeed = 0.2f,
-            });
-            B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
-            B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
-            B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
+                Bullet B1;
+                Bullet B2;
+                Bullet B3;
+                Bullet B4;
+                Bullet B5;
+                MainParent.Add(B1 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos,
+                    BulletSpeed = 0.15f,
+                });
+                MainParent.Add(B2 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos + 0.1f,
+                    BulletSpeed = 0.175f,
+                });
+                MainParent.Add(B3 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos - 0.1f,
+                    BulletSpeed = 0.175f,
+                });
+                MainParent.Add(B4 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos + 0.2f,
+                    BulletSpeed = 0.17f,
+                });
+                MainParent.Add(B5 = new Bullet(1)
+                {
+                    Origin = Anchor.Centre,
+                    Depth = 1,
+                    BulletColor = Color4.Cyan,
+                    BulletAngleRadian = playerPos - 0.2f,
+                    BulletSpeed = 0.17f,
+                });
+                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
+                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
+                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
+                B4.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B4));
+                B5.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B5));
+            }
+
         }
         public float playerRelativePositionAngle()
         {
