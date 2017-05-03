@@ -30,7 +30,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             CharacterType = HitObjectType.Enemy;
             CharacterHealth = 60;
             Team = 1;
-            HitboxWidth = 4;
+            HitboxWidth = 20;
             HitboxColor = Color4.Yellow;
             Alpha = 1;
             Judgement = new VitaruJudgement { Result = HitResult.Hit };
@@ -43,10 +43,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         private float shootLeniancy = 10f; 
         private bool hasShot = false;
 
-        private Bullet bulletAddDeg(float speed , float degree)
+        private void bulletAddDeg(float speed , float degree)
         {
-            Bullet bullets;
-            MainParent.Add(bullets = new Bullet(1)
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
@@ -54,12 +54,12 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 BulletAngleDegree = playerPos + degree,
                 BulletSpeed = speed,
             });
-            return bullets;
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
-        private Bullet bulletAddRad(float speed, float degree)
+        private void bulletAddRad(float speed, float degree)
         {
-            Bullet bullets;
-            MainParent.Add(bullets = new Bullet(1)
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
@@ -67,11 +67,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 BulletAngleRadian = playerPos + degree,
                 BulletSpeed = speed,
             });
-            return bullets;
-        }
-
-        private void drawVector(Bullet bullet)
-        {
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
 
@@ -155,12 +150,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 Bullet B1;
                 Bullet B2;
                 Bullet B3;
-                B1 = bulletAddRad(0.2f, direction);
-                B2 = bulletAddRad(0.2f, 0.1f + direction);
-                B3 = bulletAddRad(0.2f, - 0.1f + direction);
-                drawVector(B1);
-                drawVector(B2);
-                drawVector(B3);
+                bulletAddRad(0.2f, direction);
+                bulletAddRad(0.2f, 0.1f + direction);
+                bulletAddRad(0.2f, - 0.1f + direction);
             }
 
             if (bulletPattern == 2)
@@ -170,17 +162,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 Bullet B3;
                 Bullet B4;
                 Bullet B5;
-                B1 = bulletAddRad(0.15f, direction);
-                B2 = bulletAddRad(0.175f, direction);
-                B3 = bulletAddRad(0.2f, direction);
-                B4 = bulletAddRad(0.225f, direction);
-                B5 = bulletAddRad(0.25f, direction);
-
-                drawVector(B1);
-                drawVector(B2);
-                drawVector(B3);
-                drawVector(B4);
-                drawVector(B5);
+                bulletAddRad(0.15f, direction);
+                bulletAddRad(0.175f, direction);
+                bulletAddRad(0.2f, direction);
+                bulletAddRad(0.225f, direction);
+                bulletAddRad(0.25f, direction);
             }
             if(bulletPattern == 3)
             {
@@ -191,21 +177,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 Bullet B5;
                 Bullet B6;
                 Bullet B7;
-                B1 = bulletAddRad(0.15f, 0f + direction);
-                B2 = bulletAddRad(0.16f, 0.075f + direction);
-                B3 = bulletAddRad(0.16f, -0.075f + direction);
-                B4 = bulletAddRad(0.17f, 0.15f + direction);
-                B5 = bulletAddRad(0.17f, -0.15f + direction);
-                B6 = bulletAddRad(0.18f, 0.225f + direction);
-                B7 = bulletAddRad(0.18f, -0.225f + direction);
-
-                drawVector(B1);
-                drawVector(B2);
-                drawVector(B3);
-                drawVector(B4);
-                drawVector(B5);
-                drawVector(B6);
-                drawVector(B7);
+                bulletAddRad(0.15f, 0f + direction);
+                bulletAddRad(0.16f, 0.075f + direction);
+                bulletAddRad(0.16f, -0.075f + direction);
+                bulletAddRad(0.17f, 0.15f + direction);
+                bulletAddRad(0.17f, -0.15f + direction);
+                bulletAddRad(0.18f, 0.225f + direction);
+                bulletAddRad(0.18f, -0.225f + direction);
             }
             if (bulletPattern == 4)
             {
@@ -228,23 +206,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                         break;
                 }
                 
-                B1 = bulletAddDeg(0.2f, 0);
-                B2 = bulletAddDeg(0.2f, 90);
-                B3 = bulletAddDeg(0.2f, 180);
-                B4 = bulletAddDeg(0.2f, 270);
-                B5 = bulletAddDeg(0.2f, anglecircle);
-                B6 = bulletAddDeg(0.2f, 90 + anglecircle);
-                B7 = bulletAddDeg(0.2f, 180 + anglecircle);
-                B8 = bulletAddDeg(0.2f, 270 + anglecircle);
-
-                drawVector(B1);
-                drawVector(B2);
-                drawVector(B3);
-                drawVector(B4);
-                drawVector(B5);
-                drawVector(B6);
-                drawVector(B7);
-                drawVector(B8);
+                bulletAddDeg(0.2f, 0);
+                bulletAddDeg(0.2f, 90);
+                bulletAddDeg(0.2f, 180);
+                bulletAddDeg(0.2f, 270);
+                bulletAddDeg(0.2f, anglecircle);
+                bulletAddDeg(0.2f, 90 + anglecircle);
+                bulletAddDeg(0.2f, 180 + anglecircle);
+                bulletAddDeg(0.2f, 270 + anglecircle);
             }
 
         }
