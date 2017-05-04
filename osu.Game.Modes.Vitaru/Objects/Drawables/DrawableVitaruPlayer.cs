@@ -33,7 +33,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
-            CharacterHealth = 100;
+            CharacterHealth = 200;
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
@@ -50,8 +50,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
             //Handles Player Speed
             var pos = Position;
-            float ySpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+            float ySpeed = 0.3f * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = 0.3f * (float)(Clock.ElapsedFrameTime);
 
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
@@ -87,10 +87,10 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             {
                 pos.X += xSpeed;
             }
-
-            pos = Vector2.ComponentMin(pos, playerBounds.Yw);
-            pos = Vector2.ComponentMax(pos, playerBounds.Xz);
-            Position = pos;
+            
+            pos = Vector2.ComponentMin(pos, playerBounds.Yw); // Useless
+            pos = Vector2.ComponentMax(pos, playerBounds.Xz); // Useless
+            Position = pos; 
         }
 
         private void shoot()
