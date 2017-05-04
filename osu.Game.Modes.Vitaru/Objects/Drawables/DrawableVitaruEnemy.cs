@@ -37,9 +37,9 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
-        private int difficultypattern = 1; // It will be depending on OD in future
-        private float anglecircle = 1f; // Angle of circles currently
-        private float direction = 0; // For more bullet hell ! could be remplaced by map seed
+        private int patternDifficulty = 1; // It will be depending on OD in future
+        private float circleAngle = 1f; // Angle of circles currently in degree
+        private float randomDirection = 0; // For more bullet hell ! could be remplaced by map seed
         private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
@@ -144,54 +144,53 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private void enemyShoot()
         {
-            direction = RNG.Next(-50, 51);
-            direction = direction / 100;
+            patternDifficulty = RNG.Next(0, 5);
+            randomDirection = RNG.Next(-50, 51) / 100;
+            float speedModifier;
+            float directionModifier;
             switch (bulletPattern)
             {
                 case 1:
-                    bulletAddRad(0.2f, direction);
-                    bulletAddRad(0.2f, 0.1f + direction);
-                    bulletAddRad(0.2f, -0.1f + direction);
+                    directionModifier = -0.1f;
+                    for(int i = 0; i<=2; i++)
+                    {
+                        bulletAddRad(0.2f, randomDirection + directionModifier);
+                        directionModifier += 0.1f;
+                    }
                     break;
 
                 case 2:
-                    bulletAddRad(0.15f, direction);
-                    bulletAddRad(0.175f, direction);
-                    bulletAddRad(0.2f, direction);
-                    bulletAddRad(0.225f, direction);
-                    bulletAddRad(0.25f, direction);
+                    speedModifier = 0;
+                    for(int i = 0; i <= 4; i++)
+                    {
+                        bulletAddRad(0.15f + speedModifier, randomDirection);
+                        speedModifier += 0.025f;
+                    }
                     break;
 
                 case 3:
-                    bulletAddRad(0.15f, 0f + direction);
-                    bulletAddRad(0.16f, 0.075f + direction);
-                    bulletAddRad(0.16f, -0.075f + direction);
-                    bulletAddRad(0.17f, 0.15f + direction);
-                    bulletAddRad(0.17f, -0.15f + direction);
-                    bulletAddRad(0.18f, 0.225f + direction);
-                    bulletAddRad(0.18f, -0.225f + direction);
+                    speedModifier = 0.03f;
+                    directionModifier = -0.225f;
+                    for(int i = 0; i <= 6; i++)
+                    {
+
+                        bulletAddRad(
+                            0.15f + Math.Abs(speedModifier),
+                            directionModifier + randomDirection
+                        );
+                        speedModifier -= 0.01f;
+                        directionModifier += 0.075f;
+                    }
                     break;
 
                 case 4:
-                    difficultypattern = RNG.Next(0, 2);
-                    switch (difficultypattern)
+                    directionModifier = (float)(90 / Math.Pow(2, patternDifficulty));
+                    circleAngle = 0;
+                   for(int j = 1; j <= Math.Pow(2,patternDifficulty + 2); j++)
                     {
-                        case 0:
-                            anglecircle = 0;
-                            break;
-                        case 1:
-                            anglecircle = 45;
-                            break;
+                        bulletAddDeg(0.2f, circleAngle);
+                        circleAngle += directionModifier;
                     }
-
-                    bulletAddDeg(0.2f, 0);
-                    bulletAddDeg(0.2f, 90);
-                    bulletAddDeg(0.2f, 180);
-                    bulletAddDeg(0.2f, 270);
-                    bulletAddDeg(0.2f, anglecircle);
-                    bulletAddDeg(0.2f, 90 + anglecircle);
-                    bulletAddDeg(0.2f, 180 + anglecircle);
-                    bulletAddDeg(0.2f, 270 + anglecircle);
                     break;
             }
         }
