@@ -12,7 +12,6 @@ using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Objects.Types;
 using osu.Game.Modes.Vitaru.Judgements;
 using osu.Framework.MathUtils;
-using System.Timers;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -47,7 +46,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         
         protected override void Update()
         {
-            bulletPattern = RNG.Next(1, 3); // could be remplaced by map seed, with stackleniency
+            bulletPattern = RNG.Next(1, 5); // could be remplaced by map seed, with stackleniency
             if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
@@ -142,7 +141,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
-
         private void enemyShoot()
         {
             patternDifficulty = RNG.Next(0, 5); // For circle currently
@@ -194,22 +192,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                         circleAngle += directionModifier;
                     }
                     break;
-
-                case 5: // Spinner
-                    circleAngle = 0;
-                    int density = 2 * RNG.Next(1, 4);
-                    for (int i = 1; i <= (360 / density); i++)
-                    {
-                        bulletAddDeg(0.2f, circleAngle);
-                        // ADD TIMER HERE
-                        circleAngle += density;
-                    }
-                    break;
             }
         }
         public float playerRelativePositionAngle()
         {
-            //Returns Something?
+            //Returns Something? Yes, but always the same thing
             playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
             return playerPos;
         }
