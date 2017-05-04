@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics.Containers;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     class LaserPiece : Container
     {

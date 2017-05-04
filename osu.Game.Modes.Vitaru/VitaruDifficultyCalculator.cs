@@ -1,12 +1,14 @@
 ﻿using osu.Game.Beatmaps;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Beatmaps;
-using osu.Game.Modes.Objects;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Beatmaps;
+using osu.Game.Rulesets.Objects;
 using System;
 using System.Collections.Generic;
-using osu.Game.Modes.Objects.Types;
+using osu.Game.Rulesets.Objects.Types;
+using osu.Game.Rulesets.Beatmaps;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
 
-namespace osu.Game.Modes.Vitaru
+namespace osu.Game.Rulesets.Vitaru
 {
     class VitaruDifficultyCalculator : DifficultyCalculator<VitaruHitObject>
     {
@@ -21,11 +23,11 @@ namespace osu.Game.Modes.Vitaru
 
         protected override void PreprocessHitObjects()
         {
-            foreach (var h in Objects)
-                (h as IHasCurve)?.Curve?.Calculate();
+            foreach (var h in Objects) { }
+                //(h as Enemy)?.Curve?.Calculate();
         }
 
-        protected override IBeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
+        protected override BeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
 
         protected override double CalculateInternal(Dictionary<string, string> categoryDifficulty)
         {

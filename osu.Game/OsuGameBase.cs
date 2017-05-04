@@ -18,6 +18,8 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Graphics.Processing;
 using osu.Game.Online.API;
+using SQLite.Net;
+using osu.Framework.Graphics.Performance;
 
 namespace osu.Game
 {
@@ -26,6 +28,8 @@ namespace osu.Game
         protected OsuConfigManager LocalConfig;
 
         protected BeatmapDatabase BeatmapDatabase;
+
+        protected RulesetDatabase RulesetDatabase;
 
         protected ScoreDatabase ScoreDatabase;
 
@@ -40,6 +44,8 @@ namespace osu.Game
         protected MenuCursor Cursor;
 
         public readonly Bindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
+
+        private Bindable<bool> fpsDisplayVisible;
 
         protected AssemblyName AssemblyName => Assembly.GetEntryAssembly()?.GetName() ?? new AssemblyName { Version = new Version() };
 
@@ -80,8 +86,12 @@ namespace osu.Game
         {
             Dependencies.Cache(this);
             Dependencies.Cache(LocalConfig);
-            Dependencies.Cache(BeatmapDatabase = new BeatmapDatabase(Host.Storage, Host));
-            Dependencies.Cache(ScoreDatabase = new ScoreDatabase(Host.Storage, Host, BeatmapDatabase));
+
+            SQLiteConnection connection = Host.Storage.GetDatabase(@"client");
+
+            Dependencies.Cache(RulesetDatabase = new RulesetDatabase(Host.Storage, connection));
+            Dependencies.Cache(BeatmapDatabase = new BeatmapDatabase(Host.Storage, connection, RulesetDatabase, Host));
+            Dependencies.Cache(ScoreDatabase = new ScoreDatabase(Host.Storage, connection, Host, BeatmapDatabase));
             Dependencies.Cache(new OsuColour());
 
             //this completely overrides the framework default. will need to change once we make a proper FontStore.
@@ -92,7 +102,10 @@ namespace osu.Game
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-Medium"));
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-MediumItalic"));
 
-            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Noto"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Noto-Basic"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Noto-Hangul"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Noto-CJK-Basic"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Noto-CJK-Compatibility"));
 
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-Regular"));
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-RegularItalic"));
@@ -106,6 +119,7 @@ namespace osu.Game
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-BlackItalic"));
 
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Venera"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Venera-Light"));
 
             OszArchiveReader.Register();
 
@@ -134,11 +148,30 @@ namespace osu.Game
 
             AddInternal(ratioContainer = new RatioAdjust
             {
-                Children = new[]
+                Children = new Drawable[]
                 {
-                    Cursor = new MenuCursor { Depth = float.MinValue }
+                    new Container
+                    {
+                        AlwaysReceiveInput = true,
+                        RelativeSizeAxes = Axes.Both,
+                        Depth = float.MinValue,
+                        Children = new Drawable[]
+                        {
+                            Cursor = new MenuCursor(),
+                            new TooltipContainer(Cursor) { Depth = -1 },
+                        }
+                    },
                 }
             });
+
+            // TODO: This is temporary until we reimplement the local FPS display.
+            // It's just to allow end-users to access the framework FPS display without knowing the shortcut key.
+            fpsDisplayVisible = LocalConfig.GetBindable<bool>(OsuConfig.ShowFpsDisplay);
+            fpsDisplayVisible.ValueChanged += val =>
+            {
+                FrameStatisticsMode = val ? FrameStatisticsMode.Minimal : FrameStatisticsMode.None;
+            };
+            fpsDisplayVisible.TriggerChange();
         }
 
         public override void SetHost(GameHost host)

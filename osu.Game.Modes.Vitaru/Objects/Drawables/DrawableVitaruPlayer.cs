@@ -1,15 +1,15 @@
 ﻿using osu.Framework.Graphics.Containers;
 using OpenTK;
 using OpenTK.Input;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using System.Collections.Generic;
 using System;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruPlayer : DrawableCharacter
     {
@@ -33,7 +33,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
-            CharacterHealth = 200;
+            CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
@@ -50,8 +50,8 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
             //Handles Player Speed
             var pos = Position;
-            float ySpeed = 0.3f * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = 0.3f * (float)(Clock.ElapsedFrameTime);
+            float ySpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
 
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
@@ -87,10 +87,11 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             {
                 pos.X += xSpeed;
             }
-            
-            pos = Vector2.ComponentMin(pos, playerBounds.Yw); // Useless
-            pos = Vector2.ComponentMax(pos, playerBounds.Xz); // Useless
-            Position = pos; 
+
+            pos = Vector2.ComponentMin(pos, playerBounds.Yw);
+            pos = Vector2.ComponentMax(pos, playerBounds.Xz);
+            Position = pos;
+            //PlayerPosition = pos;
         }
 
         private void shoot()
@@ -106,7 +107,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                 {
                     Depth = 1,
                     Anchor = Anchor.Centre,
-                    BulletSpeed = 1,
+                    BulletSpeed = 0.1f,
                     BulletAngleRadian = 0,
                 });
                 b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));

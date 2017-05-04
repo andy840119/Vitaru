@@ -5,10 +5,10 @@ using osu.Framework.Graphics.Containers;
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Graphics;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using System;
 
-namespace osu.Game.Modes.Vitaru.Objects.Projectiles
+namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 {
     public abstract class BulletPattern : Container
     {

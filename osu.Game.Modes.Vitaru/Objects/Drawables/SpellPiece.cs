@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics;
 using System;
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     class SpellPiece : Container
     {

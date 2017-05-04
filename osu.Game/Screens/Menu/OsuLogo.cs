@@ -148,14 +148,14 @@ namespace osu.Game.Screens.Menu
                                         }
                                     }
                                 },
-                                /*new MenuCircularVisualisation
+                                new MenuVisualisation
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
                                     Size = logo.Size,
                                     BlendingMode = BlendingMode.Additive,
                                     Alpha = 0.2f,
-                                }*/
+                                }
                             }
                         }
                     }
@@ -193,8 +193,6 @@ namespace osu.Game.Screens.Menu
             logoBounceContainer.ScaleTo(1f, 500, EasingTypes.OutElastic);
             return true;
         }
-
-        protected override bool OnDragStart(InputState state) => true;
 
         protected override bool OnClick(InputState state)
         {

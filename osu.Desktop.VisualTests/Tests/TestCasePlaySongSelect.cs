@@ -6,7 +6,6 @@ using osu.Desktop.VisualTests.Platform;
 using osu.Framework.Testing;
 using osu.Framework.MathUtils;
 using osu.Game.Database;
-using osu.Game.Modes;
 using osu.Game.Screens.Select;
 using osu.Game.Screens.Select.Filter;
 
@@ -14,11 +13,13 @@ namespace osu.Desktop.VisualTests.Tests
 {
     internal class TestCasePlaySongSelect : TestCase
     {
-        private BeatmapDatabase db, oldDb;
+        private BeatmapDatabase db;
         private TestStorage storage;
         private PlaySongSelect songSelect;
 
         public override string Description => @"with fake data";
+
+        private RulesetDatabase rulesets;
 
         public override void Reset()
         {
@@ -26,7 +27,11 @@ namespace osu.Desktop.VisualTests.Tests
             if (db == null)
             {
                 storage = new TestStorage(@"TestCasePlaySongSelect");
-                db = new BeatmapDatabase(storage);
+
+                var backingDatabase = storage.GetDatabase(@"client");
+
+                rulesets = new RulesetDatabase(storage, backingDatabase);
+                db = new BeatmapDatabase(storage, backingDatabase, rulesets);
 
                 var sets = new List<BeatmapSetInfo>();
 
@@ -44,13 +49,13 @@ namespace osu.Desktop.VisualTests.Tests
             AddStep(@"Sort by Difficulty", delegate { songSelect.FilterControl.Sort = SortMode.Difficulty; });
         }
 
-        protected override void Dispose(bool isDisposing)
-        {
-            if (oldDb != null)
-                db = null;
+        //protected override void Dispose(bool isDisposing)
+        //{
+        //    if (oldDb != null)
+        //        db = null;
 
-            base.Dispose(isDisposing);
-        }
+        //    base.Dispose(isDisposing);
+        //}
 
         private BeatmapSetInfo createTestBeatmapSet(int i)
         {
@@ -72,7 +77,7 @@ namespace osu.Desktop.VisualTests.Tests
                     new BeatmapInfo
                     {
                         OnlineBeatmapID = 1234 + i,
-                        Mode = PlayMode.Osu,
+                        Ruleset = rulesets.Query<RulesetInfo>().First(),
                         Path = "normal.osu",
                         Version = "Normal",
                         Difficulty = new BeatmapDifficulty
@@ -83,7 +88,7 @@ namespace osu.Desktop.VisualTests.Tests
                     new BeatmapInfo
                     {
                         OnlineBeatmapID = 1235 + i,
-                        Mode = PlayMode.Osu,
+                        Ruleset = rulesets.Query<RulesetInfo>().First(),
                         Path = "hard.osu",
                         Version = "Hard",
                         Difficulty = new BeatmapDifficulty
@@ -94,7 +99,7 @@ namespace osu.Desktop.VisualTests.Tests
                     new BeatmapInfo
                     {
                         OnlineBeatmapID = 1236 + i,
-                        Mode = PlayMode.Osu,
+                        Ruleset = rulesets.Query<RulesetInfo>().First(),
                         Path = "insane.osu",
                         Version = "Insane",
                         Difficulty = new BeatmapDifficulty

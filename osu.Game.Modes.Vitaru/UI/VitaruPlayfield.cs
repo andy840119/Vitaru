@@ -2,22 +2,26 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
-using osu.Game.Modes.Vitaru.Objects;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Game.Modes.UI;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.UI;
 using OpenTK;
-using osu.Game.Modes.Vitaru.Judgements;
+using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Modes.Objects.Drawables;
-using osu.Game.Modes.Osu.Objects.Drawables.Connections;
+using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.Osu.Objects.Drawables.Connections;
 using osu.Framework.Graphics.Sprites;
 
-namespace osu.Game.Modes.Vitaru.UI
+namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
         public Container MainPlayfield;
         private Box playfieldBackground;
+
+        public override bool ProvidingUserCursor => false;
+
+        public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
 
         public override Vector2 Size
         {
@@ -30,31 +34,26 @@ namespace osu.Game.Modes.Vitaru.UI
             }
         }
 
-        public VitaruPlayfield() : base(512)
+        public VitaruPlayfield() : base(BASE_SIZE.X)
         {
-            Position = new Vector2(-182, -200);
+            Position = new Vector2(-166, -200);
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
-            RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(1f);
+            Scale = new Vector2(1.6f);
 
             Add(new Drawable[]
             {
                 MainPlayfield = new Container
                 {
-                    RelativeSizeAxes = Axes.Both,
                     Depth = -1,
                 },
-                playfieldBackground = new Box
-                {
-                    Depth = -2,
-                    Size = new Vector2 (1.2f , 1f),
-                    Position = new Vector2(212 , 338),
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.25f,
-                }
             });
             DrawableCharacter.playfield = MainPlayfield;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
         }
 
         public override void Add(DrawableHitObject<VitaruHitObject, VitaruJudgement> h)

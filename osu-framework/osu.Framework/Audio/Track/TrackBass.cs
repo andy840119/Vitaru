@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace osu.Framework.Audio.Track
 {
-    public class TrackBass : Track, IBassAudio
+    public class TrackBass : Track, IBassAudio, IHasPitchAdjust
     {
         private AsyncBufferStream dataStream;
 
@@ -25,6 +25,11 @@ namespace osu.Framework.Audio.Track
         /// The handle for this track, if there is one.
         /// </summary>
         private int activeStream;
+
+        /// <summary>
+        /// The handle for adjusting tempo.
+        /// </summary>
+        private int tempoAdjustStream;
 
         /// <summary>
         /// This marks if the track is paused, or stopped to the end.
@@ -60,9 +65,9 @@ namespace osu.Framework.Audio.Track
                     const int bass_nodevice = 0x20000;
 
                     Bass.ChannelSetDevice(activeStream, bass_nodevice);
-                    activeStream = BassFx.TempoCreate(activeStream, BassFlags.Decode | BassFlags.FxFreeSource);
+                    tempoAdjustStream = BassFx.TempoCreate(activeStream, BassFlags.Decode | BassFlags.FxFreeSource);
                     Bass.ChannelSetDevice(activeStream, bass_nodevice);
-                    activeStream = BassFx.ReverseCreate(activeStream, 5f, BassFlags.Default | BassFlags.FxFreeSource);
+                    activeStream = BassFx.ReverseCreate(tempoAdjustStream, 5f, BassFlags.Default | BassFlags.FxFreeSource);
 
                     Bass.ChannelSetAttribute(activeStream, ChannelAttribute.TempoUseQuickAlgorithm, 1);
                     Bass.ChannelSetAttribute(activeStream, ChannelAttribute.TempoOverlapMilliseconds, 4);
@@ -152,12 +157,15 @@ namespace osu.Framework.Audio.Track
 
         public override void Start()
         {
-            base.Start();
+            isRunning = true;
 
+            base.Start();
             PendingActions.Enqueue(() =>
             {
-                Bass.ChannelPlay(activeStream);
-                isPlayed = true;
+                if (Bass.ChannelPlay(activeStream))
+                    isPlayed = true;
+                else
+                    isRunning = false;
             });
         }
 
@@ -190,23 +198,21 @@ namespace osu.Framework.Audio.Track
 
         public override bool IsRunning => isRunning;
 
-        internal override void OnStateChanged(object sender, EventArgs e)
+        internal override void OnStateChanged()
         {
-            base.OnStateChanged(sender, e);
+            base.OnStateChanged();
 
             setDirection(FrequencyCalculated.Value < 0);
 
             Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Volume, VolumeCalculated);
             Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Pan, BalanceCalculated);
             Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Frequency, bassFreq);
-            Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Tempo, (Math.Abs(Tempo) - 1) * 100);
+            Bass.ChannelSetAttribute(tempoAdjustStream, ChannelAttribute.Tempo, (Math.Abs(Tempo) - 1) * 100);
         }
 
         private volatile float initialFrequency;
 
         private int bassFreq => (int)MathHelper.Clamp(Math.Abs(initialFrequency * FrequencyCalculated), 100, 100000);
-
-        public override double Rate => bassFreq / initialFrequency * Tempo * direction;
 
         private volatile int bitrate;
 
@@ -291,11 +297,10 @@ namespace osu.Framework.Audio.Track
             }
         }
 
-        public override float[] GetChannelData()
+        public double PitchAdjust
         {
-            var fft = new float[512];
-            Bass.ChannelGetData(activeStream, fft, (int)DataFlags.FFT1024);
-            return fft;
+            get { return Frequency.Value; }
+            set { Frequency.Value = value; }
         }
     }
 }

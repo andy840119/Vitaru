@@ -2,7 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 
-namespace osu.Game.Modes.Vitaru.Objects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     class TotemPiece
     {

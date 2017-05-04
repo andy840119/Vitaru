@@ -51,13 +51,17 @@ namespace osu.Framework.Configuration
 
         public override string ToString() => Value.ToString("0.0###", NumberFormatInfo.InvariantInfo);
 
-        public override bool Parse(object s)
+        public override void Parse(object s)
         {
             string str = s as string;
-            if (str == null) return false;
+            if (str == null)
+                throw new InvalidCastException($@"Input type {s.GetType()} could not be cast to a string for parsing");
 
-            Value = double.Parse(str, NumberFormatInfo.InvariantInfo);
-            return true;
+            var parsed = double.Parse(str, NumberFormatInfo.InvariantInfo);
+            if (parsed < MinValue || parsed > MaxValue)
+                throw new ArgumentException($"Parsed number ({parsed}) is outside the valid range ({MinValue} - {MaxValue})");
+
+            Value = parsed;
         }
     }
 }

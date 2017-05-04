@@ -9,24 +9,23 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 
-namespace osu.Game.Modes.Vitaru.Objects.Projectiles
+namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 {
     public class Bullet : Projectile
     {
         //Different stats for Bullet that should always be changed
-        public int BulletDamage { get; set; } = 20;
-        public Color4 BulletColor { get; set; } = Color4.Red;
-        public float BulletSpeed { get; set; } = 20;
-        public float BulletWidth { get; set; } = 12f;
+        public int BulletDamage { get; set; } = 1;
+        public Color4 BulletColor { get; set; } = Color4.White;
+        public float BulletSpeed { get; set; } = 0;
+        public float BulletWidth { get; set; } = 8f;
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -1;
         public Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
-        public Vector2 PlayfieldOffset = new Vector2(200 , 375);
+        public Vector2 PlayfieldOffset = new Vector2(205 , 375);
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
-        private Vector2 bulletVelocity;
+        private Vector2 bulletVelocity = new Vector2 (0);
         private BulletPiece bulletSprite;
-        
 
         public Bullet(int team)
         {
@@ -60,24 +59,26 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
-            GetBulletVelocity();
+            if(bulletVelocity == new Vector2(0))
+                GetBulletVelocity();
+
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
 
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
             {
-                if (Team == 0)
-                    DeleteBullet();
+                if (Team == 0) { }
+                    //DeleteBullet();
             }
 
             if (Position.Y < (BulletBounds.Y + PlayfieldOffset.Y) | Position.X < (BulletBounds.X + PlayfieldOffset.X) |  Position.Y > (BulletBounds.W + PlayfieldOffset.Y) | Position.X > (BulletBounds.Z + PlayfieldOffset.X))
             {
-                if(Team == 1)
-                    DeleteBullet();
+                if (Team == 1) { }
+                    //DeleteBullet();
             }
 
             if (Clock.ElapsedFrameTime > 100)
             {
-                DeleteBullet();
+                //DeleteBullet();
             }
         }
 
@@ -129,7 +130,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Projectiles
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (bullet.BulletColor).Opacity(0.75f),
+                            Colour = (bullet.BulletColor).Opacity(0.5f),
                             Radius = 2f,
                         }
                 }

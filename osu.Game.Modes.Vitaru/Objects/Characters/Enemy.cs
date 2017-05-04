@@ -1,21 +1,11 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Graphics.Containers;
 using OpenTK;
-using osu.Game.Modes.Vitaru.Objects.Drawables;
-using osu.Framework.Graphics;
-using OpenTK.Graphics;
-using osu.Game.Modes.Vitaru.Objects.Projectiles;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using System;
-using System.Collections.Generic;
-using osu.Framework.MathUtils;
-using osu.Framework.Graphics.Transforms;
-using osu.Game.Beatmaps.Samples;
-using osu.Game.Beatmaps.Timing;
-using osu.Game.Database;
 
-namespace osu.Game.Modes.Vitaru.Objects.Characters
+namespace osu.Game.Rulesets.Vitaru.Objects.Characters
 {
     public class Enemy : Character
     {
@@ -37,5 +27,6 @@ namespace osu.Game.Modes.Vitaru.Objects.Characters
         public override HitObjectType Type => HitObjectType.Enemy;
 
         public double EndTime { get; set; }
+        public object Sample { get; internal set; }
     }
 }
