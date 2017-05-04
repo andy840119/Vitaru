@@ -12,6 +12,7 @@ using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Objects.Types;
 using osu.Game.Modes.Vitaru.Judgements;
 using osu.Framework.MathUtils;
+using System.Timers;
 
 namespace osu.Game.Modes.Vitaru.Objects.Drawables
 {
@@ -39,14 +40,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private int patternDifficulty = 1; // It will be depending on OD in future
         private float circleAngle = 1f; // Angle of circles currently in degree
-        private float randomDirection = 0; // For more bullet hell ! could be remplaced by map seed
+        private float randomDirection = 0; // For more bullet hell !
         private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
         
         protected override void Update()
         {
-            bulletPattern = RNG.Next(1, 5);
+            bulletPattern = RNG.Next(1, 3); // could be remplaced by map seed, with stackleniency
             if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
@@ -144,13 +145,14 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
 
         private void enemyShoot()
         {
-            patternDifficulty = RNG.Next(0, 5);
-            randomDirection = RNG.Next(-50, 51) / 100;
+            patternDifficulty = RNG.Next(0, 5); // For circle currently
+            randomDirection = RNG.Next(-50, 51); // Between -0.05f and 0.05f
+            randomDirection = randomDirection / 100; // It seems that add / 100 after the random breaks randomDirection idk why
             float speedModifier;
             float directionModifier;
             switch (bulletPattern)
             {
-                case 1:
+                case 1: // Wave of three bullets
                     directionModifier = -0.1f;
                     for(int i = 0; i<=2; i++)
                     {
@@ -159,7 +161,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     }
                     break;
 
-                case 2:
+                case 2: // Cool wave
                     speedModifier = 0;
                     for(int i = 0; i <= 4; i++)
                     {
@@ -168,7 +170,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     }
                     break;
 
-                case 3:
+                case 3: // Line
                     speedModifier = 0.03f;
                     directionModifier = -0.225f;
                     for(int i = 0; i <= 6; i++)
@@ -183,13 +185,24 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     }
                     break;
 
-                case 4:
+                case 4: // Circle
                     directionModifier = (float)(90 / Math.Pow(2, patternDifficulty));
                     circleAngle = 0;
                    for(int j = 1; j <= Math.Pow(2,patternDifficulty + 2); j++)
                     {
                         bulletAddDeg(0.2f, circleAngle);
                         circleAngle += directionModifier;
+                    }
+                    break;
+
+                case 5: // Spinner
+                    circleAngle = 0;
+                    int density = 2 * RNG.Next(1, 4);
+                    for (int i = 1; i <= (360 / density); i++)
+                    {
+                        bulletAddDeg(0.2f, circleAngle);
+                        // ADD TIMER HERE
+                        circleAngle += density;
                     }
                     break;
             }
