@@ -46,7 +46,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
         
         protected override void Update()
         {
-            bulletPattern = RNG.Next(1, 5); // could be remplaced by map seed, with stackleniency
+            bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
             if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
@@ -128,6 +128,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
+
         private void bulletAddRad(float speed, float degree)
         {
             Bullet bullet;
@@ -141,6 +142,7 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
+
         private void enemyShoot()
         {
             patternDifficulty = RNG.Next(0, 5); // For circle currently
@@ -150,32 +152,31 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
             float directionModifier;
             switch (bulletPattern)
             {
-                case 1: // Wave of three bullets
-                    directionModifier = -0.1f;
-                    for(int i = 0; i<=2; i++)
+                case 1: // Wave
+                    directionModifier = -0.1f * patternDifficulty;
+                    for(int i = 1; i<=(3 * patternDifficulty); i++)
                     {
-                        bulletAddRad(0.2f, randomDirection + directionModifier);
+                        bulletAddRad(0.15f, randomDirection + directionModifier);
                         directionModifier += 0.1f;
                     }
                     break;
 
-                case 2: // Cool wave
+                case 2: // Line
                     speedModifier = 0;
-                    for(int i = 0; i <= 4; i++)
+                    for(int i = 1; i <= 3 + patternDifficulty; i++)
                     {
-                        bulletAddRad(0.15f + speedModifier, randomDirection);
-                        speedModifier += 0.025f;
+                        bulletAddRad(0.12f + speedModifier, randomDirection);
+                        speedModifier += 0.02f;
                     }
                     break;
 
-                case 3: // Line
-                    speedModifier = 0.03f;
-                    directionModifier = -0.225f;
-                    for(int i = 0; i <= 6; i++)
+                case 3: // Cool wave
+                    speedModifier = 0.02f + 0.01f*(patternDifficulty - 1);
+                    directionModifier = -0.15f - 0.075f*(patternDifficulty - 1);
+                    for(int i = 1; i <= 3 + patternDifficulty * 2; i++)
                     {
-
                         bulletAddRad(
-                            0.15f + Math.Abs(speedModifier),
+                            0.1f + Math.Abs(speedModifier),
                             directionModifier + randomDirection
                         );
                         speedModifier -= 0.01f;
@@ -188,9 +189,13 @@ namespace osu.Game.Modes.Vitaru.Objects.Drawables
                     circleAngle = 0;
                    for(int j = 1; j <= Math.Pow(2,patternDifficulty + 2); j++)
                     {
-                        bulletAddDeg(0.2f, circleAngle);
+                        bulletAddDeg(0.15f, circleAngle);
                         circleAngle += directionModifier;
                     }
+                    break;
+
+                case 5: // Fast shot !
+                    bulletAddRad(0.30f, 0 + randomDirection);
                     break;
             }
         }
