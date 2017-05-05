@@ -36,8 +36,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private double timeSinceLastShoot;
 
-        protected Color4 HitboxColor = Color4.White;
-        protected int HitboxWidth = 16;
+        protected Color4 HitboxColor { get; set; }
+        protected float HitboxWidth { get; set; }
 
         public Action OnDeath { get; set; }
         public Action OnShoot { get; set; }

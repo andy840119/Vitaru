@@ -37,13 +37,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
+        private int patternDifficulty = 1; // It will be depending on OD in future
+        private float circleAngle = 1f; // Angle of circles currently in degree
+        private float randomDirection = 0; // For more bullet hell !
         private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
 
         protected override void Update()
         {
-            bulletPattern = RNG.Next(1, 4);
+            bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
             if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
             {
                 enemyShoot();
@@ -112,173 +115,93 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Expire();
         }
 
+        private void bulletAddDeg(float speed, float degree)
+        {
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
+            {
+                Origin = Anchor.Centre,
+                Depth = 1,
+                BulletColor = Color4.Cyan,
+                BulletAngleDegree = playerPos + degree,
+                BulletSpeed = speed,
+            });
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+        }
+
+        private void bulletAddRad(float speed, float degree)
+        {
+            Bullet bullet;
+            MainParent.Add(bullet = new Bullet(1)
+            {
+                Origin = Anchor.Centre,
+                Depth = 1,
+                BulletColor = Color4.Cyan,
+                BulletAngleRadian = playerPos + degree,
+                BulletSpeed = speed,
+            });
+            bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+        }
+
         private void enemyShoot()
         {
-            if (bulletPattern == 1)
+            patternDifficulty = RNG.Next(0, 5); // For circle currently
+            randomDirection = RNG.Next(-50, 51); // Between -0.05f and 0.05f
+            randomDirection = randomDirection / 100; // It seems that add / 100 after the random breaks randomDirection idk why
+            float speedModifier;
+            float directionModifier;
+            switch (bulletPattern)
             {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                MainParent.Add(B1 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.2f,
-                });
-                MainParent.Add(B2 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos - 0.1f,
-                    BulletSpeed = 0.2f,
-                });
-                MainParent.Add(B3 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos + 0.1f,
-                    BulletSpeed = 0.2f,
-                });
-                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
-                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
-                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
-            }
+                case 1: // Wave
+                    directionModifier = -0.1f * patternDifficulty;
+                    for (int i = 1; i <= (3 * patternDifficulty); i++)
+                    {
+                        bulletAddRad(0.15f, randomDirection + directionModifier);
+                        directionModifier += 0.1f;
+                    }
+                    break;
 
-            if (bulletPattern == 2)
-            {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                Bullet B4;
-                Bullet B5;
-                MainParent.Add(B1 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.05f,
-                });
-                MainParent.Add(B2 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.1f,
-                });
-                MainParent.Add(B3 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.15f,
-                });
-                MainParent.Add(B4 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = Color4.Cyan,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.2f,
-                });
-                MainParent.Add(B5 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.25f,
-                });
-                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
-                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
-                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
-                B4.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B4));
-                B5.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B5));
-            }
-            if(bulletPattern == 3)
-            {
-                Bullet B1;
-                Bullet B2;
-                Bullet B3;
-                Bullet B4;
-                Bullet B5;
-                Bullet B6;
-                Bullet B7;
-                MainParent.Add(B1 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos,
-                    BulletSpeed = 0.15f,
-                });
-                MainParent.Add(B2 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos + 0.05f,
-                    BulletSpeed = 0.16f,
-                });
-                MainParent.Add(B3 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos - 0.05f,
-                    BulletSpeed = 0.16f,
-                });
-                MainParent.Add(B4 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos + 0.125f,
-                    BulletSpeed = 0.17f,
-                });
-                MainParent.Add(B5 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos - 0.125f,
-                    BulletSpeed = 0.17f,
-                });
-                MainParent.Add(B6 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos + 0.2f,
-                    BulletSpeed = 0.18f,
-                });
-                MainParent.Add(B7 = new Bullet(1)
-                {
-                    Origin = Anchor.Centre,
-                    Depth = 1,
-                    BulletColor = enemyColor,
-                    BulletAngleRadian = playerPos - 0.2f,
-                    BulletSpeed = 0.18f,
-                });
-                B1.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B1));
-                B2.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B2));
-                B3.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B3));
-                B4.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B4));
-                B5.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B5));
-                B6.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B6));
-                B7.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), B7));
-            }
+                case 2: // Line
+                    speedModifier = 0;
+                    for (int i = 1; i <= 3 + patternDifficulty; i++)
+                    {
+                        bulletAddRad(0.12f + speedModifier, randomDirection);
+                        speedModifier += 0.02f;
+                    }
+                    break;
 
+                case 3: // Cool wave
+                    speedModifier = 0.02f + 0.01f * (patternDifficulty - 1);
+                    directionModifier = -0.15f - 0.075f * (patternDifficulty - 1);
+                    for (int i = 1; i <= 3 + patternDifficulty * 2; i++)
+                    {
+                        bulletAddRad(
+                            0.1f + Math.Abs(speedModifier),
+                            directionModifier + randomDirection
+                        );
+                        speedModifier -= 0.01f;
+                        directionModifier += 0.075f;
+                    }
+                    break;
+
+                case 4: // Circle
+                    directionModifier = (float)(90 / Math.Pow(2, patternDifficulty));
+                    circleAngle = 0;
+                    for (int j = 1; j <= Math.Pow(2, patternDifficulty + 2); j++)
+                    {
+                        bulletAddDeg(0.15f, circleAngle);
+                        circleAngle += directionModifier;
+                    }
+                    break;
+
+                case 5: // Fast shot !
+                    bulletAddRad(0.30f, 0 + randomDirection);
+                    break;
+            }
         }
         public float playerRelativePositionAngle()
         {
-            //Returns Something?
+            //Returns Something? Yes, but always the same thing
             playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
             return playerPos;
         }

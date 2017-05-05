@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             base.Update();
             GetBulletVelocity();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-            /*
+            
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
             {
                 if (Team == 0)
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             if (Clock.ElapsedFrameTime > 100)
             {
                 DeleteBullet();
-            }*/
+            }
         }
 
         internal void DeleteBullet()
