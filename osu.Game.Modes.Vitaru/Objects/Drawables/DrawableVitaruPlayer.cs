@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
-            CharacterHealth = 10000;
+            CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
@@ -41,8 +42,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Anchor = Anchor.Centre;
         }
 
+        private float lastCharacterHealth = 100;
+        protected override void CheckJudgement(bool userTriggered)
+        {
+            //this seems to only  work once
+            if (CharacterHealth < lastCharacterHealth)
+            {
+                Judgement.Result = HitResult.Miss;
+                lastCharacterHealth = lastCharacterHealth - 10;
+            }
+        }
+
         private const float playerSpeed = 0.3f;
         private Vector2 positionChange = Vector2.Zero;
+        
 
         protected override void Update()
         {

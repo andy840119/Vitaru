@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
     public class Bullet : Projectile
     {
         //Different stats for Bullet that should always be changed
-        public int BulletDamage { get; set; } = 20;
+        public int BulletDamage { get; set; } = 10;
         public Color4 BulletColor { get; set; } = Color4.White;
         public float BulletSpeed { get; set; } = 1f;
         public float BulletWidth { get; set; } = 12f;

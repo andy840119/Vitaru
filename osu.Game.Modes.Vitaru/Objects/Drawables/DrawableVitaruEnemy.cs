@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterType = HitObjectType.Enemy;
             CharacterHealth = 20;
             Team = 1;
-            HitboxWidth = 20;
+            HitboxWidth = 24;
             HitboxColor = Color4.Yellow;
             Alpha = 1;
             //Judgement = new VitaruJudgement { Result = HitResult.Hit };
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             playerRelativePositionAngle();
             if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
             {
-                Dispose();
+                //Dispose();
             }
         }
 
