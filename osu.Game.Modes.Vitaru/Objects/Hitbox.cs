@@ -21,6 +21,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         
         public Hitbox()
         {
+            hitboxPiece();
+        }
+
+        private void hitboxPiece()
+        {
             Children = new Drawable[]
             {
                 new Container
@@ -56,7 +61,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (HitboxColor).Opacity(0.4f),
+                            Colour = (HitboxColor).Opacity(0.3f),
                             Radius = 2f,
                         }
                 }
