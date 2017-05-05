@@ -21,10 +21,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         
         public Hitbox()
         {
-            hitboxPiece();
         }
 
-        private void hitboxPiece()
+        protected override void LoadComplete()
         {
             Children = new Drawable[]
             {

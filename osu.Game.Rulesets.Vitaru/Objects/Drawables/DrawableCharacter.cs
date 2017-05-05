@@ -44,29 +44,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public DrawableCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-            Children = new Drawable[]
-            {
-                CharacterSprite = new Sprite()
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Alpha = 1,
-                },
-                CharacterKiaiSprite = new Sprite()
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Alpha = 0,
-                },
-                Hitbox = new Hitbox()
-                {
-                    Alpha = 0.1f,
-                    HitboxWidth = HitboxWidth,
-                    HitboxColor = HitboxColor,
-                }
-            };
         }
         
         /// <summary>
@@ -176,6 +153,30 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
+            Children = new Drawable[]
+            {
+                CharacterSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 1,
+                },
+                CharacterKiaiSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 0,
+                },
+                Hitbox = new Hitbox()
+                {
+                    Alpha = 0.1f,
+                    HitboxWidth = HitboxWidth,
+                    HitboxColor = HitboxColor,
+                }
+            };
+
             string characterType = "null";
             switch(CharacterType)
             {
