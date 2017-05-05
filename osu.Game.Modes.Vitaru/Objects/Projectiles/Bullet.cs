@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -1;
         public Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
-        public Vector2 PlayfieldOffset = new Vector2(200, 375);
+        public Vector2 PlayfieldOffset = new Vector2(175, 375);
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
@@ -73,11 +73,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             {
                 if (Team == 1)
                     DeleteBullet();
-            }
-
-            if (Clock.ElapsedFrameTime > 100)
-            {
-                DeleteBullet();
             }
         }
 

@@ -47,13 +47,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
-            if (HitObject.StartTime < (Time.Current + (shootLeniancy * 2)) && HitObject.StartTime > (Time.Current - (shootLeniancy / 4)) && hasShot == false)
+            if (HitObject.StartTime < Time.Current && hasShot == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
             playerRelativePositionAngle();
+            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
+            {
+                Dispose();
+            }
         }
 
         protected override void CheckJudgement(bool userTriggered)
