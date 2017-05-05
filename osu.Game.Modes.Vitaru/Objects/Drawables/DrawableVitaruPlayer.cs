@@ -36,12 +36,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterHealth = 10000;
             Team = 0;
             HitboxColor = Color4.Cyan;
-            HitboxWidth = 8;
+            HitboxWidth = 6;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
         }
 
-        private const float playerSpeed = 0.25f;
+        private const float playerSpeed = 0.3f;
         private Vector2 positionChange = Vector2.Zero;
 
         protected override void Update()
@@ -50,8 +50,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             //Handles Player Speed
             var pos = Position;
-            float ySpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+            float ySpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);
 
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
