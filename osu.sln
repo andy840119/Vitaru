@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{80683232
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Testing", "osu-framework\osu.Framework.Testing\osu.Framework.Testing.csproj", "{007B2356-AB6F-4BD9-96D5-116FC2DCE69A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Modes.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{9A615027-B2AB-435E-B865-0C7209933457}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{9A615027-B2AB-435E-B865-0C7209933457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
