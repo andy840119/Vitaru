@@ -9,15 +9,12 @@ using OpenTK;
 using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Osu.Objects.Drawables.Connections;
-using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
-        public Container MainPlayfield;
-        private Box playfieldBackground;
+        private readonly Container mainPlayfield;
 
         public override bool ProvidingUserCursor => false;
 
@@ -43,12 +40,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Add(new Drawable[]
             {
-                MainPlayfield = new Container
+                mainPlayfield = new Container
                 {
+                    RelativeSizeAxes = Axes.Both,
                     Depth = -1,
                 },
             });
-            DrawableCharacter.playfield = MainPlayfield;
+            DrawableCharacter.playfield = mainPlayfield;
         }
 
         protected override void LoadComplete()
@@ -62,7 +60,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
             if (c != null)
-                MainPlayfield.Add(c.ProxiedLayer.CreateProxy());
+                mainPlayfield.Add(c.ProxiedLayer.CreateProxy());
 
             base.Add(h);
         }

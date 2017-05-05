@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
-            CharacterHealth = 100;
+            CharacterHealth = 10000;
             Team = 0;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 8;
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 {
                     Depth = 1,
                     Anchor = Anchor.Centre,
-                    BulletSpeed = 0.1f,
+                    BulletSpeed = 1f,
                     BulletAngleRadian = 0,
                 });
                 b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
