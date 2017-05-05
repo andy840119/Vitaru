@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, -20, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, 0, 720);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterHealth = 10000;
             Team = 0;
             HitboxColor = Color4.Cyan;
-            HitboxWidth = 6;
+            HitboxWidth = 8;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
         }
