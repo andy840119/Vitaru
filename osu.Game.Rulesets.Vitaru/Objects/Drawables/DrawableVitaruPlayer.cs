@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;
             Team = 0;
-            HitboxColor = Color4.Cyan;
+            HitboxColor = Color4.Yellow;
             HitboxWidth = 4;
             OnShoot = shoot;
             Anchor = Anchor.Centre;

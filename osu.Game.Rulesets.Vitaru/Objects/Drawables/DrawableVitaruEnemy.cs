@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterHealth = 20;
             Team = 1;
             HitboxWidth = 24;
-            HitboxColor = Color4.Yellow;
+            HitboxColor = Color4.Cyan;
             Alpha = 1;
             Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
