@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Cyan;
-            HitboxWidth = 8;
+            HitboxWidth = 4;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
         }
@@ -121,7 +121,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     Depth = 1,
                     Anchor = Anchor.Centre,
                     BulletSpeed = 1f,
+                    BulletColor = Color4.Red,
                     BulletAngleRadian = 0,
+                    BulletWidth = 6,
                 });
                 b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
             }

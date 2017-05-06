@@ -132,9 +132,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
-                BulletColor = Color4.Cyan,
+                BulletColor = enemyColor,
                 BulletAngleRadian = playerPos + degree,
                 BulletSpeed = speed,
+                BulletWidth = 8,
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }

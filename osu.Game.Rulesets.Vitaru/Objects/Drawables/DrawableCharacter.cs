@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     {
                         Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                         float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = (Hitbox.HitboxWidth + bullet.BulletWidth) * 0.75f;
+                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
                         if (distance < minDist)
                         {
                             bullet.DeleteBullet();
@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     {
                         Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                         float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = (Hitbox.HitboxWidth + bullet.BulletWidth) * 0.75f;
+                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
                         if (distance < minDist)
                         {
                             bullet.DeleteBullet();
@@ -171,7 +171,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 },
                 Hitbox = new Hitbox()
                 {
-                    Alpha = 0.1f,
+                    Alpha = 0,
                     HitboxWidth = HitboxWidth,
                     HitboxColor = HitboxColor,
                 }

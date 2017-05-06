@@ -37,15 +37,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     Depth = 1,
                     BorderColour = HitboxColor,
                     Alpha = 1f,
-                    CornerRadius = HitboxWidth / 2,
+                    CornerRadius = HitboxWidth,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = HitboxWidth,
-                            Height = HitboxWidth,
+                            Width = HitboxWidth * 2,
+                            Height = HitboxWidth * 2,
                         },
                     },
                 },
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(HitboxWidth),
+                        Scale = new Vector2(HitboxWidth * 2),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect

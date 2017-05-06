@@ -32,10 +32,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public Bullet(int team)
         {
             Team = team;
-            bulletPiece();
+
         }
 
-        private void bulletPiece()
+        protected override void LoadComplete()
         {
             Children = new Drawable[]
 {
@@ -49,15 +49,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
                     Depth = 1,
                     BorderColour = BulletColor,
                     Alpha = 1f,
-                    CornerRadius = BulletWidth / 2,
+                    CornerRadius = BulletWidth,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = BulletWidth,
-                            Height = BulletWidth,
+                            Width = BulletWidth * 2,
+                            Height = BulletWidth * 2,
                         },
                     },
                 },
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(BulletWidth),
+                        Scale = new Vector2(BulletWidth * 2),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
