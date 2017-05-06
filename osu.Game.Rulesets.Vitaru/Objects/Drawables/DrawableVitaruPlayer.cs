@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, 0, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, 30, 720);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -36,20 +36,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;
             Team = 0;
-            HitboxColor = Color4.Cyan;
+            HitboxColor = Color4.Yellow;
             HitboxWidth = 4;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
         }
 
-        private float lastCharacterHealth = 100;
         protected override void CheckJudgement(bool userTriggered)
         {
             //this seems to only  work once
-            if (CharacterHealth < lastCharacterHealth)
+            if (CharacterHealth == 0)
             {
                 Judgement.Result = HitResult.Miss;
-                lastCharacterHealth = lastCharacterHealth - 10;
             }
         }
 
@@ -122,7 +120,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     Anchor = Anchor.Centre,
                     BulletSpeed = 1f,
                     BulletColor = Color4.Red,
-                    BulletAngleRadian = 0,
+                    BulletAngleDegree = 0,
                     BulletWidth = 6,
                 });
                 b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));

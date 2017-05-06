@@ -22,11 +22,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletAngleRadian { get; set; } = -10;
 
         private Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
-        private Vector2 PlayfieldOffset = new Vector2(175, 375);
+        private Vector2 PlayfieldOffset = new Vector2(175, 380);
+        private bool fadingOut = false;
+
+        public static int BulletCount = 0;
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
-        private CircularContainer bulletContainer;
+
+        private Container bulletRing;
+        private CircularContainer bulletCircle;
 
 
         public Bullet(int team)
@@ -37,9 +42,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 
         protected override void LoadComplete()
         {
+            BulletCount++;
+            GetBulletVelocity();
             Children = new Drawable[]
-{
-                new Container
+            {
+                bulletRing = new Container
                 {
                     Masking = true,
                     AutoSizeAxes = Axes.Both,
@@ -47,6 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
                     Anchor = Anchor.Centre,
                     BorderThickness = 3,
                     Depth = 1,
+                    AlwaysPresent = true,
                     BorderColour = BulletColor,
                     Alpha = 1f,
                     CornerRadius = BulletWidth,
@@ -61,13 +69,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
                         },
                     },
                 },
-                bulletContainer = new CircularContainer
+                bulletCircle = new CircularContainer
                 {
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
                         Scale = new Vector2(BulletWidth * 2),
                         Depth = 2,
+                        AlwaysPresent = true,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
@@ -76,21 +85,22 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
                             Radius = 2f,
                         }
                 }
-};
+            };
         }
 
         public Vector2 GetBulletVelocity()
         {
             if (BulletAngleRadian != -10)
             {
-                bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleRadian)));
-                bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
+                bulletVelocity.X = BulletSpeed * (((float)Math.Cos(BulletAngleRadian)));
+                bulletVelocity.Y = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
                 return bulletVelocity;
             }
             else
             {
-                bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
-                bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
+                BulletAngleDegree = BulletAngleDegree - 90;
+                bulletVelocity.X = BulletSpeed * (((float)Math.Cos(BulletAngleDegree * (Math.PI / 180))));
+                bulletVelocity.Y = BulletSpeed * ((float)Math.Sin(BulletAngleDegree * (Math.PI / 180)));
                 return bulletVelocity;
             }
         }
@@ -98,20 +108,28 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         protected override void Update()
         {
             base.Update();
-            GetBulletVelocity();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
-            
+
+            if (Alpha < 0.05)
+                DeleteBullet();
+
             if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
             {
-                if (Team == 0)
-                    DeleteBullet();
+                if (Team == 0 && fadingOut == false)
+                    fadeOut();
             }
 
             if (Position.Y < (BulletBounds.Y + PlayfieldOffset.Y) | Position.X < (BulletBounds.X + PlayfieldOffset.X) | Position.Y > (BulletBounds.W + PlayfieldOffset.Y) | Position.X > (BulletBounds.Z + PlayfieldOffset.X))
             {
-                if (Team == 1)
-                    DeleteBullet();
+                if (Team == 1 && fadingOut == false)
+                    fadeOut();
             }
+        }
+
+        private void fadeOut()
+        {
+            fadingOut = true;
+            FadeOut((200), EasingTypes.OutBounce);
         }
 
         internal void DeleteBullet()

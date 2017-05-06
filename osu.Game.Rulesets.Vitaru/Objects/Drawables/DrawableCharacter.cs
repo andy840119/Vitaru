@@ -140,16 +140,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
         }
 
-        protected void ShowHitbox()
-        {
-            Hitbox.FadeIn(0.25f);
-        }
-
-        protected void HideHitbox()
-        {
-            Hitbox.FadeOut(0.25f);
-        }
-
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
