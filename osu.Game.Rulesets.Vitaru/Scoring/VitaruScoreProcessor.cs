@@ -76,6 +76,7 @@ using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {
@@ -130,7 +131,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
                         Health.Value += 0.1f;
                         break;
                     case HitResult.Miss:
-                        Health.Value -= 0.2f;
+                        Health.Value -= 1f;
                         break;
                 }
             }
@@ -144,7 +145,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
                 maxScore += j.MaxScoreValue;
             }
 
-            TotalScore.Value = score;
+            TotalScore.Value = Bullet.BulletCount;
             Accuracy.Value = (double)score / maxScore;
         }
     }

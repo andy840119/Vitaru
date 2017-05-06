@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             HitboxWidth = 24;
             HitboxColor = Color4.Yellow;
             Alpha = 1;
-            //Judgement = new VitaruJudgement { Result = HitResult.Hit };
+            Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
         private int patternDifficulty = 1; // It will be depending on OD in future
@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public float playerRelativePositionAngle()
         {
             //Returns Something? Yes, but always the same thing
-            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.X - Position.X), -1 * (DrawableVitaruPlayer.PlayerPosition.Y - Position.Y));
+            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.Y - Position.Y),(DrawableVitaruPlayer.PlayerPosition.X - Position.X));
             return playerPos;
         }
     }
