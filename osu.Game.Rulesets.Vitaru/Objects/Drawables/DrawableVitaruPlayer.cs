@@ -36,7 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;
             Team = 0;
-            //OnDeath = fail;
             HitboxColor = Color4.Cyan;
             HitboxWidth = 4;
             OnShoot = shoot;
@@ -50,11 +49,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Judgement.Result = HitResult.Miss;
             }
-        }
-
-        private void fail()
-        {
-            Judgement.Result = HitResult.Miss;
         }
 
         private const float playerSpeed = 0.3f;
