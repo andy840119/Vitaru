@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             playerRelativePositionAngle();
             if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
             {
-                //Dispose();
+                Dispose();
             }
         }
 
