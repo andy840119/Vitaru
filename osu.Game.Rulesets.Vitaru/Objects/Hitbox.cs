@@ -21,6 +21,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         
         public Hitbox()
         {
+        }
+
+        protected override void LoadComplete()
+        {
             Children = new Drawable[]
             {
                 new Container
@@ -33,15 +37,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     Depth = 1,
                     BorderColour = HitboxColor,
                     Alpha = 1f,
-                    CornerRadius = HitboxWidth / 2,
+                    CornerRadius = HitboxWidth,
                     Children = new[]
                     {
                         new Box
                         {
                             Colour = Color4.White,
                             Alpha = 1,
-                            Width = HitboxWidth,
-                            Height = HitboxWidth,
+                            Width = HitboxWidth * 2,
+                            Height = HitboxWidth * 2,
                         },
                     },
                 },
@@ -50,13 +54,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         Origin = Anchor.Centre,
                         Anchor = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(HitboxWidth),
+                        Scale = new Vector2(HitboxWidth * 2),
                         Depth = 2,
                         Masking = true,
                         EdgeEffect = new EdgeEffect
                         {
                             Type = EdgeEffectType.Shadow,
-                            Colour = (HitboxColor).Opacity(0.4f),
+                            Colour = (HitboxColor).Opacity(0.3f),
                             Radius = 2f,
                         }
                 }

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public float Armor { get; internal set; } = 1; //All damage taken should be divided by this number. During kiai player will only take half damage so [2]
         public int Team { get; set; } = 0; // 0 = Player, 1 = Ememies + Boss(s) in Singleplayer
         public int ProjectileDamage { get; set; }
-        public int BPM { get; set; } = 190;
+        public int BPM { get; set; } = 200;
         private SampleChannel sampleShoot;
         private SampleChannel sampleDeath;
 
@@ -44,31 +44,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public DrawableCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-            Children = new Drawable[]
-            {
-                CharacterSprite = new Sprite()
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Alpha = 1,
-                },
-                CharacterKiaiSprite = new Sprite()
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Alpha = 0,
-                },
-                Hitbox = new Hitbox()
-                {
-                    Alpha = 0,
-                    HitboxWidth = HitboxWidth,
-                    HitboxColor = HitboxColor,
-                }
-            };
         }
-
+        
         /// <summary>
         /// The <see cref="Character"/> gets damaged, with a multiplier of <see cref="DamageMultiplier"/>
         /// </summary>
@@ -97,6 +74,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
+            /*
+            if(Kiai == true)
+            {
+                CharacterSprite.FadeOut();
+                CharacterKiaiSprite.FadeIn();
+            }
+            if (Kiai == false)
+            {
+                CharacterSprite.FadeIn();
+                CharacterKiaiSprite.FadeOut();
+            }*/
+
             MainParent = playfield;
             base.Update();
             if (MainParent?.Children != null)
@@ -153,17 +142,41 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected void ShowHitbox()
         {
-            Hitbox.FadeIn();
+            Hitbox.FadeIn(0.25f);
         }
 
         protected void HideHitbox()
         {
-            Hitbox.FadeOut();
+            Hitbox.FadeOut(0.25f);
         }
 
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
+            Children = new Drawable[]
+            {
+                CharacterSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 1,
+                },
+                CharacterKiaiSprite = new Sprite()
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Alpha = 0,
+                },
+                Hitbox = new Hitbox()
+                {
+                    Alpha = 0,
+                    HitboxWidth = HitboxWidth,
+                    HitboxColor = HitboxColor,
+                }
+            };
+
             string characterType = "null";
             switch(CharacterType)
             {

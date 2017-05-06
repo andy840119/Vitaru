@@ -29,12 +29,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = enemy.Position;
             CharacterType = HitObjectType.Enemy;
-            CharacterHealth = 40;
+            CharacterHealth = 20;
             Team = 1;
-            HitboxWidth = 20;
+            HitboxWidth = 24;
             HitboxColor = Color4.Yellow;
             Alpha = 1;
-            Judgement = new VitaruJudgement { Result = HitResult.Hit };
+            //Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
         private int patternDifficulty = 1; // It will be depending on OD in future
@@ -56,20 +56,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             playerRelativePositionAngle();
             if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
             {
-                Dispose();
+                //Dispose();
             }
         }
 
         protected override void CheckJudgement(bool userTriggered)
         {
-            double hitOffset = Math.Abs(Judgement.TimeOffset);
-
             if (CharacterHealth < 1)
             {
                 Judgement.Result = HitResult.Hit;
             }
-            else
-                Judgement.Result = HitResult.Miss;
         }
 
         protected override void UpdateInitialState()
@@ -103,15 +99,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 case ArmedState.Idle:
                     Delay(duration + TIME_PREEMPT);
-                    //FadeOut(TIME_FADEOUT);
+                    FadeOut(TIME_FADEOUT * 2);
                     Expire(true);
                     break;
-                case ArmedState.Miss:
-                    //FadeOut(TIME_FADEOUT / 2);
-                    Expire();
-                    break;
                 case ArmedState.Hit:
-                    //FadeOut(TIME_FADEOUT / 4);
+                    FadeOut(TIME_FADEOUT / 4);
                     Expire();
                     break;
             }
@@ -140,9 +132,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
-                BulletColor = Color4.Cyan,
+                BulletColor = enemyColor,
                 BulletAngleRadian = playerPos + degree,
                 BulletSpeed = speed,
+                BulletWidth = 8,
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }

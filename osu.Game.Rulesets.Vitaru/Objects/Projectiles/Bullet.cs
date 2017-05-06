@@ -14,36 +14,74 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
     public class Bullet : Projectile
     {
         //Different stats for Bullet that should always be changed
-        public int BulletDamage { get; set; } = 20;
-        public Color4 BulletColor { get; set; } = Color4.Red;
-        public float BulletSpeed { get; set; } = 20;
+        public int BulletDamage { get; set; } = 10;
+        public Color4 BulletColor { get; set; } = Color4.White;
+        public float BulletSpeed { get; set; } = 1f;
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
-        public float BulletAngleRadian { get; set; } = -1;
-        public Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
-        public Vector2 PlayfieldOffset = new Vector2(175, 375);
+        public float BulletAngleRadian { get; set; } = -10;
+
+        private Vector4 BulletBounds = new Vector4(-30, -50, 532, 740);
+        private Vector2 PlayfieldOffset = new Vector2(175, 375);
 
         //Result of bulletSpeed + bulletAngle math, should never be modified outside of this class
         private Vector2 bulletVelocity;
-        private BulletPiece bulletSprite;
+        private CircularContainer bulletContainer;
 
 
         public Bullet(int team)
         {
             Team = team;
-            Children = new[]
-            {
-                bulletSprite = new BulletPiece(this)
+
+        }
+
+        protected override void LoadComplete()
+        {
+            Children = new Drawable[]
+{
+                new Container
                 {
-                    Anchor = Anchor.Centre,
+                    Masking = true,
+                    AutoSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    BorderThickness = 3,
+                    Depth = 1,
+                    BorderColour = BulletColor,
+                    Alpha = 1f,
+                    CornerRadius = BulletWidth,
+                    Children = new[]
+                    {
+                        new Box
+                        {
+                            Colour = Color4.White,
+                            Alpha = 1,
+                            Width = BulletWidth * 2,
+                            Height = BulletWidth * 2,
+                        },
+                    },
                 },
-            };
+                bulletContainer = new CircularContainer
+                {
+                        Origin = Anchor.Centre,
+                        Anchor = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Scale = new Vector2(BulletWidth * 2),
+                        Depth = 2,
+                        Masking = true,
+                        EdgeEffect = new EdgeEffect
+                        {
+                            Type = EdgeEffectType.Shadow,
+                            Colour = (BulletColor).Opacity(0.5f),
+                            Radius = 2f,
+                        }
+                }
+};
         }
 
         public Vector2 GetBulletVelocity()
         {
-            if (BulletAngleRadian != -1)
+            if (BulletAngleRadian != -10)
             {
                 bulletVelocity.Y = BulletSpeed * (-1 * ((float)Math.Cos(BulletAngleRadian)));
                 bulletVelocity.X = BulletSpeed * ((float)Math.Sin(BulletAngleRadian));
@@ -79,56 +117,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         internal void DeleteBullet()
         {
             Dispose();
-        }
-    }
-
-    public class BulletPiece : Container
-    {
-        private CircularContainer bulletContainer;
-        private object bullet;
-        public BulletPiece(Bullet bullet)
-        {
-            this.bullet = bullet;
-            Children = new Drawable[]
-            {
-                new Container
-                {
-                    Masking = true,
-                    AutoSizeAxes = Axes.Both,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    BorderThickness = 3,
-                    Depth = 1,
-                    BorderColour = bullet.BulletColor,
-                    Alpha = 1f,
-                    CornerRadius = bullet.BulletWidth / 2,
-                    Children = new[]
-                    {
-                        new Box
-                        {
-                            Colour = Color4.White,
-                            Alpha = 1,
-                            Width = bullet.BulletWidth,
-                            Height = bullet.BulletWidth,
-                        },
-                    },
-                },
-                bulletContainer = new CircularContainer
-                {
-                        Origin = Anchor.Centre,
-                        Anchor = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(bullet.BulletWidth),
-                        Depth = 2,
-                        Masking = true,
-                        EdgeEffect = new EdgeEffect
-                        {
-                            Type = EdgeEffectType.Shadow,
-                            Colour = (bullet.BulletColor).Opacity(0.75f),
-                            Radius = 2f,
-                        }
-                }
-            };
         }
     }
 }

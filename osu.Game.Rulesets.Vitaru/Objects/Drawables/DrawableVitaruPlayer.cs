@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, -20, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, 0, 720);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -33,16 +34,28 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Origin = Anchor.Centre;
             Position = PlayerPosition;
             CharacterType = HitObjectType.Player;
-            CharacterHealth = 10000;
+            CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Cyan;
-            HitboxWidth = 8;
+            HitboxWidth = 4;
             OnShoot = shoot;
             Anchor = Anchor.Centre;
         }
 
-        private const float playerSpeed = 0.25f;
+        private float lastCharacterHealth = 100;
+        protected override void CheckJudgement(bool userTriggered)
+        {
+            //this seems to only  work once
+            if (CharacterHealth < lastCharacterHealth)
+            {
+                Judgement.Result = HitResult.Miss;
+                lastCharacterHealth = lastCharacterHealth - 10;
+            }
+        }
+
+        private const float playerSpeed = 0.3f;
         private Vector2 positionChange = Vector2.Zero;
+        
 
         protected override void Update()
         {
@@ -50,8 +63,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             //Handles Player Speed
             var pos = Position;
-            float ySpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
-            float xSpeed = 0.5f * (float)(Clock.ElapsedFrameTime);
+            float ySpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);
+            float xSpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);
 
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
@@ -91,7 +104,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             pos = Vector2.ComponentMin(pos, playerBounds.Yw);
             pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
-            //PlayerPosition = pos;
+            PlayerPosition = pos;
         }
 
         private void shoot()
@@ -108,7 +121,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     Depth = 1,
                     Anchor = Anchor.Centre,
                     BulletSpeed = 1f,
+                    BulletColor = Color4.Red,
                     BulletAngleRadian = 0,
+                    BulletWidth = 6,
                 });
                 b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
             }
