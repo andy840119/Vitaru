@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             pos = Vector2.ComponentMin(pos, playerBounds.Yw);
             pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
-            //PlayerPosition = pos;
+            PlayerPosition = pos;
         }
 
         private void shoot()
