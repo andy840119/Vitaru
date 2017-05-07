@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.MathUtils;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -21,6 +22,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public bool Shoot = false;
         private float playerPos;
         private Color4 enemyColor = Color4.Green;
+
+        private readonly List<ISliderProgress> components = new List<ISliderProgress>();
+        private int currentRepeat;
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
@@ -34,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             HitboxWidth = 24;
             HitboxColor = Color4.Cyan;
             Alpha = 1;
-            Judgement = new VitaruJudgement { Result = HitResult.Hit };
+            //Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
         private int patternDifficulty = 1; // It will be depending on OD in future
@@ -47,7 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
-            if (HitObject.StartTime < Time.Current && hasShot == false)
+            if (HitObject.StartTime < Time.Current && hasShot == false && slider == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
@@ -57,6 +61,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
             {
                 Dispose();
+            }
+
+            double progress = MathHelper.Clamp((Time.Current - enemy.StartTime) / enemy.Duration, 0, 1);
+
+            int repeat = enemy.RepeatAt(progress);
+            progress = enemy.ProgressAt(progress);
+
+            if (repeat > currentRepeat)
+            {
+                if (repeat < enemy.RepeatCount)
+                    PlaySamples();
+                currentRepeat = repeat;
             }
         }
 
@@ -138,6 +154,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 BulletWidth = 8,
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
+        }
+
+        internal interface ISliderProgress
+        {
+            void UpdateProgress(double progress, int repeat);
         }
 
         private void enemyShoot()
