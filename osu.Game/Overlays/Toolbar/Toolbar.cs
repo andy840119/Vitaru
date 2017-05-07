@@ -19,6 +19,7 @@ namespace osu.Game.Overlays.Toolbar
         public const float TOOLTIP_HEIGHT = 30;
 
         public Action OnHome;
+        public Action OnOsuMon;
 
         private readonly ToolbarUserArea userArea;
 
@@ -51,7 +52,10 @@ namespace osu.Game.Overlays.Toolbar
                             Action = () => OnHome?.Invoke()
                         },
                         new ToolbarModeSelector(),
-                        new Toolbarosumon(),
+                        new ToolbarOsuMon
+                        {
+                            Action = () => OnOsuMon?.Invoke()
+                        },
                     }
                 },
                 new FillFlowContainer

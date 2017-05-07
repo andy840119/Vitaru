@@ -8,11 +8,11 @@ using osu.Framework.Graphics.Textures;
 
 namespace osu.Game.Overlays.Toolbar
 {
-    class Toolbarosumon : ToolbarButton
+    class ToolbarOsuMon : ToolbarButton
     {
         private ToolbarButton button;
         private Sprite icon;
-        public Toolbarosumon()
+        public ToolbarOsuMon()
         {
             Children = new Drawable[]
             {
