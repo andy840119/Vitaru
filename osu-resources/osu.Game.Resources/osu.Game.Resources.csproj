@@ -631,7 +631,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Fonts\Venera-Light_0.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Textures\Menu\osumonIcon.png" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Samples\Vitaru\deathSound.mp3" />
     <EmbeddedResource Include="Samples\Vitaru\shootSound.mp3" />
@@ -643,6 +645,9 @@
     <EmbeddedResource Include="Textures\Play\Vitaru\enemyKiai.png" />
     <EmbeddedResource Include="Textures\Play\Vitaru\player.png" />
     <EmbeddedResource Include="Textures\Play\Vitaru\playerKiai.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Textures\Menu\osumonLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

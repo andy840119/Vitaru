@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             }
 
             if (curveData != null)
-            {/*
+            {
                 yield return new Enemy
                 {
                     StartTime = original.StartTime,
@@ -46,22 +46,23 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     ControlPoints = curveData.ControlPoints,
                     CurveType = curveData.CurveType,
                     Distance = curveData.Distance,
-                    RepeatSamples = curveData.RepeatSamples,
+                    //RepeatSamples = curveData.RepeatSamples,
                     RepeatCount = curveData.RepeatCount,
                     Position = positionData?.Position ?? Vector2.Zero,
-                    NewCombo = comboData?.NewCombo ?? false
-                };*/
+                    NewCombo = comboData?.NewCombo ?? false,
+                    IsSlider = true,
+                };
             }
             else if (endTimeData != null)
-            {/*
+            {
                 yield return new Enemy
                 {
                     StartTime = original.StartTime,
                     Samples = original.Samples,
-                    EndTime = endTimeData.EndTime,
+                    //EndTime = endTimeData.EndTime,
 
-                    Position = positionData?.Position ?? OsuPlayfield.BASE_SIZE / 2,
-                };*/
+                    Position = positionData?.Position ?? VitaruPlayfield.BASE_SIZE / 2,
+                };
             }
             else
             {
@@ -70,7 +71,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     StartTime = original.StartTime,
                     Samples = original.Samples,
                     Position = positionData?.Position ?? Vector2.Zero,
-                    NewCombo = comboData?.NewCombo ?? false
+                    //NewCombo = comboData?.NewCombo ?? false,
+                    IsSlider = false,
                 };
             }
         }

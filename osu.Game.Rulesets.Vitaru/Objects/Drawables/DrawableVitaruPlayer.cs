@@ -9,6 +9,7 @@ using System;
 using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Scoring;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -44,20 +45,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void CheckJudgement(bool userTriggered)
         {
-            //this seems to only  work once
-            if (CharacterHealth == 0)
-            {
-                Judgement.Result = HitResult.Miss;
-            }
         }
 
         private const float playerSpeed = 0.3f;
         private Vector2 positionChange = Vector2.Zero;
-        
+        public static float Energy;
+        public static float Health;
 
         protected override void Update()
         {
             base.Update();
+
+            VitaruScoreProcessor.VitaruHealth = CharacterHealth / 100;
 
             //Handles Player Speed
             var pos = Position;

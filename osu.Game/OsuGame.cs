@@ -28,6 +28,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Overlays.Notifications;
 using osu.Game.Screens.Play;
+using osu.Game.Screens.osuMon;
 
 namespace osu.Game
 {
@@ -42,6 +43,17 @@ namespace osu.Game
         private NotificationManager notificationManager;
 
         private DialogOverlay dialogOverlay;
+
+        private Screen osuMon
+        {
+            get
+            {
+                Screen s = screenStack;
+                while (s != null && !(s is OsuMonMenu))
+                    s = s.ChildScreen;
+                return s as OsuMonMenu;
+            }
+        }
 
         private Intro intro
         {
@@ -203,6 +215,7 @@ namespace osu.Game
             {
                 Depth = -3,
                 OnHome = delegate { intro?.ChildScreen?.MakeCurrent(); },
+                OnOsuMon = delegate { osuMon?.MakeCurrent(); },
             }, overlayContent.Add);
 
             options.StateChanged += delegate

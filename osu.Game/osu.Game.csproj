@@ -80,6 +80,7 @@
     <Compile Include="Overlays\Music\PlaylistList.cs" />
     <Compile Include="Overlays\Options\Sections\Audio\MainMenuOptions.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarChatButton.cs" />
+    <Compile Include="Overlays\Toolbar\Toolbarosumon.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarSystemClock.cs" />
     <Compile Include="Rulesets\Beatmaps\BeatmapConverter.cs" />
     <Compile Include="Rulesets\Beatmaps\BeatmapProcessor.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Screens\Backgrounds\BackgroundScreenEmpty.cs" />
     <Compile Include="Screens\Charts\ChartInfo.cs" />
     <Compile Include="Screens\Edit\Editor.cs" />
+    <Compile Include="Screens\osuMon\OsuMonMenu.cs" />
     <Compile Include="Screens\Play\HotkeyRetryOverlay.cs" />
     <Compile Include="Screens\Play\SquareGraph.cs" />
     <Compile Include="Screens\Ranking\ResultsPage.cs" />
