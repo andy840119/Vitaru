@@ -166,6 +166,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 BulletColor = Color4.Cyan,
                 BulletAngleDegree = playerPos + degree,
                 BulletSpeed = speed,
+                BulletWidth = 10,
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
         }
@@ -251,9 +252,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     break;
             }
         }
+
         public float playerRelativePositionAngle()
         {
-            //Returns Something? Yes, but always the same thing
+            //Returns a Radian
             playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.Y - Position.Y),(DrawableVitaruPlayer.PlayerPosition.X - Position.X));
             return playerPos;
         }
