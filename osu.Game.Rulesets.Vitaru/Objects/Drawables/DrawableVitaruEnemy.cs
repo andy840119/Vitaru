@@ -47,18 +47,37 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private int bulletPattern = 1;
         private float shootLeniancy = 10f;
         private bool hasShot = false;
+        private bool sliderDone = false;
 
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
-            if (HitObject.StartTime < Time.Current && hasShot == false)
+            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
-            playerRelativePositionAngle();
-            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha == 0)
+
+            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == true)
+            {
+                enemyShoot();
+                hasShot = true;
+            }
+
+            if (enemy.EndTime < Time.Current && hasShot == true && enemy.IsSlider == true && sliderDone == false)
+            {
+                enemyShoot();
+                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
+                sliderDone = true;
+            }
+
+            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == false)
+            {
+                Dispose();
+            }
+
+            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == true)
             {
                 Dispose();
             }
@@ -74,7 +93,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     PlaySamples();
                 currentRepeat = repeat;
             }
+            if(enemy.IsSlider)
+                UpdateProgress(progress, repeat);
         }
+
+        public void UpdateProgress(double progress, int repeat)
+        {
+            Position = enemy.Curve.PositionAt(progress);
+        }
+
+        private bool canCurrentlyTrack => Time.Current >= enemy.StartTime && Time.Current < enemy.EndTime;
 
         protected override void CheckJudgement(bool userTriggered)
         {
@@ -87,7 +115,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void UpdateInitialState()
         {
             base.UpdateInitialState();
-
             Alpha = 0f;
             Scale = new Vector2(0.5f);
         }
@@ -163,12 +190,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private void enemyShoot()
         {
+            playerRelativePositionAngle();
             patternDifficulty = RNG.Next(0, 5); // For circle currently
             randomDirection = RNG.Next(-50, 51); // Between -0.05f and 0.05f
             randomDirection = randomDirection / 100; // It seems that add / 100 after the random breaks randomDirection idk why
+
             float speedModifier;
             float directionModifier;
+
             //enemy.Sample.Play();
+
             switch (bulletPattern)
             {
                 case 1: // Wave

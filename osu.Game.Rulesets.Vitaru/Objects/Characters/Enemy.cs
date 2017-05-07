@@ -47,7 +47,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Characters
 
         public int RepeatAt(double progress) => (int)(progress * RepeatCount);
 
-
         public List<Vector2> ControlPoints
         {
             get { return Curve.ControlPoints; }
