@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         private void fadeOut()
         {
             fadingOut = true;
-            FadeOut((200), EasingTypes.OutBounce);
+            FadeOut((400), EasingTypes.OutBounce);
         }
 
         internal void DeleteBullet()
