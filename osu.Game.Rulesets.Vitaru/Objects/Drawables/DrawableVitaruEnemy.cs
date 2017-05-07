@@ -198,7 +198,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             float speedModifier;
             float directionModifier;
 
-            //enemy.Sample.Play();
+            PlaySamples();
 
             switch (bulletPattern)
             {

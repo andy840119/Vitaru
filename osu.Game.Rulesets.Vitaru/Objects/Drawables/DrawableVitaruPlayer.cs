@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             //this seems to only  work once
             if (CharacterHealth == 0)
             {
-                //Judgement.Result = HitResult.Miss;
+                Judgement.Result = HitResult.Miss;
             }
         }
 
