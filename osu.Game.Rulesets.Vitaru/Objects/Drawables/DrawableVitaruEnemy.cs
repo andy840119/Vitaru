@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
-            if (HitObject.StartTime < Time.Current && hasShot == false && slider == false)
+            if (HitObject.StartTime < Time.Current && hasShot == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
@@ -168,6 +168,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             randomDirection = randomDirection / 100; // It seems that add / 100 after the random breaks randomDirection idk why
             float speedModifier;
             float directionModifier;
+            //enemy.Sample.Play();
             switch (bulletPattern)
             {
                 case 1: // Wave

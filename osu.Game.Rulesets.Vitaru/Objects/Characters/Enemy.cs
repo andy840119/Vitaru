@@ -2,6 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using OpenTK;
+using osu.Framework.Audio.Sample;
 using osu.Game.Beatmaps.Timing;
 using osu.Game.Database;
 using osu.Game.Rulesets.Objects;
@@ -80,8 +81,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Characters
         //Main Enemy Function
         public Enemy() : base () { }
         public override HitObjectType Type => HitObjectType.Enemy;
-
-        public object Sample { get; set; }
         public bool IsSlider { get; set; }
     }
 }
