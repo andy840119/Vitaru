@@ -90,7 +90,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (repeat > currentRepeat)
             {
                 if (repeat < enemy.RepeatCount)
-                    PlaySamples();
+                {
+                    enemyShoot();
+                }   
                 currentRepeat = repeat;
             }
             if(enemy.IsSlider)
