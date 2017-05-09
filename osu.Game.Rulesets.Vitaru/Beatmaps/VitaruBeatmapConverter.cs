@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     StartTime = 0f,
                 };
             }
-
+            /*
             if (curveData != null)
             {
                 yield return new Enemy
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     //NewCombo = comboData?.NewCombo ?? false,
                     IsSlider = false,
                 };
-            }
+            }*/
         }
     }
 }
