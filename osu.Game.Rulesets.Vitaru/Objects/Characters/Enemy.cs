@@ -80,6 +80,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Characters
         //Main Enemy Function
         public Enemy() : base () { }
         public override HitObjectType Type => HitObjectType.Enemy;
-        public bool IsSlider { get; set; }
+        public bool IsSlider { get; set; } = false;
+        public bool IsSpinner { get; set; } = false;
     }
 }
