@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
     internal class VitaruBeatmapConverter : BeatmapConverter<VitaruHitObject>
     {
-        public bool playerLoaded = false;
+        private bool playerLoaded = false;
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(IHasPosition) };
 
         protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
@@ -36,7 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     StartTime = 0f,
                 };
             }
-            /*
             if (curveData != null)
             {
                 yield return new Enemy
@@ -54,15 +53,16 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 };
             }
             else if (endTimeData != null)
-            {
+            {/*
                 yield return new Enemy
                 {
                     StartTime = original.StartTime,
                     Samples = original.Samples,
                     //EndTime = endTimeData.EndTime,
+                    IsSpinner = true,
 
                     Position = positionData?.Position ?? VitaruPlayfield.BASE_SIZE / 2,
-                };
+                };*/
             }
             else
             {
@@ -71,10 +71,9 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     StartTime = original.StartTime,
                     Samples = original.Samples,
                     Position = positionData?.Position ?? Vector2.Zero,
-                    //NewCombo = comboData?.NewCombo ?? false,
-                    IsSlider = false,
+                    NewCombo = comboData?.NewCombo ?? false,
                 };
-            }*/
+            }
         }
     }
 }
