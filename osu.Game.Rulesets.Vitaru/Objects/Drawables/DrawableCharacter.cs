@@ -28,9 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private SampleChannel sampleShoot;
         private SampleChannel sampleDeath;
 
-        public static Container playfield;
         protected Hitbox Hitbox;
-        public Container MainParent = playfield;
 
         public bool Shooting { get; set; } = false;
 
@@ -86,7 +84,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 CharacterKiaiSprite.FadeOut();
             }*/
 
-            MainParent = playfield;
             base.Update();
             if (MainParent?.Children != null)
             foreach (Drawable draw in MainParent.Children)

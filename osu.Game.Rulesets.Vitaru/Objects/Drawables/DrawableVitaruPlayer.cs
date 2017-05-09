@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, 30, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, 0, 820);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
         }
 
-        private const float playerSpeed = 0.3f;
+        private const float playerSpeed = 0.5f;
         private Vector2 positionChange = Vector2.Zero;
         public static float Energy;
         public static float Health;
@@ -55,8 +55,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
-
-            VitaruScoreProcessor.VitaruHealth = CharacterHealth / 100;
 
             //Handles Player Speed
             var pos = Position;
@@ -66,8 +64,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
             {
-                xSpeed /= 2;
-                ySpeed /= 2;
+                xSpeed /= 4;
+                ySpeed /= 4;
             }
             if (keys[Key.Z])
             {
@@ -106,24 +104,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private void shoot()
         {
-            if (MainParent == null)
+            Bullet b;
+            MainParent.Add(b = new Bullet(Team)
             {
-                throw new Exception();
-            }
-            if (MainParent != null)
-            {
-                Bullet b;
-                MainParent.Add(b = new Bullet(Team)
-                {
-                    Depth = 1,
-                    Anchor = Anchor.Centre,
-                    BulletSpeed = 1f,
-                    BulletColor = Color4.Red,
-                    BulletAngleDegree = 0,
-                    BulletWidth = 6,
-                });
-                b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-            }
+                Depth = 1,
+                Anchor = Anchor.Centre,
+                BulletSpeed = 1f,
+                BulletColor = Color4.Red,
+                BulletAngleDegree = 0,
+                BulletWidth = 6,
+            });
+            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
