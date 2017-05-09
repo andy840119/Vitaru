@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Scoring;
+using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -105,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private void shoot()
         {
             Bullet b;
-            MainParent.Add(b = new Bullet(Team)
+            VitaruPlayfield.vitaruPlayfield.Add(b = new Bullet(Team)
             {
                 Depth = 1,
                 Anchor = Anchor.Centre,

@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.MathUtils;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -159,7 +160,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private void bulletAddDeg(float speed, float degree)
         {
             Bullet bullet;
-            MainParent.Add(bullet = new Bullet(1)
+            VitaruPlayfield.vitaruPlayfield.Add(bullet = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,
@@ -174,7 +175,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private void bulletAddRad(float speed, float degree)
         {
             Bullet bullet;
-            MainParent.Add(bullet = new Bullet(1)
+            VitaruPlayfield.vitaruPlayfield.Add(bullet = new Bullet(1)
             {
                 Origin = Anchor.Centre,
                 Depth = 1,

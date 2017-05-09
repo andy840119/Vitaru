@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -10;
 
-        private Vector4 BulletBounds = new Vector4(-30, -100, 532, 740);
+        private Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
         private Vector2 PlayfieldOffset = new Vector2(175, 380);
         private bool fadingOut = false;
 

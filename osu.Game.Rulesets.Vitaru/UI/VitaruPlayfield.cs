@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
-        private readonly Container vitaruPlayfield;
+        public static Container vitaruPlayfield;
 
         public override bool ProvidingUserCursor => false;
 
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 vitaruPlayfield = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Depth = -1,
+                    Depth = 0,
                 },
             });
         }

@@ -9,6 +9,7 @@ using System;
 using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -85,8 +86,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }*/
 
             base.Update();
-            if (MainParent?.Children != null)
-            foreach (Drawable draw in MainParent.Children)
+            if (VitaruPlayfield.vitaruPlayfield?.Children != null)
+            foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
             {
                 if (draw is Bullet)
                 {
@@ -105,8 +106,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     }
                 }
             }
-            if (MainParent != null)
-            foreach (Drawable draw in MainParent.Children)
+            if (VitaruPlayfield.vitaruPlayfield != null)
+            foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
             {
                 if (draw is Bullet)
                 {
