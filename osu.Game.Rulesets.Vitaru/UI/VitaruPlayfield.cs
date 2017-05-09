@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
-        public VitaruPlayfield() : base(BASE_SIZE.X)
+        public VitaruPlayfield() : base()
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
