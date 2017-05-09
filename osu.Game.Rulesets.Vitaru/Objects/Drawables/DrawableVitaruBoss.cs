@@ -9,7 +9,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
         {
             Anchor = Anchor.TopCentre;
-            Speed = new Vector2(0, -160);
             Position = hitObject.Position;
             CharacterType = HitObjectType.Boss;
             CharacterHealth = 1000;

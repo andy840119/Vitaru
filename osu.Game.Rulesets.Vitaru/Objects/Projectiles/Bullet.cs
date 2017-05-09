@@ -21,9 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -10;
 
-        private Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
-        private Vector2 PlayfieldOffset = new Vector2(175, 380);
-        private bool fadingOut = false;
+        private Vector4 BulletBounds = new Vector4(-266, 266, -420, 420);
 
         public static int BulletCount = 0;
 
@@ -113,23 +111,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             if (Alpha < 0.05)
                 DeleteBullet();
 
-            if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
-            {
-                if (Team == 0 && fadingOut == false)
-                    fadeOut();
-            }
-
-            if (Position.Y < (BulletBounds.Y + PlayfieldOffset.Y) | Position.X < (BulletBounds.X + PlayfieldOffset.X) | Position.Y > (BulletBounds.W + PlayfieldOffset.Y) | Position.X > (BulletBounds.Z + PlayfieldOffset.X))
-            {
-                if (Team == 1 && fadingOut == false)
-                    fadeOut();
-            }
+            if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)   
+                fadeOut();
         }
 
         private void fadeOut()
         {
-            fadingOut = true;
-            FadeOut((400), EasingTypes.OutBounce);
+            FadeOut(250);
         }
 
         internal void DeleteBullet()

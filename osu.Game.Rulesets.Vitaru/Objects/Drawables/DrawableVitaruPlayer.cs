@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, 0, 820);
+        private Vector4 playerBounds = new Vector4(-256, 256, -410, 410);
 
         public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
         {
