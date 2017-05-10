@@ -57,6 +57,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Update();
 
+            playerMovement();
+        }
+
+        private void playerMovement()
+        {
             //Handles Player Speed
             var pos = Position;
             float ySpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);

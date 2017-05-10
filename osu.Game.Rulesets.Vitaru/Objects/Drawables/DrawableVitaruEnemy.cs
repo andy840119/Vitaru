@@ -53,60 +53,21 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
-            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == false)
-            {
-                enemyShoot();
-                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
-                hasShot = true;
-            }
 
-            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == true)
-            {
-                enemyShoot();
-                hasShot = true;
-            }
+            if (!enemy.IsSlider && !enemy.IsSpinner)
+                hitcircle();
 
-            if (enemy.EndTime < Time.Current && hasShot == true && enemy.IsSlider == true && sliderDone == false)
-            {
-                enemyShoot();
-                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
-                sliderDone = true;
-            }
+            if (enemy.IsSlider)
+                slider();
 
-            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == false)
-            {
-                Dispose();
-            }
-
-            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == true)
-            {
-                Dispose();
-            }
-
-            double progress = MathHelper.Clamp((Time.Current - enemy.StartTime) / enemy.Duration, 0, 1);
-
-            int repeat = enemy.RepeatAt(progress);
-            progress = enemy.ProgressAt(progress);
-
-            if (repeat > currentRepeat)
-            {
-                if (repeat < enemy.RepeatCount)
-                {
-                    enemyShoot();
-                }   
-                currentRepeat = repeat;
-            }
-            if(enemy.IsSlider)
-                UpdateProgress(progress, repeat);
+            if (enemy.IsSpinner)
+                spinner();
+                
         }
 
-        public void UpdateProgress(double progress, int repeat)
-        {
-            Position = enemy.Curve.PositionAt(progress);
-        }
-
-        private bool canCurrentlyTrack => Time.Current >= enemy.StartTime && Time.Current < enemy.EndTime;
-
+        /// <summary>
+        /// Generic Enemy stuff
+        /// </summary>
         protected override void CheckJudgement(bool userTriggered)
         {
             if (CharacterHealth < 1)
@@ -157,6 +118,83 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Expire();
         }
 
+        /// <summary>
+        /// All the hitcircle stuff
+        /// </summary>
+        private void hitcircle()
+        {
+            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == false)
+            {
+                enemyShoot();
+                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
+                hasShot = true;
+            }
+            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == false)
+            {
+                Dispose();
+            }
+        }
+
+        /// <summary>
+        /// All The Slider Stuff
+        /// </summary>
+        private void slider()
+        {
+            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == true)
+            {
+                enemyShoot();
+                hasShot = true;
+            }
+
+            if (enemy.EndTime < Time.Current && hasShot == true && enemy.IsSlider == true && sliderDone == false)
+            {
+                enemyShoot();
+                FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
+                sliderDone = true;
+            }
+
+            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == true)
+            {
+                Dispose();
+            }
+
+            double progress = MathHelper.Clamp((Time.Current - enemy.StartTime) / enemy.Duration, 0, 1);
+
+            int repeat = enemy.RepeatAt(progress);
+            progress = enemy.ProgressAt(progress);
+
+            if (repeat > currentRepeat)
+            {
+                if (repeat < enemy.RepeatCount)
+                {
+                    enemyShoot();
+                }
+                currentRepeat = repeat;
+            }
+            UpdateProgress(progress, repeat);
+        }
+
+        public void UpdateProgress(double progress, int repeat)
+        {
+            Position = enemy.Curve.PositionAt(progress);
+        }
+
+        internal interface ISliderProgress
+        {
+            void UpdateProgress(double progress, int repeat);
+        }
+
+        /// <summary>
+        /// all the spinner stuff
+        /// </summary>
+        private void spinner()
+        {
+
+        }
+
+        /// <summary>
+        /// All the shooting stuff
+        /// </summary>
         private void bulletAddDeg(float speed, float degree)
         {
             Bullet bullet;
@@ -185,11 +223,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 BulletWidth = 8,
             });
             bullet.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), bullet));
-        }
-
-        internal interface ISliderProgress
-        {
-            void UpdateProgress(double progress, int repeat);
         }
 
         private void enemyShoot()

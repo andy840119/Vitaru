@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -10;
+        public bool UpdateVelocity { get; set; } = false;
 
         private Vector4 BulletBounds = new Vector4(-266, 266, -420, 420);
 
@@ -35,7 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public Bullet(int team)
         {
             Team = team;
-
         }
 
         protected override void LoadComplete()
@@ -108,6 +108,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             base.Update();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
 
+            //Will be useful for makin bullets stop, like if a certain character / boss could freeze time.
+            if (UpdateVelocity)
+                GetBulletVelocity();
+
             if (Alpha < 0.05)
                 DeleteBullet();
 
@@ -117,7 +121,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
 
         private void fadeOut()
         {
-            FadeOut(250);
+            if(Alpha == 1)
+                FadeOut(500);
         }
 
         internal void DeleteBullet()
