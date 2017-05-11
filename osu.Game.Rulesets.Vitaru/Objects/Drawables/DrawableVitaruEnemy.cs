@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
-            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f)
+            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.1f)
             {
                 Dispose();
             }
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 sliderDone = true;
             }
 
-            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f)
+            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.1f)
             {
                 Dispose();
             }
