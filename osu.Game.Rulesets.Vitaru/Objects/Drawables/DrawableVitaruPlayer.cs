@@ -42,7 +42,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             HitboxColor = Color4.Yellow;
             HitboxWidth = 4;
             OnShoot = shoot;
-            Anchor = Anchor.Centre;
         }
 
         protected override void CheckJudgement(bool userTriggered)
@@ -115,7 +114,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             VitaruPlayfield.vitaruPlayfield.Add(b = new Bullet(Team)
             {
                 Depth = 1,
-                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
                 BulletSpeed = 1f,
                 BulletColor = Color4.Red,
                 BulletAngleDegree = 0,

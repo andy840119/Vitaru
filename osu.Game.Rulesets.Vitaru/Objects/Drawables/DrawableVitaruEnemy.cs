@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.MathUtils;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Rulesets.Vitaru.Beatmaps;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -29,7 +30,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
-            Anchor = Anchor.TopLeft;
             this.enemy = enemy;
             AlwaysPresent = true;
             Origin = Anchor.Centre;
@@ -40,7 +40,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             HitboxWidth = 24;
             HitboxColor = Color4.Cyan;
             Alpha = 1;
-            //Judgement = new VitaruJudgement { Result = HitResult.Hit };
         }
 
         private int patternDifficulty = 1; // It will be depending on OD in future

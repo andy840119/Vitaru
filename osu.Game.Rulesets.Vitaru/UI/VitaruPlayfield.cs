@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             get
             {
                 var parentSize = Parent.DrawSize;
-                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 10f / 16f, parentSize.Y);
+                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 5f / 8f, parentSize.Y);
 
                 return new Vector2(aspectSize.X / parentSize.X, aspectSize.Y / parentSize.Y) * base.Size;
             }

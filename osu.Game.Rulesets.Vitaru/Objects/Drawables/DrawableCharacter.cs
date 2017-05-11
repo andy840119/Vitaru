@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, TextureStore textures)
         {
-            Anchor = Anchor.Centre;
+            Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
             Children = new Drawable[]
             {

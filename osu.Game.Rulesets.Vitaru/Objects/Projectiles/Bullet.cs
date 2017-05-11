@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletAngleRadian { get; set; } = -10;
         public bool UpdateVelocity { get; set; } = false;
 
-        private Vector4 BulletBounds = new Vector4(-266, 266, -420, 420);
+        private Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
 
         public static int BulletCount = 0;
 
