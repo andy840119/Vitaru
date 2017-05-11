@@ -73,8 +73,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
             {
-                xSpeed /= 2;
-                ySpeed /= 2;
+                xSpeed /= 3;
+                ySpeed /= 3;
             }
             if (keys[Key.Z])
             {
