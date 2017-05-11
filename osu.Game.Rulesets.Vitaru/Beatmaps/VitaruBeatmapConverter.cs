@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
     internal class VitaruBeatmapConverter : BeatmapConverter<VitaruHitObject>
     {
-        private Vector2 offset = new Vector2(0, 0);
         private bool playerLoaded = false;
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(IHasPosition) };
 
@@ -33,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 playerLoaded = true;
                 yield return new VitaruPlayer
                 {
-                    Position = (new Vector2(256, 800)) + offset,
+                    Position = new Vector2(256, 800),
                     StartTime = 0f,
                 };
             }
@@ -48,7 +47,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     Distance = curveData.Distance,
                     //RepeatSamples = curveData.RepeatSamples,
                     RepeatCount = curveData.RepeatCount,
-                    Position = (positionData?.Position ?? Vector2.Zero) + offset,
+                    Position = positionData?.Position ?? Vector2.Zero,
                     NewCombo = comboData?.NewCombo ?? false,
                     IsSlider = true,
                 };
@@ -62,7 +61,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                     //EndTime = endTimeData.EndTime,
                     IsSpinner = true,
 
-                    Position = (positionData?.Position ?? VitaruPlayfield.BASE_SIZE / 2) + offset,
+                    Position = positionData?.Position ?? VitaruPlayfield.BASE_SIZE / 2,
                 };
             }
             else
@@ -71,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 {
                     StartTime = original.StartTime,
                     Samples = original.Samples,
-                    Position = (positionData?.Position ?? Vector2.Zero) + offset,
+                    Position = positionData?.Position ?? Vector2.Zero,
                     NewCombo = comboData?.NewCombo ?? false,
                 };
             }

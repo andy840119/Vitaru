@@ -123,13 +123,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         /// </summary>
         private void hitcircle()
         {
-            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == false)
+            if (HitObject.StartTime < Time.Current && hasShot == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 hasShot = true;
             }
-            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == false)
+            if (HitObject.StartTime < Time.Current && hasShot == true && Alpha < 0.05f)
             {
                 Dispose();
             }
@@ -140,20 +140,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         /// </summary>
         private void slider()
         {
-            if (HitObject.StartTime < Time.Current && hasShot == false && enemy.IsSlider == true)
+            if (HitObject.StartTime < Time.Current && hasShot == false)
             {
                 enemyShoot();
                 hasShot = true;
             }
 
-            if (enemy.EndTime < Time.Current && hasShot == true && enemy.IsSlider == true && sliderDone == false)
+            if (enemy.EndTime < Time.Current && hasShot == true && sliderDone == false)
             {
                 enemyShoot();
                 FadeOut(Math.Min(TIME_FADEOUT * 2, TIME_PREEMPT));
                 sliderDone = true;
             }
 
-            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f && enemy.IsSlider == true)
+            if (enemy.EndTime < Time.Current && hasShot == true && Alpha < 0.05f)
             {
                 Dispose();
             }
