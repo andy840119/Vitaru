@@ -10,7 +10,7 @@ using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
-    class SpellPiece : Container
+    public class SpellPiece : Container
     {
         private Sprite sprite;
         public float DegreesPerSecond = 80;
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
         {
-            sprite.Texture = textures.Get(@"Play/Vitaru/boss");
+            sprite.Texture = textures.Get(@"Play/Vitaru/sign");
         }
 
         protected override void Update()

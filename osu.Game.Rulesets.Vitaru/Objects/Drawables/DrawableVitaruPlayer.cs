@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     {
         private readonly VitaruPlayer player;
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
+        private double savedTime = -10000;
 
         //(MinX,MaxX,MinY,MaxY)
         private Vector4 playerBounds = new Vector4(0, 512, 0, 820);
@@ -59,10 +60,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             HitDetect();
 
-            playerMovement();
+            playerInput();
         }
 
-        private void playerMovement()
+        private void playerInput()
         {
             //Handles Player Speed
             var pos = Position;
@@ -85,7 +86,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
             if (keys[Key.X])
             {
-                //Bass();
+                Spell();
             }
             if (keys[Key.Up])
             {
@@ -108,6 +109,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
             VitaruPlayer.PlayerPosition = pos;
+        }
+
+        private void Spell()
+        {
+            if(Time.Current > savedTime + 10000)
+            {
+                Sign.Colour = Color4.Red;
+                savedTime = Time.Current;
+                Sign.Alpha = 1;
+                CharacterHealth = 100;
+                Sign.FadeOut(2500 , EasingTypes.InQuint);
+            }
         }
 
         private void shoot()
