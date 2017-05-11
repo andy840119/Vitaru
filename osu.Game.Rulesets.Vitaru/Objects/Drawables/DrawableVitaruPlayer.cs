@@ -112,7 +112,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private void shoot()
         {
+            Bullet a;
             Bullet b;
+            Bullet c;
+            VitaruPlayfield.vitaruPlayfield.Add(a = new Bullet(Team)
+            {
+                Depth = 0,
+                Origin = Anchor.Centre,
+                BulletSpeed = 1f,
+                BulletColor = Color4.Red,
+                BulletAngleDegree = -5,
+                BulletWidth = 6,
+            });
             VitaruPlayfield.vitaruPlayfield.Add(b = new Bullet(Team)
             {
                 Depth = 1,
@@ -122,7 +133,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 BulletAngleDegree = 0,
                 BulletWidth = 6,
             });
+            VitaruPlayfield.vitaruPlayfield.Add(c = new Bullet(Team)
+            {
+                Depth = 0,
+                Origin = Anchor.Centre,
+                BulletSpeed = 1f,
+                BulletColor = Color4.Red,
+                BulletAngleDegree = 5,
+                BulletWidth = 6,
+            });
+            a.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), a));
             b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
+            c.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), c));
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
