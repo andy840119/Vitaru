@@ -1,15 +1,19 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruBoss : DrawableCharacter
     {
-        public DrawableVitaruBoss(VitaruHitObject hitObject) : base(hitObject)
+        private readonly Boss boss;
+
+        public DrawableVitaruBoss(Boss boss) : base(boss)
         {
+            this.boss = boss;
             Anchor = Anchor.TopCentre;
-            Position = hitObject.Position;
+            Position = boss.Position;
             CharacterType = HitObjectType.Boss;
             CharacterHealth = 1000;
             Team = 1;

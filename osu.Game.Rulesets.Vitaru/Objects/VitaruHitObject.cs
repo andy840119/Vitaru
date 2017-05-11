@@ -19,7 +19,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public bool Kiai { get; protected set; }
 
-        public Vector2 Position = new Vector2(-10000);//{ get; set; }
+        //I have no idea where enemies are getting pos info from if its not from here
+        public Vector2 Position { get; set; }
 
         public Vector2 StackedPosition => Position + StackOffset;
 
