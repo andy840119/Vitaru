@@ -14,18 +14,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : Playfield<VitaruHitObject, VitaruJudgement>
     {
-        private readonly Container mainPlayfield;
+        public static Container vitaruPlayfield;
 
-        public override bool ProvidingUserCursor => false;
+        public override bool ProvidingUserCursor => true;
 
-        public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
+        public static readonly Vector2 BASE_SIZE = new Vector2(512, 820);
 
         public override Vector2 Size
         {
             get
             {
                 var parentSize = Parent.DrawSize;
-                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 9f / 16f, parentSize.Y);
+                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 5f / 8f, parentSize.Y);
 
                 return new Vector2(aspectSize.X / parentSize.X, aspectSize.Y / parentSize.Y) * base.Size;
             }
@@ -33,20 +33,17 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public VitaruPlayfield() : base(BASE_SIZE.X)
         {
-            Position = new Vector2(-166, -200);
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
-            Scale = new Vector2(1.6f);
 
             Add(new Drawable[]
             {
-                mainPlayfield = new Container
+                vitaruPlayfield = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Depth = -1,
+                    Depth = 0,
                 },
             });
-            DrawableCharacter.playfield = mainPlayfield;
         }
 
         protected override void LoadComplete()
@@ -60,7 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
             if (c != null)
-                mainPlayfield.Add(c.ProxiedLayer.CreateProxy());
+                vitaruPlayfield.Add(c.ProxiedLayer.CreateProxy());
 
             base.Add(h);
         }

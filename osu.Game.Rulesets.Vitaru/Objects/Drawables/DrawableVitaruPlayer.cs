@@ -10,20 +10,22 @@ using osu.Game.Rulesets.Vitaru.Objects.Projectiles;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Scoring;
+using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruPlayer : DrawableCharacter
     {
+        private readonly VitaruPlayer player;
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
-        
-        public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(0, 512, 30, 720);
+        private Vector4 playerBounds = new Vector4(0, 512, 0, 820);
 
-        public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableVitaruPlayer(VitaruPlayer player) : base(player)
         {
+            this.player = player;
             keys[Key.Up] = false;
             keys[Key.Right] = false;
             keys[Key.Down] = false;
@@ -33,21 +35,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             keys[Key.LShift] = false;
             keys[Key.RShift] = false;
             Origin = Anchor.Centre;
-            Position = PlayerPosition;
+            Position = player.Position;
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;
             Team = 0;
             HitboxColor = Color4.Yellow;
             HitboxWidth = 4;
             OnShoot = shoot;
-            Anchor = Anchor.Centre;
         }
 
         protected override void CheckJudgement(bool userTriggered)
         {
         }
 
-        private const float playerSpeed = 0.3f;
+        private const float playerSpeed = 0.5f;
         private Vector2 positionChange = Vector2.Zero;
         public static float Energy;
         public static float Health;
@@ -56,8 +57,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Update();
 
-            VitaruScoreProcessor.VitaruHealth = CharacterHealth / 100;
+            playerMovement();
+        }
 
+        private void playerMovement()
+        {
             //Handles Player Speed
             var pos = Position;
             float ySpeed = playerSpeed * (float)(Clock.ElapsedFrameTime);
@@ -66,8 +70,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             //All these handle keys and when they are or aren't pressed
             if (keys[Key.LShift] | keys[Key.RShift])
             {
-                xSpeed /= 2;
-                ySpeed /= 2;
+                xSpeed /= 4;
+                ySpeed /= 4;
             }
             if (keys[Key.Z])
             {
@@ -101,29 +105,22 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             pos = Vector2.ComponentMin(pos, playerBounds.Yw);
             pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
-            PlayerPosition = pos;
+            VitaruPlayer.PlayerPosition = pos;
         }
 
         private void shoot()
         {
-            if (MainParent == null)
+            Bullet b;
+            VitaruPlayfield.vitaruPlayfield.Add(b = new Bullet(Team)
             {
-                throw new Exception();
-            }
-            if (MainParent != null)
-            {
-                Bullet b;
-                MainParent.Add(b = new Bullet(Team)
-                {
-                    Depth = 1,
-                    Anchor = Anchor.Centre,
-                    BulletSpeed = 1f,
-                    BulletColor = Color4.Red,
-                    BulletAngleDegree = 0,
-                    BulletWidth = 6,
-                });
-                b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
-            }
+                Depth = 1,
+                Origin = Anchor.Centre,
+                BulletSpeed = 1f,
+                BulletColor = Color4.Red,
+                BulletAngleDegree = 0,
+                BulletWidth = 6,
+            });
+            b.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), b));
         }
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)

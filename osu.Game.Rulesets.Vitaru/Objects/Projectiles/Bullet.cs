@@ -20,10 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public float BulletWidth { get; set; } = 12f;
         public float BulletAngleDegree { get; set; } = 0;
         public float BulletAngleRadian { get; set; } = -10;
+        public bool UpdateVelocity { get; set; } = false;
 
-        private Vector4 BulletBounds = new Vector4(-30, -100, 532, 740);
-        private Vector2 PlayfieldOffset = new Vector2(175, 380);
-        private bool fadingOut = false;
+        private Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
 
         public static int BulletCount = 0;
 
@@ -37,7 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
         public Bullet(int team)
         {
             Team = team;
-
         }
 
         protected override void LoadComplete()
@@ -110,26 +108,21 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Projectiles
             base.Update();
             MoveToOffset(new Vector2(bulletVelocity.X * (float)Clock.ElapsedFrameTime, bulletVelocity.Y * (float)Clock.ElapsedFrameTime));
 
+            //Will be useful for makin bullets stop, like if a certain character / boss could freeze time.
+            if (UpdateVelocity)
+                GetBulletVelocity();
+
             if (Alpha < 0.05)
                 DeleteBullet();
 
-            if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)
-            {
-                if (Team == 0 && fadingOut == false)
-                    fadeOut();
-            }
-
-            if (Position.Y < (BulletBounds.Y + PlayfieldOffset.Y) | Position.X < (BulletBounds.X + PlayfieldOffset.X) | Position.Y > (BulletBounds.W + PlayfieldOffset.Y) | Position.X > (BulletBounds.Z + PlayfieldOffset.X))
-            {
-                if (Team == 1 && fadingOut == false)
-                    fadeOut();
-            }
+            if (Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z)   
+                fadeOut();
         }
 
         private void fadeOut()
         {
-            fadingOut = true;
-            FadeOut((400), EasingTypes.OutBounce);
+            if(Alpha == 1)
+                FadeOut(500);
         }
 
         internal void DeleteBullet()

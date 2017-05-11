@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public bool Kiai { get; protected set; }
 
+        //I have no idea where enemies are getting pos info from if its not from here
         public Vector2 Position { get; set; }
 
         public Vector2 StackedPosition => Position + StackOffset;
@@ -29,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public virtual int StackHeight { get; set; }
 
-        public Vector2 StackOffset => new Vector2(StackHeight * Scale * -6.4f);
+        public Vector2 StackOffset => new Vector2(0,0);
 
         public double Radius => HitboxSize * Scale;
 

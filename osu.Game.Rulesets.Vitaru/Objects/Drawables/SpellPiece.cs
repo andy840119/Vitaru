@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
         {
-            sprite.Texture = textures.Get(@"Play/Vitaru/sign");
+            sprite.Texture = textures.Get(@"Play/Vitaru/boss");
         }
 
         protected override void Update()
