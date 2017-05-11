@@ -57,6 +57,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Update();
 
+            HitDetect();
+
             playerMovement();
         }
 

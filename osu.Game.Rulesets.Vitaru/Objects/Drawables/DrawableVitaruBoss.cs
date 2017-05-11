@@ -24,6 +24,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
+
+            HitDetect();
+
             float ySpeed = Speed.Y * (float)Clock.ElapsedFrameTime;
             float xSpeed = Speed.X * (float)Clock.ElapsedFrameTime;
         }

@@ -54,6 +54,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             enemy.EnemyPosition = enemy.Position;
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
 
+            HitDetect();
+
             if (!enemy.IsSlider && !enemy.IsSpinner)
                 hitcircle();
 

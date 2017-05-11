@@ -40,6 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public Action OnDeath { get; set; }
         public Action OnShoot { get; set; }
+        public bool Kiai { get; private set; }
 
         public DrawableCharacter(VitaruHitObject hitObject) : base(hitObject)
         {
@@ -73,7 +74,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Update()
         {
-            /*
             if(Kiai == true)
             {
                 CharacterSprite.FadeOut();
@@ -83,49 +83,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 CharacterSprite.FadeIn();
                 CharacterKiaiSprite.FadeOut();
-            }*/
+            }
 
             base.Update();
-            if (VitaruPlayfield.vitaruPlayfield?.Children != null)
-            foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
-            {
-                if (draw is Bullet)
-                {
-                    Bullet bullet = draw as Bullet;
-                    if (bullet.Team != Team)
-                    {
-                        Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
-                        float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
-                        if (distance < minDist)
-                        {
-                            bullet.DeleteBullet();
-                            if (TakeDamage(bullet.BulletDamage))
-                                break;
-                        }
-                    }
-                }
-            }
-            if (VitaruPlayfield.vitaruPlayfield != null)
-            foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
-            {
-                if (draw is Bullet)
-                {
-                    Bullet bullet = draw as Bullet;
-                    if (bullet.Team != Team)
-                    {
-                        Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
-                        float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
-                        float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
-                        if (distance < minDist)
-                        {
-                            bullet.DeleteBullet();
-                            if (TakeDamage(bullet.BulletDamage))
-                                break;
-                        }
-                    }
-                }
-            }
+
+            HitDetect();
+
             if (Shooting)
             {
                 timeSinceLastShoot += Clock.ElapsedFrameTime;
@@ -136,6 +99,50 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     timeSinceLastShoot -= 1 / (BPM / 30.0) * 1000.0;
                 }
             }
+        }
+
+        public void HitDetect()
+        {
+            if (VitaruPlayfield.vitaruPlayfield?.Children != null)
+                foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
+                {
+                    if (draw is Bullet)
+                    {
+                        Bullet bullet = draw as Bullet;
+                        if (bullet.Team != Team)
+                        {
+                            Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
+                            float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
+                            float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
+                            if (distance < minDist)
+                            {
+                                bullet.DeleteBullet();
+                                if (TakeDamage(bullet.BulletDamage))
+                                    break;
+                            }
+                        }
+                    }
+                }
+            if (VitaruPlayfield.vitaruPlayfield != null)
+                foreach (Drawable draw in VitaruPlayfield.vitaruPlayfield.Children)
+                {
+                    if (draw is Bullet)
+                    {
+                        Bullet bullet = draw as Bullet;
+                        if (bullet.Team != Team)
+                        {
+                            Vector2 bulletPos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
+                            float distance = (float)Math.Sqrt(Math.Pow(bulletPos.X, 2) + Math.Pow(bulletPos.Y, 2));
+                            float minDist = Hitbox.HitboxWidth + bullet.BulletWidth;
+                            if (distance < minDist)
+                            {
+                                bullet.DeleteBullet();
+                                if (TakeDamage(bullet.BulletDamage))
+                                    break;
+                            }
+                        }
+                    }
+                }
         }
 
         [BackgroundDependencyLoader]
