@@ -48,6 +48,6 @@ namespace osu.Game.Rulesets.Vitaru
             return null;
         }
 
-        protected override Vector2 GetPlayfieldAspectAdjust() => new Vector2(0.75f);
+        protected override Vector2 GetPlayfieldAspectAdjust() => new Vector2(0.8f);
     }
 }

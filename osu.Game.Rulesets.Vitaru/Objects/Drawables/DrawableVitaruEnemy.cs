@@ -29,6 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public DrawableVitaruEnemy(Enemy enemy) : base(enemy)
         {
+            Anchor = Anchor.TopLeft;
             this.enemy = enemy;
             AlwaysPresent = true;
             Origin = Anchor.Centre;
@@ -46,12 +47,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private float circleAngle = 1f; // Angle of circles currently in degree
         private float randomDirection = 0; // For more bullet hell !
         private int bulletPattern = 1;
-        private float shootLeniancy = 10f;
         private bool hasShot = false;
         private bool sliderDone = false;
 
         protected override void Update()
         {
+            enemy.EnemyPosition = enemy.Position;
             bulletPattern = RNG.Next(1, 6); // could be remplaced by map seed, with stackleniency
 
             if (!enemy.IsSlider && !enemy.IsSpinner)
@@ -290,7 +291,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public float playerRelativePositionAngle()
         {
             //Returns a Radian
-            playerPos = (float)Math.Atan2((DrawableVitaruPlayer.PlayerPosition.Y - Position.Y),(DrawableVitaruPlayer.PlayerPosition.X - Position.X));
+            playerPos = (float)Math.Atan2((VitaruPlayer.PlayerPosition.Y - Position.Y),(VitaruPlayer.PlayerPosition.X - Position.X));
             return playerPos;
         }
     }

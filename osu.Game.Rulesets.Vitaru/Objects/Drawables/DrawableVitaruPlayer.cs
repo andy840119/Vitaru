@@ -11,20 +11,21 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Rulesets.Vitaru.Objects.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruPlayer : DrawableCharacter
     {
+        private readonly VitaruPlayer player;
         private Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
-        
-        public static Vector2 PlayerPosition;
 
         //(MinX,MaxX,MinY,MaxY)
-        private Vector4 playerBounds = new Vector4(-256, 256, -410, 410);
+        private Vector4 playerBounds = new Vector4(0, 512, 0, 820);
 
-        public DrawableVitaruPlayer(VitaruHitObject hitObject) : base(hitObject)
+        public DrawableVitaruPlayer(VitaruPlayer player) : base(player)
         {
+            this.player = player;
             keys[Key.Up] = false;
             keys[Key.Right] = false;
             keys[Key.Down] = false;
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             keys[Key.LShift] = false;
             keys[Key.RShift] = false;
             Origin = Anchor.Centre;
-            Position = PlayerPosition;
+            Position = player.Position;
             CharacterType = HitObjectType.Player;
             CharacterHealth = 100;
             Team = 0;
@@ -105,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             pos = Vector2.ComponentMin(pos, playerBounds.Yw);
             pos = Vector2.ComponentMax(pos, playerBounds.Xz);
             Position = pos;
-            PlayerPosition = pos;
+            VitaruPlayer.PlayerPosition = pos;
         }
 
         private void shoot()

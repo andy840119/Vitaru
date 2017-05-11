@@ -19,6 +19,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Characters
         public double EndTime { get; set; }
         public object Sample { get; internal set; }
 
+        public static Vector2 PlayerPosition;
+
         public override HitObjectType Type => HitObjectType.Player;
     }
 }
