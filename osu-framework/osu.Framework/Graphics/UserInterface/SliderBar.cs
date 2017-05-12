@@ -11,7 +11,8 @@ using System.Diagnostics;
 
 namespace osu.Framework.Graphics.UserInterface
 {
-    public abstract class SliderBar<T> : Container where T : struct
+    public abstract class SliderBar<T> : Container, IHasCurrentValue<T>
+        where T : struct
     {
         /// <summary>
         /// Range padding reduces the range of movement a slider bar is allowed to have
@@ -23,56 +24,43 @@ namespace osu.Framework.Graphics.UserInterface
 
         public float UsableWidth => DrawWidth - 2 * RangePadding;
 
-        private float keyboardStep;
+        /// <summary>
+        /// A custom step value for each key press which actuates a change on this control.
+        /// </summary>
+        public float KeyboardStep;
 
-        public float KeyboardStep
+        protected readonly BindableNumber<T> CurrentNumber;
+
+        public Bindable<T> Current => CurrentNumber;
+
+        protected SliderBar()
         {
-            get { return keyboardStep; }
-            set
-            {
-                keyboardStep = value;
-                stepInitialized = true;
-            }
-        }
+            if (typeof(T) == typeof(int))
+                CurrentNumber = new BindableInt() as BindableNumber<T>;
+            else if (typeof(T) == typeof(long))
+                CurrentNumber = new BindableLong() as BindableNumber<T>;
+            else if (typeof(T) == typeof(double))
+                CurrentNumber = new BindableDouble() as BindableNumber<T>;
 
-        private bool stepInitialized;
+            if (CurrentNumber == null) throw new NotImplementedException($"We don't support the generic type of {nameof(BindableNumber<T>)}.");
 
-        public BindableNumber<T> Bindable
-        {
-            get { return bindable; }
-            set
-            {
-                if (bindable != null)
-                    bindable.ValueChanged -= bindableValueChanged;
-                bindable = value;
-                bindable.ValueChanged += bindableValueChanged;
-                UpdateValue(NormalizedValue);
-            }
+            CurrentNumber.ValueChanged += v => UpdateValue(NormalizedValue);
         }
 
         protected float NormalizedValue
         {
             get
             {
-                if (Bindable == null)
+                if (Current == null)
                     return 0;
-                var min = Convert.ToSingle(Bindable.MinValue);
-                var max = Convert.ToSingle(Bindable.MaxValue);
-                var val = Convert.ToSingle(Bindable.Value);
+                var min = Convert.ToSingle(CurrentNumber.MinValue);
+                var max = Convert.ToSingle(CurrentNumber.MaxValue);
+                var val = Convert.ToSingle(CurrentNumber.Value);
                 return (val - min) / (max - min);
             }
         }
 
-        private BindableNumber<T> bindable;
-
         protected abstract void UpdateValue(float value);
-
-        protected override void Dispose(bool isDisposing)
-        {
-            if (Bindable != null)
-                Bindable.ValueChanged -= bindableValueChanged;
-            base.Dispose(isDisposing);
-        }
 
         protected override void LoadComplete()
         {
@@ -108,30 +96,38 @@ namespace osu.Framework.Graphics.UserInterface
         {
             if (!Hovering)
                 return false;
-            if (!stepInitialized)
-                KeyboardStep = (Convert.ToSingle(Bindable.MaxValue) - Convert.ToSingle(Bindable.MinValue)) / 20;
-            var step = KeyboardStep;
-            if (Bindable.IsInteger)
-                step = (float)Math.Ceiling(step);
+
+            var step = KeyboardStep != 0 ? KeyboardStep : (Convert.ToSingle(CurrentNumber.MaxValue) - Convert.ToSingle(CurrentNumber.MinValue)) / 20;
+            if (CurrentNumber.IsInteger) step = (float)Math.Ceiling(step);
+
             switch (args.Key)
             {
                 case Key.Right:
-                    Bindable.Add(step);
+                    CurrentNumber.Add(step);
+                    OnUserChange();
                     return true;
                 case Key.Left:
-                    Bindable.Add(-step);
+                    CurrentNumber.Add(-step);
+                    OnUserChange();
                     return true;
                 default:
                     return false;
             }
         }
 
-        private void bindableValueChanged(object sender, EventArgs e) => UpdateValue(NormalizedValue);
-
         private void handleMouseInput(InputState state)
         {
             var xPosition = ToLocalSpace(state.Mouse.NativeState.Position).X - RangePadding;
-            Bindable.SetProportional(xPosition / UsableWidth);
+
+            if (!CurrentNumber.Disabled)
+                CurrentNumber.SetProportional(xPosition / UsableWidth);
+
+            OnUserChange();
         }
+
+        /// <summary>
+        /// Triggered when the value is changed based on end-user input to this control.
+        /// </summary>
+        protected virtual void OnUserChange() { }
     }
 }

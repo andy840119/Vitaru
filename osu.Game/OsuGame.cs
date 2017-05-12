@@ -15,7 +15,6 @@ using osu.Framework.Logging;
 using osu.Game.Graphics.UserInterface.Volume;
 using osu.Framework.Allocation;
 using osu.Framework.Timing;
-using osu.Game.Modes;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
 using osu.Game.Screens.Menu;
@@ -24,10 +23,12 @@ using System.Linq;
 using osu.Framework.Graphics.Primitives;
 using System.Threading.Tasks;
 using osu.Framework.Threading;
+using osu.Game.Database;
 using osu.Game.Graphics;
-using osu.Game.Modes.Scoring;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Overlays.Notifications;
 using osu.Game.Screens.Play;
+using osu.Game.Screens.osuMon;
 
 namespace osu.Game
 {
@@ -42,6 +43,17 @@ namespace osu.Game
         private NotificationManager notificationManager;
 
         private DialogOverlay dialogOverlay;
+
+        private Screen osuMon
+        {
+            get
+            {
+                Screen s = screenStack;
+                while (s != null && !(s is OsuMonMenu))
+                    s = s.ChildScreen;
+                return s as OsuMonMenu;
+            }
+        }
 
         private Intro intro
         {
@@ -58,7 +70,8 @@ namespace osu.Game
 
         private VolumeControl volume;
 
-        public Bindable<PlayMode> PlayMode;
+        private Bindable<int> configRuleset;
+        public Bindable<RulesetInfo> Ruleset = new Bindable<RulesetInfo>();
 
         private readonly string[] args;
 
@@ -88,7 +101,9 @@ namespace osu.Game
 
             Dependencies.Cache(this);
 
-            PlayMode = LocalConfig.GetBindable<PlayMode>(OsuConfig.PlayMode);
+            configRuleset = LocalConfig.GetBindable<int>(OsuConfig.Ruleset);
+            Ruleset.Value = RulesetDatabase.GetRuleset(configRuleset.Value);
+            Ruleset.ValueChanged += r => configRuleset.Value = r.ID ?? 0;
         }
 
         private ScheduledDelegate scoreLoad;
@@ -191,6 +206,7 @@ namespace osu.Game
             };
 
             Dependencies.Cache(options);
+            Dependencies.Cache(chat);
             Dependencies.Cache(musicController);
             Dependencies.Cache(notificationManager);
             Dependencies.Cache(dialogOverlay);
@@ -199,13 +215,8 @@ namespace osu.Game
             {
                 Depth = -3,
                 OnHome = delegate { intro?.ChildScreen?.MakeCurrent(); },
-                OnPlayModeChange = m => PlayMode.Value = m,
-            }, t =>
-            {
-                PlayMode.ValueChanged += delegate { Toolbar.SetGameMode(PlayMode.Value); };
-                PlayMode.TriggerChange();
-                overlayContent.Add(Toolbar);
-            });
+                OnOsuMon = delegate { osuMon?.MakeCurrent(); },
+            }, overlayContent.Add);
 
             options.StateChanged += delegate
             {
@@ -276,7 +287,7 @@ namespace osu.Game
                 return;
             }
 
-            //central game mode change logic.
+            //central game screen change logic.
             if (!currentScreen.ShowOverlays)
             {
                 options.State = Visibility.Hidden;
@@ -307,6 +318,18 @@ namespace osu.Game
             return base.OnExiting();
         }
 
+        /// <summary>
+        /// Use to programatically exit the game as if the user was triggering via alt-f4.
+        /// Will keep persisting until an exit occurs (exit may be blocked multiple times).
+        /// </summary>
+        public void GracefullyExit()
+        {
+            if (!OnExiting())
+                Exit();
+            else
+                Scheduler.AddDelayed(GracefullyExit, 2000);
+        }
+
         protected override void UpdateAfterChildren()
         {
             base.UpdateAfterChildren();
@@ -314,7 +337,7 @@ namespace osu.Game
             if (intro?.ChildScreen != null)
                 intro.ChildScreen.Padding = new MarginPadding { Top = Toolbar.Position.Y + Toolbar.DrawHeight };
 
-            Cursor.State = currentScreen == null || currentScreen.HasLocalCursorDisplayed ? Visibility.Hidden : Visibility.Visible;
+            Cursor.State = currentScreen?.HasLocalCursorDisplayed == false ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void screenAdded(Screen newScreen)

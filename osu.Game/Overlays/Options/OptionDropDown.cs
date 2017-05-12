@@ -24,6 +24,7 @@ namespace osu.Game.Overlays.Options
             set
             {
                 text.Text = value;
+                text.Alpha = !string.IsNullOrEmpty(value) ? 1 : 0;
             }
         }
 
@@ -33,9 +34,7 @@ namespace osu.Game.Overlays.Options
             set
             {
                 bindable = value;
-                dropdown.SelectedValue.BindTo(bindable);
-                if (bindable.Disabled)
-                    Alpha = 0.3f;
+                dropdown.Current.BindTo(bindable);
             }
         }
 
@@ -74,6 +73,11 @@ namespace osu.Game.Overlays.Options
                     RelativeSizeAxes = Axes.X,
                     Items = Items,
                 }
+            };
+
+            dropdown.Current.DisabledChanged += disabled =>
+            {
+                Alpha = disabled ? 0.3f : 1;
             };
         }
     }

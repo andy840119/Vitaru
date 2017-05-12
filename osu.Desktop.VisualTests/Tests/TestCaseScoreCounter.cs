@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.MathUtils;
 using osu.Framework.Testing;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Modes.UI;
+using osu.Game.Rulesets.UI;
 
 namespace osu.Desktop.VisualTests.Tests
 {
@@ -21,8 +21,6 @@ namespace osu.Desktop.VisualTests.Tests
             base.Reset();
 
             int numerator = 0, denominator = 0;
-
-            bool maniaHold = false;
 
             ScoreCounter score = new ScoreCounter(7)
             {

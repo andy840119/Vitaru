@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
 using osu.Game.Graphics;
-using osu.Game.Modes;
 using OpenTK;
 
 namespace osu.Game.Overlays.Toolbar
@@ -20,14 +19,13 @@ namespace osu.Game.Overlays.Toolbar
         public const float TOOLTIP_HEIGHT = 30;
 
         public Action OnHome;
-        public Action<PlayMode> OnPlayModeChange;
+        public Action OnOsuMon;
 
-        private readonly ToolbarModeSelector modeSelector;
         private readonly ToolbarUserArea userArea;
 
         protected override bool HideOnEscape => false;
 
-        protected override bool BlockPassThroughInput => false;
+        protected override bool BlockPassThroughMouse => false;
 
         private const double transition_time = 500;
 
@@ -53,13 +51,13 @@ namespace osu.Game.Overlays.Toolbar
                         {
                             Action = () => OnHome?.Invoke()
                         },
-                        modeSelector = new ToolbarModeSelector
+                        new ToolbarModeSelector(),
+                        /*
+                        new ToolbarOsuMon
                         {
-                            OnPlayModeChange = mode =>
-                            {
-                                OnPlayModeChange?.Invoke(mode);
-                            }
-                        }
+                            Action = () => OnOsuMon?.Invoke()
+                        },
+                        */
                     }
                 },
                 new FillFlowContainer
@@ -73,6 +71,7 @@ namespace osu.Game.Overlays.Toolbar
                     Children = new Drawable[]
                     {
                         new ToolbarSystemClock(),
+                        new ToolbarChatButton(),
                         new ToolbarMusicButton(),
                         new ToolbarButton
                         {
@@ -129,8 +128,6 @@ namespace osu.Game.Overlays.Toolbar
                 gradientBackground.FadeOut(transition_time, EasingTypes.OutQuint);
             }
         }
-
-        public void SetGameMode(PlayMode mode) => modeSelector.SetGameMode(mode);
 
         protected override void PopIn()
         {

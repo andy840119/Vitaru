@@ -8,7 +8,6 @@ using System.Diagnostics;
 using OpenTK;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.OpenGL;
-using osu.Framework.Graphics.Sprites;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Shaders;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -59,7 +58,7 @@ namespace osu.Framework.Graphics.Containers
 
         private Game game;
 
-        protected Task LoadComponentAsync(Drawable component, Action<Drawable> onLoaded = null) => component.LoadAsync(game, Clock, onLoaded);
+        protected Task LoadComponentAsync(Drawable component, Action<Drawable> onLoaded = null) => component.LoadAsync(game, this, onLoaded);
 
         [BackgroundDependencyLoader(true)]
         private void load(Game game, ShaderManager shaders)
@@ -72,15 +71,21 @@ namespace osu.Framework.Graphics.Containers
             // From now on, since we ourself are loaded now,
             // we actually permit children to be loaded if our
             // lifetimelist (internalChildren) requests a load.
-            internalChildren.LoadRequested += i =>
-            {
-                i.Load(game, Clock);
-                i.Parent = this;
-            };
+            internalChildren.LoadRequested += loadChild;
 
-            // This updates the alive status of our children according to our new
-            // clock, and recursively loads each alive child.
+            // We are in a potentially async context, so let's aggressively load all our children
+            // regardless of their alive state. this also gives children a clock so they can be checked
+            // for their correct alive state in the case LifetimeStart is set to a definite value.
+            internalChildren.ForEach(loadChild);
+
+            // Let's also perform an update on our LifetimeList to add any alive children.
             internalChildren.Update(Clock.TimeInfo);
+        }
+
+        private void loadChild(T child)
+        {
+            child.Load(Clock, Dependencies);
+            child.Parent = this;
         }
 
         protected override void Dispose(bool isDisposing)
@@ -187,25 +192,27 @@ namespace osu.Framework.Graphics.Containers
         /// <summary>
         /// Removes a given child from this container.
         /// </summary>
-        /// <returns>True if the child was found and removed, false otherwise.</returns>
-        public bool Remove(T drawable)
+        public void Remove(T drawable)
         {
             if (drawable == null)
-                return false;
+                throw new ArgumentNullException(nameof(drawable));
 
             if (Content != this)
-                return Content.Remove(drawable);
+            {
+                Content.Remove(drawable);
+                return;
+            }
 
-            bool result = internalChildren.Remove(drawable);
-            if (!result) return false;
+            if (!internalChildren.Remove(drawable))
+                throw new InvalidOperationException($@"Cannot remove a drawable ({drawable}) which is not a child of this ({this}), but {drawable.Parent}.");
 
-            Trace.Assert(drawable.Parent == this, $@"Removed a drawable ({drawable}) whose parent was not this ({this}), but {drawable.Parent}.");
+            // The string construction is quite expensive, so we are using Debug.Assert here.
+            Debug.Assert(drawable.Parent == this, $@"Removed a drawable ({drawable}) whose parent was not this ({this}), but {drawable.Parent}.");
+
             drawable.Parent = null;
 
             if (AutoSizeAxes != Axes.None)
                 InvalidateFromChild(Invalidation.Geometry);
-
-            return true;
         }
 
         /// <summary>
@@ -334,7 +341,7 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         protected virtual bool RequiresChildrenUpdate => !IsMaskedAway || !childrenSizeDependencies.IsValid;
 
-        internal sealed override bool UpdateSubTree()
+        public override bool UpdateSubTree()
         {
             if (!base.UpdateSubTree()) return false;
 
@@ -596,7 +603,7 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         public void FadeEdgeEffectTo(float newAlpha, double duration = 0, EasingTypes easing = EasingTypes.None)
         {
-            TransformTo(EdgeEffect.Colour.Linear.A, newAlpha, duration, easing, new TransformEdgeEffectAlpha());
+            TransformTo(() => EdgeEffect.Colour.Linear.A, newAlpha, duration, easing, new TransformEdgeEffectAlpha());
         }
 
         #endregion
@@ -710,7 +717,7 @@ namespace osu.Framework.Graphics.Containers
         /// <summary>
         /// Determines how thick of a border to draw around the inside of the masked region.
         /// Only has an effect when <see cref="Masking"/> is true.
-        /// The border only is drawn on top of children of type <see cref="Sprite"/>.
+        /// The border only is drawn on top of children using a sprite shader.
         /// </summary>
         /// <remarks>
         /// Drawing borders is optimized heavily into our sprite shaders. As a consequence
@@ -868,11 +875,28 @@ namespace osu.Framework.Graphics.Containers
             }
         }
 
+        private float autoSizeDuration;
+
         /// <summary>
         /// The duration which automatic sizing should take. If zero, then it is instantaneous.
         /// Otherwise, this is equivalent to applying an automatic size via <see cref="Drawable.ResizeTo(Vector2, double, EasingTypes)"/>.
         /// </summary>
-        public float AutoSizeDuration { get; set; }
+        public float AutoSizeDuration
+        {
+            get { return autoSizeDuration; }
+            set
+            {
+                if (autoSizeDuration == value) return;
+
+                autoSizeDuration = value;
+
+                // if we have an existing transform, we want to update its duration.
+                // not doing this could potentially cause incorrect final autosize dimensions.
+                var existing = Transforms.Find(t => t is TransformAutoSize);
+                if (existing != null)
+                    existing.EndTime = existing.StartTime + autoSizeDuration;
+            }
+        }
 
         /// <summary>
         /// The type of easing which should be used for smooth automatic sizing when <see cref="AutoSizeDuration"/>
@@ -880,6 +904,10 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         public EasingTypes AutoSizeEasing;
 
+        /// <summary>
+        /// THIS EVENT PURELY EXISTS FOR THE SCENE GRAPH VISUALIZER. DO NOT USE.
+        /// This event will fire after our <see cref="Size"/> is updated from autosizing.
+        /// </summary>
         internal event Action OnAutoSize;
 
         private Cached childrenSizeDependencies = new Cached();
@@ -1020,7 +1048,7 @@ namespace osu.Framework.Graphics.Containers
 
         private void autoSizeResizeTo(Vector2 newSize, double duration = 0, EasingTypes easing = EasingTypes.None)
         {
-            TransformTo(Size, newSize, duration, easing, new TransformAutoSize());
+            TransformTo(() => Size, newSize, duration, easing, new TransformAutoSize());
         }
 
         /// <summary>

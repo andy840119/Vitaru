@@ -12,6 +12,8 @@ namespace osu.Framework.Graphics.Containers
         Vector2 ChildSize { get; }
         Vector2 ChildOffset { get; }
 
+        float CornerRadius { get; }
+
         void InvalidateFromChild(Invalidation invalidation);
 
         void Clear(bool dispose = true);
@@ -37,7 +39,7 @@ namespace osu.Framework.Graphics.Containers
         void Add(T drawable);
         void Add(IEnumerable<T> collection);
 
-        bool Remove(T drawable);
+        void Remove(T drawable);
         void Remove(IEnumerable<T> range);
     }
 }

@@ -13,7 +13,7 @@ namespace osu.Framework.Graphics.UserInterface
     /// A drop-down menu to select from a group of values.
     /// </summary>
     /// <typeparam name="T">Type of value to select.</typeparam>
-    public abstract class Dropdown<T> : FillFlowContainer
+    public abstract class Dropdown<T> : FillFlowContainer, IHasCurrentValue<T>
     {
         protected internal DropdownHeader Header;
         protected internal Menu DropdownMenu;
@@ -59,9 +59,10 @@ namespace osu.Framework.Graphics.UserInterface
                 foreach (var entry in value)
                     AddDropdownItem(entry.Key, entry.Value);
 
-                refreshSelection(null, null);
-                if (SelectedItem == null)
-                    SelectedItem = MenuItems.FirstOrDefault();
+                if (Current.Value == null || !itemMap.Keys.Contains(Current.Value))
+                    Current.Value = itemMap.Keys.FirstOrDefault();
+                else
+                    Current.TriggerChange();
             }
         }
 
@@ -77,8 +78,9 @@ namespace osu.Framework.Graphics.UserInterface
             var item = CreateMenuItem(text, value);
             item.Action = () =>
             {
-                selectedItem = item;
-                SelectedValue.Value = item.Value;
+                if (!Current.Disabled)
+                    Current.Value = item.Value;
+
                 DropdownMenu.State = MenuState.Closed;
             };
             itemMap[item.Value] = item;
@@ -87,7 +89,7 @@ namespace osu.Framework.Graphics.UserInterface
 
         // TODO: RemoveDropdownItem?
 
-        public readonly Bindable<T> SelectedValue = new Bindable<T>();
+        public Bindable<T> Current { get; } = new Bindable<T>();
 
         private DropdownMenuItem<T> selectedItem;
 
@@ -98,7 +100,7 @@ namespace osu.Framework.Graphics.UserInterface
             {
                 selectedItem = value;
                 if (value != null)
-                    SelectedValue.Value = value.Value;
+                    Current.Value = value.Value;
             }
         }
 
@@ -114,7 +116,7 @@ namespace osu.Framework.Graphics.UserInterface
             };
 
             Header.Action = DropdownMenu.Toggle;
-            SelectedValue.ValueChanged += refreshSelection;
+            Current.ValueChanged += selectionChanged;
         }
 
         protected override void LoadComplete()
@@ -124,15 +126,22 @@ namespace osu.Framework.Graphics.UserInterface
             Header.Label = SelectedItem?.Text;
         }
 
-        private void refreshSelection(object sender, EventArgs e)
+        private void selectionChanged(T newSelection = default(T))
         {
+            foreach (var i in MenuItems)
+                i.IsSelected = false;
+
             // refresh if SelectedItem and SelectedValue mismatched
             // null is not a valid value for Dictionary, so neither here
-            if ((SelectedItem == null || !EqualityComparer<T>.Default.Equals(SelectedItem.Value, SelectedValue.Value))
-                && SelectedValue.Value != null)
-                itemMap.TryGetValue(SelectedValue.Value, out selectedItem);
+            if ((SelectedItem == null || !EqualityComparer<T>.Default.Equals(SelectedItem.Value, newSelection))
+                && newSelection != null)
+                itemMap.TryGetValue(newSelection, out selectedItem);
 
-            Header.Label = SelectedItem?.Text;
+            if (SelectedItem != null)
+            {
+                Header.Label = SelectedItem.Text;
+                SelectedItem.IsSelected = true;
+            }
         }
 
         /// <summary>

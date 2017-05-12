@@ -25,7 +25,7 @@ namespace osu.Game.Overlays
         public const float SIDEBAR_WIDTH = Sidebar.DEFAULT_WIDTH;
 
         private const float width = 400;
-        
+
         private const float sidebar_padding = 10;
 
         private ScrollContainer scrollContainer;
@@ -51,7 +51,6 @@ namespace osu.Game.Overlays
                 new AudioSection(),
                 new SkinSection(),
                 new InputSection(),
-                new EditorSection(),
                 new OnlineSection(),
                 new MaintenanceSection(),
                 new DebugSection(),
@@ -118,7 +117,7 @@ namespace osu.Game.Overlays
                     ).ToArray()
                 }
             };
-        
+
             scrollContainer.Padding = new MarginPadding { Top = game?.Toolbar.DrawHeight ?? 0 };
         }
 
